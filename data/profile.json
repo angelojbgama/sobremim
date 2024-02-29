@@ -1,6 +1,6 @@
 {
   "name": "Angelo JB Gama",
-  "photo": "../assets/img/my-photo.jpg",
+  "photo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/assets/img/my-photo.jpg",
   "job": "Desenvolvedor",
   "location": "Belford Roxo - RJ",
   "phone": "(21) 98030-9664",
@@ -9,39 +9,39 @@
     "hardSkills": [
       {
         "name": "Nodejs",
-        "logo": "../data/imgs/nodejs.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/nodejs.png"
       },
       {
         "name": "JavaScript",
-        "logo": "../data/imgs/js.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/js.png"
       },
       {
         "name": "HTML",
-        "logo": "../data/imgs/html.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/html.png"
       },
       {
         "name": "CSS",
-        "logo": "../data/imgs/css.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/css.png"
       },
       {
         "name": "PHP",
-        "logo": "../data/imgs/php.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/php.png"
       },
       {
         "name": "MySQL",
-        "logo": "../data/imgs/mysql.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/mysql.png"
       },
       {
         "name": "React",
-        "logo": "../data/imgs/react.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/react.png"
       },
       {
         "name": "GitHub",
-        "logo": "../data/imgs/github.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/github.png"
       },
       {
         "name": "Python",
-        "logo": "../data/imgs/python.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/python.png"
       }
     ],
     "softSkills": [
