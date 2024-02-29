@@ -1,0 +1,83 @@
+{
+  "name": "Angelo JB Gama",
+  "photo": "../assets/img/my-photo.jpg",
+  "job": "Desenvolvedor",
+  "location": "Belford Roxo - RJ",
+  "phone": "(21) 98030-9664",
+  "email": "angelojbgama@gmail.com",
+  "skills": {
+    "hardSkills": [
+      {
+        "name": "Nodejs",
+        "logo": "../data/imgs/nodejs.png"
+      },
+      {
+        "name": "JavaScript",
+        "logo": "../data/imgs/js.png"
+      },
+      {
+        "name": "HTML",
+        "logo": "../data/imgs/html.png"
+      },
+      {
+        "name": "CSS",
+        "logo": "../data/imgs/css.png"
+      },
+      {
+        "name": "PHP",
+        "logo": "../data/imgs/php.png"
+      },
+      {
+        "name": "MySQL",
+        "logo": "../data/imgs/mysql.png"
+      },
+      {
+        "name": "React",
+        "logo": "../data/imgs/react.png"
+      },
+      {
+        "name": "GitHub",
+        "logo": "../data/imgs/github.png"
+      },
+      {
+        "name": "Python",
+        "logo": "../data/imgs/python.png"
+      }
+    ],
+    "softSkills": [
+      "Facilidade com tarefas práticas",
+      "Comunicação",
+      "Trabalho em equipe",
+      "Flexibilidade"
+     ]
+  },
+  "languages": [
+    "Português BR",
+    "Inglês (Intermediário)",
+    "Espanhol (Basico)"
+    ],
+  "portfolio": [
+    {
+      "name": "Projeto de Automação em Python",
+      "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
+      "github": true
+    },
+    {
+      "name": "Projeto Python IA: Inteligência Artificial e Previsões",
+      "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
+      "github": true
+    }
+  ],
+  "professionalExperience": [
+    {
+      "name": "Grupo PLL, Rio de Janeiro - Técnico em eletrônica",
+      "period": "Fevereiro de 2016 - Novembro de 2019",
+      "description": "Análise e reparo, leitura de manuais técnicos sobre hardware, software e esquemas eletrônicos de smartphones. Prestava suporte, efetuava a manutenção do sistema administrativo através de edições de planilhas, execução constante de métodos de análise em sistemas eletrônicos."
+    },
+    {
+      "name": "GMX, Rio de Janeiro - Técnico em eletrônica",
+      "period": "Julho de 2012 - Outubro de 2015",
+      "description": "Análise e reparo, leitura de manuais técnicos sobre hardware, software e esquemas eletrônicos de smartphones, manutenção, suporte e reparo de computadores desktop e laptop. Prestava suporte, efetuava a manutenção do sistema administrativo, execução constante de métodos de análise para sistemas eletrônicos."
+    }    
+  ]
+}
