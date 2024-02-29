@@ -14,7 +14,7 @@ function updateProfileInfo(profileData) {
     location.innerText = profileData.location
 
     const phone = document.getElementById('profile.phone')
-    phone.innerText = profileData.phone
+    phone.innerText = '(21)98030-9664
     phone.href = `${profileData.phone}`
 
     const email = document.getElementById('profile.email')
