@@ -8,5 +8,7 @@ footer {
 }
 
 footer img {
-    max-width: 100px;
+    max-width: 50px;
+    max-height: 50px;
+    margin: 0 .5rem;
 }
