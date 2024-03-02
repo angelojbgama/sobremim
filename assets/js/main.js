@@ -62,6 +62,18 @@ function updateProfessionalExperience(profileData) {
     }).join('')
 }
 
+function updatecodigosdeapoio(profileData) {
+    const codigosdeapoio = document.getElementById('profile.codigosdeapoio')
+    codigosdeapoio.innerHTML = profileData.codigosdeapoio.map(project => {
+        return `
+            <li>
+                <h3 ${project.github ? 'class="github"' : ''}>${project.name}</h3>
+                <a href="${project.url}" target="_blank">${project.url}</a>
+            </li>
+        `
+    }).join('')
+}
+
 (async () => {
     const profileData = await fetchProfileData()
     updateProfileInfo(profileData)
@@ -70,4 +82,5 @@ function updateProfessionalExperience(profileData) {
     updateLanguages(profileData)
     updatePortfolio(profileData)
     updateProfessionalExperience(profileData)
+    updatecodigosdeapoio(profileData)
 })()

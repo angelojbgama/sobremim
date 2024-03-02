@@ -49,13 +49,13 @@
       "Comunicação",
       "Trabalho em equipe",
       "Flexibilidade"
-     ]
+    ]
   },
   "languages": [
     "Português BR",
     "Inglês (Intermediário)",
     "Espanhol (Basico)"
-    ],
+  ],
   "portfolio": [
     {
       "name": "Projeto de Automação em Python",
@@ -78,6 +78,13 @@
       "name": "GMX, Rio de Janeiro - Técnico em eletrônica",
       "period": "Julho de 2012 - Outubro de 2015",
       "description": "Análise e reparo, leitura de manuais técnicos sobre hardware, software e esquemas eletrônicos de smartphones, manutenção, suporte e reparo de computadores desktop e laptop. Prestava suporte, efetuava a manutenção do sistema administrativo, execução constante de métodos de análise para sistemas eletrônicos."
-    }    
+    }
+  ],
+  "codigosdeapoio": [
+    {
+      "name": "MySQL",
+      "url": "https://github.com/angelojbgama/MySQL-canivete-su-o/tree/main",
+      "github": true
+    }
   ]
 }
