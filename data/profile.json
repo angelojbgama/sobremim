@@ -58,12 +58,17 @@
   ],
   "portfolio": [
     {
-      "name": "Projeto de Automação em Python",
+      "name": "APP Gerador de Senhas em React.Native",
+      "url": "https://github.com/angelojbgama/bat-pass-app",
+      "github": true
+    },
+    {
+      "name": "Automação e programa leitor de pdf e busca por regex em Python",
       "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
       "github": true
     },
     {
-      "name": "Projeto Python IA: Inteligência Artificial e Previsões",
+      "name": "Automação e analise de dados em Python: Inteligência artificial e previsões de preços",
       "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
       "github": true
     }
