@@ -97,6 +97,11 @@
   ],
   "codigosdeapoio": [
     {
+      "name": "Python",
+      "url": "https://github.com/angelojbgama/Codigos-de-apaio-Python/tree/main",
+      "github": true
+    },
+    {
       "name": "MySQL",
       "url": "https://github.com/angelojbgama/MySQL-canivete-su-o/tree/main",
       "github": true
