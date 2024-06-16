@@ -32,6 +32,10 @@
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/mysql.png"
       },
       {
+        "name": "Postgresql",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/postgresql.png"
+      },
+      {
         "name": "React",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/react.png"
       },
@@ -46,6 +50,10 @@
       {
         "name": "Django",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/django.png"
+      },
+      {
+        "name": "Docker",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/docker.png"
       }
     ],
     "softSkills": [
