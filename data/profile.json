@@ -42,6 +42,10 @@
       {
         "name": "Python",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/python.png"
+      },
+      {
+        "name": "Django",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/django.png"
       }
     ],
     "softSkills": [
