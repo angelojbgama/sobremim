@@ -1,8 +1,8 @@
 {
-  "name": "Angelo JB Gama",
+  "name": "Angelo",
   "photo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/assets/img/my-photo.jpg",
-  "job": "Desenvolvedor",
-  "location": "Belford Roxo - RJ",
+  "job": "Programador",
+  "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
   "email": "angelojbgama@gmail.com",
   "skills": {
@@ -10,6 +10,10 @@
       {
         "name": "Nodejs",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/nodejs.png"
+      },
+      {
+        "name": "UML",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/uml.png"
       },
       {
         "name": "JavaScript",
