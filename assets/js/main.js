@@ -13,6 +13,9 @@ function updateProfileInfo(profileData) {
     const location = document.getElementById('profile.location')
     location.innerText = profileData.location
 
+    const graduate = document.getElementById('profile.graduate')
+    graduate.innerText = profileData.graduate
+
     const phone = document.getElementById('profile.phone')
     phone.innerText = profileData.phone
     phone.href = `https://wa.me/5521980309664`

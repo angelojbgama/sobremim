@@ -49,6 +49,10 @@
     background-image: url('../img/icons/location.svg');
 }
 
+.information .graduate::before {
+    background-image: url('../img/icons/graduate.svg');
+}
+
 .information .email::before {
     background-image: url('../img/icons/email.svg');
 }
