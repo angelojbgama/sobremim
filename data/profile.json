@@ -66,7 +66,7 @@
       },
       {
         "name": "RabbitMQ",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/rabbitmq.png"
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/RabbitMQ.png"
       },
       {
         "name": "Celery",
@@ -78,10 +78,15 @@
       }
     ],
     "softSkills": [
-      "Facilidade com tarefas práticas",
-      "Comunicação",
-      "Trabalho em equipe",
-      "Flexibilidade"
+      "Gosto de novas tecnologias",
+      "Soluções baseadas em pesquisa",
+      "Proficiência em Linguagens de Programação",
+      "Conhecimento de Ferramentas e Frameworks",
+      "Depuração e Testes",
+      "Arquitetura de Software",
+      "Capacidade de Abstração",
+      "Persistência",
+      "Pensamento Focado no Usuário"
     ]
   },
   "languages": [
@@ -120,7 +125,7 @@
     {
       "name": "Fundação COPPETEC, Rio de Janeiro - Programador",
       "period": "Abril de 2024 - Até o momento",
-      "description": "Atuo como Programador de Interface de Aplicação, desenvolvendo e otimizando a interface de uma solução SaaS para detecção de danos em dutos no setor de petróleo. Utilizo Django, Python, JavaScript, HTML e PostgreSQL. Minhas responsabilidades incluem receber e resolver tarefas do cliente, corrigir bugs, melhorar a interface e adicionar novas funcionalidades sugeridas durante o desenvolvimento. Participo de todas as fases do projeto, desde o planejamento e codificação até testes, implantação e manutenção, seguindo metodologias Agile e Scrum. Além disso, treino novos membros da equipe e mantenho a documentação dos processos e programas desenvolvidos ao longo dos anos. Mantenho comunicação constante com outras equipes e departamentos para garantir a funcionalidade e a integração da solução final."
+      "description": "Atuo como Programador, desenvolvendo e otimizando a interface de uma solução SaaS para detecção de danos em dutos no setor de petróleo. Minhas responsabilidades incluem receber e resolver tarefas do cliente, corrigir bugs, melhorar a interface e adicionar novas funcionalidades sugeridas durante o desenvolvimento."
     },
     {
       "name": "Grupo PLL, Rio de Janeiro - Técnico em eletrônica",
