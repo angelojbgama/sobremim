@@ -13,6 +13,10 @@
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/nodejs.png"
       },
       {
+        "name": "POO",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/oop.png"
+      },
+      {
         "name": "UML",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/uml.png"
       },
@@ -59,6 +63,14 @@
       {
         "name": "Django",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/django.png"
+      },
+      {
+        "name": "RabbitMQ",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/rabbitmq.png"
+      },
+      {
+        "name": "Celery",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/celery.png"
       },
       {
         "name": "Docker",
