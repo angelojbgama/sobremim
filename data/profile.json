@@ -101,6 +101,11 @@
       "github": true
     },
     {
+      "name": "Web Scraping de Notebooks com API RESTful",
+      "url": "https://github.com/angelojbgama/crawler-jr",
+      "github": true
+    },
+    {
       "name": "Automação e programa leitor de pdf e busca por regex em Python",
       "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
       "github": true
@@ -138,9 +143,9 @@
       "description": "Análise e reparo, leitura de manuais técnicos sobre hardware, software e esquemas eletrônicos de smartphones, manutenção, suporte e reparo de computadores desktop e laptop. Prestava suporte, efetuava a manutenção do sistema administrativo, execução constante de métodos de análise para sistemas eletrônicos."
     }
   ],
-  "codigosdeapoio": [
+  "conhecimentos": [
     {
-      "name": "Python",
+      "name": "Obsidian",
       "url": "https://github.com/angelojbgama/Codigos-de-apaio-Python/tree/main",
       "github": true
     },
