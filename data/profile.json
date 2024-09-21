@@ -96,6 +96,11 @@
   ],
   "portfolio": [
     {
+      "name": "Petpedia",
+      "url": "https://github.com/angelojbgama/Petpedia",
+      "github": true
+    },
+    {
       "name": "APP Gerador de Senhas em React.Native",
       "url": "https://github.com/angelojbgama/bat-pass-app",
       "github": true
