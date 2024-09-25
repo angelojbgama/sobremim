@@ -1,7 +1,7 @@
 {
   "name": "Angelo",
   "photo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/assets/img/my-photo.jpg",
-  "job": "Programador",
+  "job": "Programador Full Stack",
   "graduate": "Analise e Desenvolvido de Sistemas",
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
@@ -9,16 +9,12 @@
   "skills": {
     "hardSkills": [
       {
-        "name": "Nodejs",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/nodejs.png"
+        "name": "Python",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/python.png"
       },
       {
-        "name": "POO",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/oop.png"
-      },
-      {
-        "name": "UML",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/uml.png"
+        "name": "C++",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/c++.png"
       },
       {
         "name": "JavaScript",
@@ -33,20 +29,36 @@
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/css.png"
       },
       {
-        "name": "PHP",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/php.png"
+        "name": "React",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/react.png"
+      },
+      {
+        "name": "Django",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/django.png"
+      },
+      {
+        "name": "Docker",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/docker.png"
+      },
+      {
+        "name": "Celery",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/celery.png"
+      },
+      {
+        "name": "RabbitMQ",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/RabbitMQ.png"
+      },
+      {
+        "name": "UML",
+        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/uml.png"
       },
       {
         "name": "MySQL",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/mysql.png"
       },
       {
-        "name": "Postgresql",
+        "name": "PostgreSQL",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/postgresql.png"
-      },
-      {
-        "name": "React",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/react.png"
       },
       {
         "name": "GitHub",
@@ -55,26 +67,6 @@
       {
         "name": "Git",
         "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/git.png"
-      },
-      {
-        "name": "Python",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/data/imgs/python.png"
-      },
-      {
-        "name": "Django",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/django.png"
-      },
-      {
-        "name": "RabbitMQ",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/RabbitMQ.png"
-      },
-      {
-        "name": "Celery",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/celery.png"
-      },
-      {
-        "name": "Docker",
-        "logo": "https://raw.githubusercontent.com/angelojbgama/portfolio/main/data/imgs/docker.png"
       }
     ],
     "softSkills": [
