@@ -84,6 +84,11 @@
   ],
   "portfolio": [
     {
+      "name": "Tem Bike",
+      "url": "https://github.com/angelojbgama/TemBike",
+      "github": true
+    },
+    {
       "name": "Petpedia",
       "url": "https://github.com/angelojbgama/Petpedia",
       "github": true
