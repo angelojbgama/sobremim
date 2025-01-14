@@ -1,34 +1,65 @@
-* {
-    box-sizing: border-box;
-    font-family: 'Open Sans', sans-serif;
-}
-
+/* Inclusão da Fonte Personalizada */
 @font-face {
     font-family: 'Neue Machina';
-    src: url('../font/neue-machina-regular.otf');
+    src: url('assets/font/neue-machina-regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Variáveis de Tema */
+:root {
+    /* Tema Escuro (Padrão) */
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --header-bg-color: #1f1f1f;
+    --header-text-color: #ffffff;
+    --border-color: #ffffff;
+    --accordion-bg-color: #1f1f1f;
+    --accordion-hover-bg-color: #333333;
+    --toggle-button-color: #ffffff;
+    /* Adicione mais variáveis conforme necessário */
 }
 
 body {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Open Sans', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 a {
-    color: #fff;
+    color: var(--text-color);
     text-decoration: none;
+    transition: color 0.3s;
 }
 
 a:hover {
     text-decoration: underline;
 }
 
+/* Contêiner Principal */
 .main {
-    margin: 1rem;
+    margin: 4rem auto; /* Centraliza o contêiner com margem superior e inferior */
     padding: 1rem;
-    border: 1px solid #fff;
+    max-width: 1100px; /* Reduz a largura máxima para permitir o background nas bordas */
+    width: 80%; /* Largura relativa para responsividade */
+    border: 1px solid var(--border-color);
     border-radius: 1rem;
+    background-color: var(--header-bg-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, background-color 0.3s;
 }
 
+/* Ajuste para Telas Menores */
+@media only screen and (max-width: 600px) {
+    .main {
+        padding: 1rem;
+        border-radius: 0.5rem;
+    }
+}
+
+/* Background Decorativo */
 .main::before,
 .main::after {
     content: '';
@@ -53,15 +84,490 @@ a:hover {
     transform: rotate(180deg);
 }
 
-
 @media only screen and (min-width: 768px) {
     .main {
         max-width: 1024px;
-        margin: 1rem auto;
+        margin: 2rem auto;
     }
 
     .main::before,
     .main::after {
         width: 70vw;
     }
+}
+
+/* Seção de Ferramentas */
+.tools {
+    margin-top: 1rem;
+}
+
+.tools h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.hard-skills {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    gap: 1rem; /* Espaçamento entre os itens */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hard-skills li {
+    display: flex;
+    align-items: center; /* Alinha verticalmente ícone e texto */
+    background-color: var(--accordion-bg-color);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.hard-skills li:hover {
+    transform: translateY(-5px);
+    background-color: var(--accordion-hover-bg-color);
+}
+
+.hard-skills li i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem; /* Espaçamento entre o ícone e o nome */
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+.hard-skills li .skill-name {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Cores Específicas para Habilidades */
+.hard-skills li.fab.fa-python {
+    color: #306998; /* Python */
+}
+
+.hard-skills li.fab.fa-js-square {
+    color: #f7df1e; /* JavaScript */
+}
+
+.hard-skills li.fab.fa-react {
+    color: #61dafb; /* React */
+}
+
+.hard-skills li.fab.fa-git-alt {
+    color: #f05032; /* Git */
+}
+
+/* Adicione mais estilos específicos conforme necessário */
+
+/* Outros Estilos (Seção, Accordion, Footer, etc.) */
+.acordeon {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem 0;
+    border: 1px solid var(--border-color);
+    border-radius: 1rem;
+    background-color: var(--accordion-bg-color);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.acordeon.open,
+.acordeon:hover {
+    background-color: var(--accordion-hover-bg-color);
+    border-color: var(--accordion-hover-bg-color);
+}
+
+.acordeon .trigger {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    color: var(--text-color);
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.acordeon .trigger h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    text-align: start;
+}
+
+.acordeon .trigger::after {
+    font-family: "Font Awesome 6 Free"; /* Família de fontes do Font Awesome */
+    content: "\f077"; /* Unicode do ícone de seta para cima (fa-chevron-up) */
+    font-weight: 900; /* Peso da fonte para ícones sólidos */
+    transition: transform 0.25s;
+    color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+}
+
+.acordeon.open .trigger::after {
+    transform: rotate(180deg);
+}
+
+.acordeon .content {
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease-in-out, height 0.25s ease-in-out, padding 0.25s ease-in-out;
+    padding: 0 1rem 0 2rem;
+}
+
+.acordeon.open .content {
+    display: block;
+    height: auto;
+    opacity: 1;
+    padding: 0 1rem 1rem 2rem;
+}
+
+.codigosdeapoio {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.codigosdeapoio li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 1rem 0;
+}
+
+.codigosdeapoio li h3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.codigosdeapoio li h3.github::before {
+    font-family: "Font Awesome 6 Free"; /* Família de fontes do Font Awesome */
+    content: "\f09b"; /* Unicode do ícone do GitHub (fa-github) */
+    font-weight: 900; /* Peso da fonte para ícones sólidos */
+    margin-right: 0.5rem;
+    color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+    font-size: 1rem; /* Tamanho do ícone */
+}
+
+.experience {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.experience li {
+    margin-bottom: 1rem;
+}
+
+.experience li .period {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.experience li .period::before {
+    font-family: "Font Awesome 6 Free"; /* Família de fontes do Font Awesome */
+    content: "\f133"; /* Unicode do ícone de calendário (fa-calendar) */
+    font-weight: 900; /* Peso da fonte para ícones sólidos */
+    margin-right: 0.5rem;
+    color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+    font-size: 1rem; /* Tamanho do ícone */
+}
+
+footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* Estilização dos Links do Footer */
+footer a {
+    color: var(--text-color); /* Cor do ícone adaptável ao tema */
+    font-size: 2rem; /* Tamanho dos ícones no footer */
+    margin: 0 0.5rem;
+    transition: color 0.3s, transform 0.3s;
+}
+
+/* Efeito de Hover nos Ícones */
+footer a:hover {
+    transform: scale(1.2); /* Aumenta o tamanho do ícone no hover */
+}
+
+/* Ajustes para Ícones Específicos no Hover */
+footer a.github:hover i {
+    color: #6e5494; /* Cor específica para GitHub no hover */
+}
+
+footer a.linkedin:hover i {
+    color: #0077b5; /* Cor específica para LinkedIn no hover */
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.header .photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.header .title {
+    font-family: 'Neue Machina', sans-serif; /* Aplica a fonte personalizada */
+    text-align: center;
+}
+
+.information {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.information p {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+    font-size: 1.125rem;
+}
+
+.information p i {
+    margin-right: 0.5rem; /* Espaçamento entre o ícone e o texto */
+    font-size: 1.25rem; /* Tamanho do ícone */
+    color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+    transition: color 0.3s;
+}
+
+@media only screen and (min-width: 768px) {
+    .header {
+        display: grid;
+        grid-template-areas:
+            "photo title"
+            "photo information"
+        ;
+    }
+
+    .header .photo {
+        grid-area: photo;
+        margin: 0 auto;
+    }
+
+    .header .title {
+        grid-area: title;
+        text-align: start;
+        max-width: 210px;
+    }
+
+    .header .information {
+        grid-area: information;
+    }
+}
+
+.languages {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.languages li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-right: 1rem;
+    font-weight: 700;
+    position: relative; /* Para posicionar o ícone */
+    padding-left: 1.5rem; /* Espaço para o ícone */
+    margin-bottom: 0.5rem; /* Espaçamento entre os itens */
+    list-style: none; /* Remove marcadores padrão */
+}
+
+.languages li i {
+    margin-right: 0.5rem; /* Espaçamento entre o ícone e o texto */
+    font-size: 1.5rem; /* Tamanho do ícone */
+    color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+    transition: color 0.3s;
+}
+
+/* Cores Específicas para Habilidades */
+.languages li.fab.fa-python {
+    color: #306998; /* Cor específica para Python */
+}
+
+.languages li.fab.fa-js-square {
+    color: #f7df1e; /* Cor específica para JavaScript */
+}
+
+/* ... Adicione mais estilos específicos conforme necessário ... */
+
+.portfolio {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.portfolio li {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 1rem 0;
+}
+
+.portfolio li h3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+
+.skills {
+    display: flex;
+    flex-direction: column;
+}
+
+.skills .tools ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    gap: 1rem; /* Espaçamento entre os itens */
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skills .tools ul li {
+    display: flex;
+    align-items: center;
+    background-color: var(--accordion-bg-color);
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s, background-color 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.skills .tools ul li:hover {
+    transform: translateY(-5px);
+    background-color: var(--accordion-hover-bg-color);
+}
+
+.skills .tools ul li i {
+    font-size: 1.5rem;
+    margin-right: 0.75rem; /* Espaçamento entre o ícone e o nome */
+    color: var(--text-color);
+    transition: color 0.3s;
+}
+
+.skills .tools ul li .skill-name {
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+/* Cores Específicas para Ícones de Habilidades */
+.skills .tools ul li.fab.fa-react {
+    color: #61dafb; /* Cor específica para React */
+}
+
+/* ... Adicione mais estilos específicos conforme necessário ... */
+
+.skills .personal ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+
+.skills .personal ul li {
+    margin-left: 2rem;
+    padding: 0.5rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .skills {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Tema Claro */
+body.light-theme {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --header-bg-color: #f0f0f0;
+    --header-text-color: #000000;
+    --border-color: #000000;
+    --accordion-bg-color: #f0f0f0;
+    --accordion-hover-bg-color: #d3d3d3;
+    --toggle-button-color: #000000;
+    /* Ajuste mais variáveis conforme necessário */
+}
+
+/* Estilo para o botão de alternância */
+.theme-toggle {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--toggle-button-color);
+    transition: color 0.3s;
+}
+
+/* Estilização do Ícone dentro do Botão de Alternância */
+.theme-toggle i {
+    font-size: 1.5rem; /* Tamanho do ícone */
+    transition: transform 0.3s, color 0.3s; /* Transições para efeitos */
+}
+
+/* Efeito de Hover no Botão de Alternância */
+.theme-toggle:hover i {
+    transform: rotate(20deg); /* Rotação suave ao passar o mouse */
+    color: #FFD700; /* Alterar a cor do ícone no hover, se desejar */
+}
+
+/* Transições Suaves */
+.acordeon,
+.header,
+footer,
+.skills,
+.languages,
+.portfolio,
+.experience,
+.information {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
