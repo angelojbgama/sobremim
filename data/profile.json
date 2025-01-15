@@ -1,5 +1,5 @@
 {
-  "name": "Angelo",
+  "name": "Angelo Gama",
   "photo": "https://raw.githubusercontent.com/angelojbgama/portifolio/main/assets/img/my-photo.jpg",
   "job": "Programador Full Stack",
   "graduate": "Analise e Desenvolvido de Sistemas",
@@ -21,18 +21,6 @@
         "iconClass": "fab fa-js-square"
       },
       {
-        "name": "HTML",
-        "iconClass": "fab fa-html5"
-      },
-      {
-        "name": "CSS",
-        "iconClass": "fab fa-css3-alt"
-      },
-      {
-        "name": "React",
-        "iconClass": "fab fa-react"
-      },
-      {
         "name": "Django",
         "iconClass": "fas fa-leaf"
       },
@@ -49,14 +37,6 @@
         "iconClass": "fas fa-server"
       },
       {
-        "name": "UML",
-        "iconClass": "fas fa-diagram-project"
-      },
-      {
-        "name": "MySQL",
-        "iconClass": "fas fa-database"
-      },
-      {
         "name": "PostgreSQL",
         "iconClass": "fas fa-database"
       },
@@ -69,7 +49,6 @@
       "Gosto de novas tecnologias",
       "Soluções baseadas em pesquisa",
       "Proficiência em Linguagens de Programação",
-      "Conhecimento de Ferramentas e Frameworks",
       "Depuração e Testes",
       "Arquitetura de Software",
       "Capacidade de Abstração",
@@ -124,17 +103,17 @@
     {
       "name": "Fundação COPPETEC, Rio de Janeiro - Programador",
       "period": "Abril de 2024 - Até o momento",
-      "description": "Desenvolvo e otimizo a interface de uma solução SaaS para detecção de danos em dutos no setor de petróleo. Minhas principais responsabilidades incluem a análise e resolução de demandas do cliente, correção de bugs, implementação de melhorias na interface e desenvolvimento de novas funcionalidades, alinhando os requisitos do cliente com boas práticas de desenvolvimento de software."
+      "description": "Desenvolvo uma solução SaaS para detecção de danos em dutos. Analiso demandas, corrijo bugs, implemento melhorias e desenvolvo novas funcionalidades seguindo boas práticas."
     },
     {
       "name": "Grupo PLL, Rio de Janeiro - Técnico em Eletrônica",
       "period": "Fevereiro de 2016 - Novembro de 2019",
-      "description": "Realizava a análise e reparo de dispositivos eletrônicos, incluindo leitura e interpretação de manuais técnicos de hardware, software e esquemas eletrônicos de smartphones. Também era responsável pelo suporte técnico, manutenção do sistema administrativo por meio de edições e atualizações de planilhas, e execução contínua de diagnósticos para otimizar sistemas eletrônicos."
+      "description": "Reparei dispositivos eletrônicos, ofereci suporte técnico, mantive sistemas administrativos e realizei diagnósticos para otimizar sistemas."
     },
     {
       "name": "GMX, Rio de Janeiro - Técnico em Eletrônica",
       "period": "Julho de 2012 - Outubro de 2015",
-      "description": "Executava análise e reparo de dispositivos eletrônicos, com foco em smartphones, computadores desktop e laptops. Minhas atividades incluíam leitura de manuais técnicos, manutenção e suporte de sistemas eletrônicos, além de suporte técnico ao cliente e melhorias no sistema administrativo por meio de atualizações e métodos de análise."
+      "description": "Reparei eletrônicos (smartphones, desktops, laptops), ofereci suporte técnico ao cliente e melhorei sistemas administrativos através de atualizações."
     }
   ]
 }

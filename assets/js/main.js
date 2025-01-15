@@ -406,13 +406,6 @@ function updateProfileInfo(profileData) {
     }
 }
 
-function updateSoftSkills(profileData) {
-    const softSkills = document.getElementById('profile.skills.softSkills');
-    if (softSkills) {
-        softSkills.innerHTML = profileData.skills.softSkills.map(skill => `<li>${skill}</li>`).join('');
-    }
-}
-
 function updateHardSkills(profileData) {
     const hardSkills = document.getElementById('profile.skills.hardSkills');
     if (hardSkills) {
@@ -422,6 +415,38 @@ function updateHardSkills(profileData) {
                 <span class="skill-name">${skill.name}</span>
             </li>
         `).join('');
+    }
+    document.querySelectorAll('.hard-skills li').forEach(item => {
+        item.addEventListener('click', () => {
+            // Remove a classe 'active' de todos os itens
+            document.querySelectorAll('.hard-skills li').forEach(el => el.classList.remove('active'));
+    
+            // Adiciona a classe 'active' ao item clicado
+            item.classList.add('active');
+    
+            // Define um tempo para esconder o balão automaticamente
+            setTimeout(() => {
+                item.classList.remove('active');
+            }, 2000); // 3 segundos
+        });
+    });
+    
+    // Adiciona um evento global para detectar cliques fora dos itens
+    document.addEventListener('click', (event) => {
+        // Verifica se o clique não foi em um item da lista
+        if (!event.target.closest('.hard-skills li')) {
+            document.querySelectorAll('.hard-skills li').forEach(el => el.classList.remove('active'));
+        }
+    });
+    
+    
+}
+
+
+function updateSoftSkills(profileData) {
+    const softSkills = document.getElementById('profile.skills.softSkills');
+    if (softSkills) {
+        softSkills.innerHTML = profileData.skills.softSkills.map(skill => `<li>${skill}</li>`).join('');
     }
 }
 
@@ -464,19 +489,6 @@ function updateProfessionalExperience(profileData) {
     }
 }
 
-function updateConhecimentos(profileData) { // Certifique-se de que o nome da função está correto
-    const conhecimentos = document.getElementById('profile.conhecimentos');
-    if (conhecimentos) {
-        conhecimentos.innerHTML = profileData.conhecimentos.map(conhecimento => `
-            <li>
-                <h3 ${conhecimento.github ? 'class="github"' : ''}>
-                    <i class="fas fa-code"></i> ${conhecimento.name}
-                </h3>
-                <a href="${conhecimento.url}" target="_blank">${conhecimento.url}</a>
-            </li>
-        `).join('');
-    }
-}
 
 (async () => {
     try {
