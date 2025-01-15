@@ -3,6 +3,10 @@
   "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
   "job": "Programador Full Stack",
   "graduate": "Analise e Desenvolvimento de Sistemas",
+  "graduetescale": {
+    "completed": 15,
+    "total": 35
+  },
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
   "email": "angelojbgama@gmail.com",

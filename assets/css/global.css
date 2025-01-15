@@ -144,6 +144,36 @@ a:hover {
 /* ===========================================================
    7. Seção de Ferramentas
 =========================================================== */
+
+/* Estilos para a Barra de Progresso */
+.progress-container {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 20px;
+}
+
+.progress {
+  height: 100%;
+  width: 0%;
+  background-color: var(--text-color); 
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-text {
+  display: block;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
 .tools {
   margin-top: 1rem;
 }
