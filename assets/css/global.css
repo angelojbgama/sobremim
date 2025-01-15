@@ -22,6 +22,9 @@
   --accordion-bg-color: #1f1f1f;
   --accordion-hover-bg-color: #333333;
   --toggle-button-color: #ffffff;
+  /* Variáveis para os balões */
+  --balloon-bg-color: rgba(0, 0, 0, 0.8);
+  --balloon-text-color: #ffffff;
   /* Adicione mais variáveis conforme necessário */
 }
 
@@ -35,6 +38,9 @@ body.light-theme {
   --accordion-bg-color: #f0f0f0;
   --accordion-hover-bg-color: #d3d3d3;
   --toggle-button-color: #000000;
+  /* Variáveis para os balões no tema claro */
+  --balloon-bg-color: rgba(255, 255, 255, 0.9);
+  --balloon-text-color: #000000;
   /* Ajuste mais variáveis conforme necessário */
 }
 
@@ -201,6 +207,8 @@ a:hover {
   border-radius: 0.5rem;
   transition: transform 0.3s, background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer; /* Indica que o item é clicável */
+  position: relative; /* Para posicionar o balão */
 }
 
 .hard-skills li:hover {
@@ -551,20 +559,21 @@ footer,
     bottom: 60px; /* Posiciona o balão acima do ícone */
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8); /* Fundo do balão */
-    color: white; /* Cor do texto */
+    background-color: var(--balloon-bg-color); /* Usa a variável de fundo */
+    color: var(--balloon-text-color); /* Usa a variável de texto */
     padding: 0.5rem;
     border-radius: 0.5rem;
     white-space: nowrap; /* Evita que o texto quebre em várias linhas */
     font-size: 0.8rem;
     z-index: 10;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra do balão */
+    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
   }
 
   .hard-skills li.active .skill-name {
     display: block; /* Mostra o balão quando o item está ativo */
   }
-
+  
   .hard-skills li .skill-name {
     display: none; /* Esconde o texto do nome da habilidade */
   }
@@ -593,7 +602,7 @@ footer,
 
   .skills .tools ul {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 4 colunas */
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas para telas menores */
     gap: 1rem; /* Espaçamento entre os itens */
     list-style: none;
     padding: 0;

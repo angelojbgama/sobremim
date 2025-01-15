@@ -539,7 +539,7 @@ function updateProfessionalExperience(profileData) {
     updateLanguages(profileData);
     updatePortfolio(profileData);
     updateProfessionalExperience(profileData);
-    updateConhecimentos(profileData); // Certifique-se de que a função está corretamente nomeada
+    updateConhecimentos(profileData); 
   } catch (error) {
     console.error("Erro ao atualizar o perfil:", error);
   }
