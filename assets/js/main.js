@@ -1,7 +1,7 @@
 // Mapeamento de Habilidades para Classes do Font Awesome (se não estiver na API)
 const skillIconMapping = {
   // **Linguagens de Programação**
-  "Python": "fab fa-python",
+  Python: "fab fa-python",
   "C++": "fas fa-code",
   JavaScript: "fab fa-js-square",
   HTML: "fab fa-html5",
@@ -420,6 +420,11 @@ function updateProfileInfo(profileData) {
     email.innerText = profileData.email;
     email.href = `mailto:${profileData.email}`;
   }
+
+  // Atualizar o título do documento
+  if (profileData.title) {
+    document.title = profileData.title;
+  }
 }
 
 function updateHardSkills(profileData) {
@@ -539,7 +544,6 @@ function updateProfessionalExperience(profileData) {
     updateLanguages(profileData);
     updatePortfolio(profileData);
     updateProfessionalExperience(profileData);
-    updateConhecimentos(profileData); 
   } catch (error) {
     console.error("Erro ao atualizar o perfil:", error);
   }

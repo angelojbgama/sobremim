@@ -1,7 +1,8 @@
 {
+  "title": "Meu trabalho",
   "name": "Angelo Gama",
   "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
-  "job": "Programador Full Stack",
+  "job": "Programador",
   "graduate": "Analise e Desenvolvimento de Sistemas",
   "graduetescale": {
     "completed": 15,
@@ -50,14 +51,11 @@
       }
     ],
     "softSkills": [
-      "Gosto de novas tecnologias",
-      "Soluções baseadas em pesquisa",
-      "Proficiência em Linguagens de Programação",
-      "Depuração e Testes",
-      "Arquitetura de Software",
-      "Capacidade de Abstração",
-      "Persistência",
-      "Pensamento Focado no Usuário"
+      "Adaptação a novas tecnologias",
+      "Resolução de problemas",
+      "Capacidade de abstração",
+      "Pensamento focado no usuário",
+      "Persistência"
     ]
   },
   "languages": ["Português BR", "Inglês (Intermediário)", "Espanhol (Basico)"],
