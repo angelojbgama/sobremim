@@ -505,16 +505,24 @@ function updatePortfolio(profileData) {
   const portfolio = document.getElementById("profile.portfolio");
   if (portfolio) {
     portfolio.innerHTML = profileData.portfolio
-      .map(
-        (project) => `
+      .map((project) => {
+        // Escolhe o ícone com base na existência do link do GitHub
+        const iconClass = project.github ? 'fab fa-github' : 'fas fa-link';
+        // Se houver um link do GitHub, adiciona um ícone adicional para o GitHub
+        const githubLink = project.github
+          ? `<a href="${project.github}" target="_blank" aria-label="GitHub">
+               <i class="fab fa-github"></i>
+             </a>`
+          : '';
+        return `
           <li>
-              <h3 ${project.github ? 'class="github"' : ""}>
-                  <i class="fas fa-link"></i> ${project.name}
-              </h3>
-              <a href="${project.url}" target="_blank">${project.url}</a>
+            <h3>
+              <i class="${iconClass}"></i> ${project.name}
+            </h3>
+            <a href="${project.url}" target="_blank">${project.url}</a>
           </li>
-      `
-      )
+        `;
+      })
       .join("");
   }
 }
