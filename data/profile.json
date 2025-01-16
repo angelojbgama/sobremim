@@ -1,5 +1,5 @@
 {
-  "title": "Meu trabalho",
+  "title": "Eu e meu trabalho",
   "name": "Angelo Gama",
   "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
   "job": "Programador",
@@ -58,6 +58,7 @@
       "Persistência"
     ]
   },
+  "acordeon": ["Habilidades", "Idiomas", "Portfólio", "Experiência Profissional"],
   "languages": ["Português BR", "Inglês (Intermediário)", "Espanhol (Basico)"],
   "portfolio": [
     {

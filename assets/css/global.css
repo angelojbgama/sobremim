@@ -116,8 +116,8 @@ a:hover {
 }
 
 .header .photo {
-  width: 200px;
-  height: 200px;
+  width: 14rem;
+  height: 14rem;
   border-radius: 50%;
 }
 
@@ -384,15 +384,6 @@ footer a:hover {
   transition: color 0.3s;
 }
 
-/* Cores Específicas para Habilidades */
-.languages li.fab.fa-python {
-  color: #306998; /* Cor específica para Python */
-}
-
-.languages li.fab.fa-js-square {
-  color: #f7df1e; /* Cor específica para JavaScript */
-}
-
 /* ===========================================================
    12. Portfolio
 =========================================================== */
@@ -499,15 +490,10 @@ footer a:hover {
 
 /* Estilização do Ícone dentro do Botão de Alternância */
 .theme-toggle i {
-  font-size: 1.5rem; /* Tamanho do ícone */
+  font-size: 2rem; /* Tamanho do ícone */
   transition: transform 0.3s, color 0.3s; /* Transições para efeitos */
 }
 
-/* Efeito de Hover no Botão de Alternância */
-.theme-toggle:hover i {
-  transform: rotate(20deg); /* Rotação suave ao passar o mouse */
-  color: #ffd700; /* Alterar a cor do ícone no hover, se desejar */
-}
 
 /* ===========================================================
    15. Transições Suaves

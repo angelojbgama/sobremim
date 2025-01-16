@@ -544,12 +544,12 @@ function updateProfessionalExperience(profileData) {
     updateLanguages(profileData);
     updatePortfolio(profileData);
     updateProfessionalExperience(profileData);
+    updateConhecimentos(profileData);
   } catch (error) {
     console.error("Erro ao atualizar o perfil:", error);
   }
 })();
 
-// Código para alternar tema permanece o mesmo...
 document.addEventListener("DOMContentLoaded", () => {
   const themeToggle = document.getElementById("theme-toggle");
   const toggleIcon = themeToggle.querySelector("i"); // Seleciona o ícone dentro do botão
@@ -557,27 +557,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Função para atualizar o ícone com base no tema
   const updateIcon = (theme) => {
+    // Remove ambas as classes de toggle
+    toggleIcon.classList.remove("fa-toggle-off", "fa-toggle-on");
+
     if (theme === "light") {
-      toggleIcon.classList.remove("fa-moon");
-      toggleIcon.classList.add("fa-sun");
+      toggleIcon.classList.add("fa-toggle-on");
     } else {
-      toggleIcon.classList.remove("fa-sun");
-      toggleIcon.classList.add("fa-moon");
+      toggleIcon.classList.add("fa-toggle-off");
     }
   };
 
   // Aplicar o tema salvo anteriormente e atualizar o ícone
   if (currentTheme === "light") {
     document.body.classList.add("light-theme");
-    updateIcon("light");
   } else {
-    updateIcon("dark");
+    document.body.classList.add("dark-theme");
   }
+  updateIcon(currentTheme);
 
   // Adicionar evento de clique para alternar o tema
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
       document.body.classList.toggle("light-theme");
+      document.body.classList.toggle("dark-theme");
+
       const theme = document.body.classList.contains("light-theme")
         ? "light"
         : "dark";
@@ -586,3 +589,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// --- Favoritar Página ---
+const favoriteToggle = document.getElementById("favorite-toggle");
+const favoriteIcon = favoriteToggle.querySelector("i"); // Ícone de favorito
+const isFavorited = localStorage.getItem("isFavorited") === "true";
+
+// Função para atualizar o ícone de favorito
+const updateFavoriteIcon = (favorited) => {
+  if (favorited) {
+    favoriteIcon.classList.remove("fa-regular", "fa-star");
+    favoriteIcon.classList.add("fa-solid", "fa-star");
+  } else {
+    favoriteIcon.classList.remove("fa-solid", "fa-star");
+    favoriteIcon.classList.add("fa-regular", "fa-star");
+  }
+};
+
+// Aplicar o estado de favorito salvo anteriormente e atualizar o ícone
+updateFavoriteIcon(isFavorited);
+
+// Evento de clique para alternar o favorito
+if (favoriteToggle) {
+  favoriteToggle.addEventListener("click", () => {
+    const favorited = localStorage.getItem("isFavorited") === "true";
+    const newFavoriteStatus = !favorited;
+    updateFavoriteIcon(newFavoriteStatus);
+    localStorage.setItem("isFavorited", newFavoriteStatus);
+  });
+}
