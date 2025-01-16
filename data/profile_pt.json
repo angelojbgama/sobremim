@@ -11,7 +11,9 @@
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
   "email": "angelojbgama@gmail.com",
+  "titleSkills": "Habilidades",
   "skills": {
+    "titleHardSkills": "Habilidades Técnicas",
     "hardSkills": [
       {
         "name": "Python",
@@ -50,6 +52,7 @@
         "iconClass": "fab fa-git-alt"
       }
     ],
+    "titleSoftSkills": "Habilidades Comportamentais",
     "softSkills": [
       "Adaptação a novas tecnologias",
       "Resolução de problemas",
@@ -58,8 +61,9 @@
       "Persistência"
     ]
   },
-  "acordeon": ["Habilidades", "Idiomas", "Portfólio", "Experiência Profissional"],
+  "titleLanguages": "Idiomas",
   "languages": ["Português BR", "Inglês (Intermediário)", "Espanhol (Basico)"],
+  "titlePortfolio": "Portfólio",
   "portfolio": [
     {
       "name": "Bike2Bike",
@@ -102,6 +106,7 @@
       "github": true
     }
   ],
+  "titleProfessionalExperience": "Experiência Profissional",
   "professionalExperience": [
     {
       "name": "Fundação COPPETEC, Rio de Janeiro - Programador",
