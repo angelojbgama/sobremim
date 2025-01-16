@@ -393,7 +393,7 @@ function updateProfileInfo(profileData) {
       const total = profileData.graduetescale.total;
       const percentage = Math.min((completed / total) * 100, 100).toFixed(2); // Limita a 100% e formata para 2 casas decimais
       progress.style.width = `${percentage}%`;
-      progressText.innerText = `${completed} de ${total} disciplinas cursadas (${percentage}%)`;
+      progressText.innerText = `${completed} disciplinas cursadas de ${total} (${percentage}%)`;
     }
   }
 

@@ -1,0 +1,127 @@
+{
+  "title": "Me and My Work",
+  "name": "Angelo Gama",
+  "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
+  "job": "Programmer",
+  "graduate": "Systems Analysis and Development",
+  "graduetescale": {
+    "completed": 15,
+    "total": 35
+  },
+  "location": "Brazil - RJ",
+  "phone": "(21) 98030-9664",
+  "email": "angelojbgama@gmail.com",
+  "titleSkills": "Skills",
+  "skills": {
+    "titleHardSkills": "Technical Skills",
+    "hardSkills": [
+      {
+        "name": "Python",
+        "iconClass": "fab fa-python"
+      },
+      {
+        "name": "C++",
+        "iconClass": "fas fa-code"
+      },
+      {
+        "name": "JavaScript",
+        "iconClass": "fab fa-js-square"
+      },
+      {
+        "name": "Django",
+        "iconClass": "fas fa-leaf"
+      },
+      {
+        "name": "Docker",
+        "iconClass": "fab fa-docker"
+      },
+      {
+        "name": "Celery",
+        "iconClass": "fas fa-rocket"
+      },
+      {
+        "name": "RabbitMQ",
+        "iconClass": "fas fa-server"
+      },
+      {
+        "name": "PostgreSQL",
+        "iconClass": "fas fa-database"
+      },
+      {
+        "name": "Git",
+        "iconClass": "fab fa-git-alt"
+      }
+    ],
+    "titleSoftSkills": "Behavioral Skills",
+    "softSkills": [
+      "Adaptation to new technologies",
+      "Problem-solving",
+      "Ability to abstract",
+      "User-focused thinking",
+      "Persistence"
+    ]
+  },
+  "titleLanguages": "Languages",
+  "languages": ["Portuguese BR", "English (Intermediate)", "Spanish (Basic)"],
+  "titlePortfolio": "Portfolio",
+  "portfolio": [
+    {
+      "name": "Bike2Bike",
+      "url": "https://github.com/angelojbgama/Bike2Bike",
+      "github": true
+    },
+    {
+      "name": "Petpedia",
+      "url": "https://github.com/angelojbgama/Petpedia",
+      "github": true
+    },
+    {
+      "name": "Password Generator App in React.Native",
+      "url": "https://github.com/angelojbgama/bat-pass-app",
+      "github": true
+    },
+    {
+      "name": "Notebook Web Scraping with RESTful API",
+      "url": "https://github.com/angelojbgama/crawler-jr",
+      "github": true
+    },
+    {
+      "name": "Automation and PDF Reader Program with Regex Search in Python",
+      "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
+      "github": true
+    },
+    {
+      "name": "Automation and Data Analysis in Python: Artificial Intelligence and Price Predictions",
+      "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
+      "github": true
+    },
+    {
+      "name": "Python Insights - Analyzing Data with Python",
+      "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
+      "github": true
+    },
+    {
+      "name": "Python Power UP - Automation Project",
+      "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
+      "github": true
+    }
+  ],
+  "titleProfessionalExperience": "Professional Experience",
+  "professionalExperience": [
+    {
+      "name": "COPPETEC Foundation, Rio de Janeiro - Programmer",
+      "period": "April 2024 - Present",
+      "description": "I develop a SaaS solution for detecting damage in pipelines. I analyze requirements, fix bugs, implement improvements, and develop new features following best practices."
+    },
+    {
+      "name": "PLL Group, Rio de Janeiro - Electronics Technician",
+      "period": "February 2016 - November 2019",
+      "description": "I repaired electronic devices, provided technical support, maintained administrative systems, and performed diagnostics to optimize systems."
+    },
+    {
+      "name": "GMX, Rio de Janeiro - Electronics Technician",
+      "period": "July 2012 - October 2015",
+      "description": "I repaired electronics (smartphones, desktops, laptops), provided technical support to clients, and improved administrative systems through updates."
+    }
+  ]
+}
