@@ -216,8 +216,8 @@ const skillIconMapping = {
 
   // **IDE e Editores**
   "Visual Studio": "fas fa-code",
-  "WebStorm": "fas fa-code",
-  "PhpStorm": "fas fa-code",
+  WebStorm: "fas fa-code",
+  PhpStorm: "fas fa-code",
   RubyMine: "fas fa-code",
 
   // **Outras Linguagens e Tecnologias Específicas**
@@ -315,39 +315,6 @@ const skillIconMapping = {
   "Unknown Skill 2": "fas fa-code",
 };
 
-// --- Função para Detectar o Idioma do Navegador e Carregar o JSON Correspondente ---
-async function fetchProfileData() {
-  // Detecta o idioma do navegador
-  let language = navigator.language || navigator.userLanguage;
-  language = language.substring(0, 2).toLowerCase(); // Extrai o código do idioma (ex: 'pt', 'en', 'es')
-
-  // Lista de idiomas suportados
-  const supportedLanguages = ["pt", "en", "es"];
-
-  // Verifica se o idioma detectado é suportado; caso contrário, define como padrão ('pt')
-  if (!supportedLanguages.includes(language)) {
-    language = "pt";
-  }
-
-  // Define o caminho do arquivo JSON baseado no idioma
-  const url = `data/profile_${language}.json`;
-
-  try {
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(`Erro ao carregar o arquivo JSON: ${response.statusText}`);
-    }
-
-    const profileData = await response.json();
-    return profileData;
-  } catch (error) {
-    console.error(error);
-    // Opcional: Retornar dados padrão ou exibir uma mensagem de erro para o usuário
-    return null;
-  }
-}
-
 // --- Funções para Atualizar Diferentes Partes do Perfil ---
 
 // 1. Atualizar Informações do Perfil
@@ -384,7 +351,9 @@ function updateProfileInfo(profileData) {
   }
 
   // Atualizar a Barra de Progresso da Graduação
-  const graduetescaleContainer = document.getElementById("profile.graduetescale");
+  const graduetescaleContainer = document.getElementById(
+    "profile.graduetescale"
+  );
   if (graduetescaleContainer && profileData.graduetescale) {
     const progress = graduetescaleContainer.querySelector(".progress");
     const progressText = graduetescaleContainer.querySelector(".progress-text");
@@ -452,7 +421,9 @@ function updateHardSkills(profileData) {
   document.querySelectorAll(".hard-skills li").forEach((item) => {
     item.addEventListener("click", () => {
       // Remove a classe 'active' de todos os itens
-      document.querySelectorAll(".hard-skills li").forEach((el) => el.classList.remove("active"));
+      document
+        .querySelectorAll(".hard-skills li")
+        .forEach((el) => el.classList.remove("active"));
 
       // Adiciona a classe 'active' ao item clicado
       item.classList.add("active");
@@ -468,7 +439,9 @@ function updateHardSkills(profileData) {
   document.addEventListener("click", (event) => {
     // Verifica se o clique não foi em um item da lista
     if (!event.target.closest(".hard-skills li")) {
-      document.querySelectorAll(".hard-skills li").forEach((el) => el.classList.remove("active"));
+      document
+        .querySelectorAll(".hard-skills li")
+        .forEach((el) => el.classList.remove("active"));
     }
   });
 }
@@ -507,13 +480,13 @@ function updatePortfolio(profileData) {
     portfolio.innerHTML = profileData.portfolio
       .map((project) => {
         // Escolhe o ícone com base na existência do link do GitHub
-        const iconClass = project.github ? 'fab fa-github' : 'fas fa-link';
+        const iconClass = project.github ? "fab fa-github" : "fas fa-link";
         // Se houver um link do GitHub, adiciona um ícone adicional para o GitHub
         const githubLink = project.github
           ? `<a href="${project.github}" target="_blank" aria-label="GitHub">
                <i class="fab fa-github"></i>
              </a>`
-          : '';
+          : "";
         return `
           <li>
             <h3>
@@ -527,21 +500,74 @@ function updatePortfolio(profileData) {
   }
 }
 
+function calcularDuracao(periodo, traducoes) {
+  const [inicio, fim] = periodo.split(" - ").map(str => str.trim());
+
+  // Função para converter a string da data em objeto Date
+  function parseData(dataStr) {
+      console.log(`Parsing date string: "${dataStr}"`);
+      if (dataStr.toLowerCase() === traducoes.current.toLowerCase()) {
+          console.log(`Detected current position: "${dataStr}"`);
+          return new Date();
+      }
+
+      const partes = dataStr.split(" ");
+      const mes = partes[0];
+      const ano = partes[partes.length - 1];
+
+      console.log(`Extracted month: "${mes}", year: "${ano}"`);
+
+      const mesIndex = traducoes.months[mes];
+      if (mesIndex === undefined) {
+          console.error(`Mês inválido ou não mapeado: "${mes}"`);
+          return new Date(); // Retorna a data atual para evitar falhas
+      }
+
+      const date = new Date(parseInt(ano), mesIndex, 1);
+      console.log(`Parsed date: ${date}`);
+      return date;
+  }
+
+  const dataInicio = parseData(inicio);
+  const dataFim = parseData(fim);
+
+  let anos = dataFim.getFullYear() - dataInicio.getFullYear();
+  let mesesDuracao = dataFim.getMonth() - dataInicio.getMonth();
+
+  if (mesesDuracao < 0) {
+      anos--;
+      mesesDuracao += 12;
+  }
+
+  console.log(`Duration: ${anos} anos e ${mesesDuracao} meses`);
+
+  let duracao = "";
+  if (anos > 0) {
+      duracao += `${anos} ${anos > 1 ? traducoes.years_plural : traducoes.years}`;
+  }
+  if (mesesDuracao > 0) {
+      if (anos > 0) duracao += " e ";
+      duracao += `${mesesDuracao} ${mesesDuracao > 1 ? traducoes.months_plural : traducoes.months_text}`;
+  }
+  return duracao || traducoes.lessThanAMonth;
+}
+
 // 6. Atualizar Experiência Profissional
 function updateProfessionalExperience(profileData) {
   const professionalExperience = document.getElementById("profile.professionalExperience");
   if (professionalExperience) {
-    professionalExperience.innerHTML = profileData.professionalExperience
-      .map(
-        (experience) => `
-          <li>
-              <h3 class="title">${experience.name}</h3>
-              <p class="period">${experience.period}</p>
-              <p>${experience.description}</p>
-          </li>
-      `
-      )
-      .join("");
+      professionalExperience.innerHTML = profileData.professionalExperience
+          .map((experience) => {
+              const duracao = calcularDuracao(experience.period, profileData.translations);
+              return `
+                <li>
+                    <h3 class="title">${experience.name}</h3>
+                    <p class="period">${experience.period} (${duracao})</p>
+                    <p>${experience.description}</p>
+                </li>
+              `;
+          })
+          .join("");
   }
 }
 
@@ -631,7 +657,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.toggle("light-theme");
     document.body.classList.toggle("dark-theme");
 
-    const theme = document.body.classList.contains("light-theme") ? "light" : "dark";
+    const theme = document.body.classList.contains("light-theme")
+      ? "light"
+      : "dark";
     updateIcon(theme);
     localStorage.setItem("theme", theme);
   });
@@ -639,7 +667,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // --- Funções para Favoritar Página ---
 const favoriteToggle = document.getElementById("favorite-toggle");
-if (favoriteToggle) { // Verifica se o elemento existe
+if (favoriteToggle) {
+  // Verifica se o elemento existe
   const favoriteIcon = favoriteToggle.querySelector("i"); // Ícone de favorito
   const isFavorited = localStorage.getItem("isFavorited") === "true";
 

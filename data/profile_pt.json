@@ -8,6 +8,28 @@
     "completed": 15,
     "total": 35
   },
+  "translations": {
+    "months": {
+      "Janeiro": 0,
+      "Fevereiro": 1,
+      "Março": 2,
+      "Abril": 3,
+      "Maio": 4,
+      "Junho": 5,
+      "Julho": 6,
+      "Agosto": 7,
+      "Setembro": 8,
+      "Outubro": 9,
+      "Novembro": 10,
+      "Dezembro": 11
+    },
+    "current": "Até o momento",
+    "lessThanAMonth": "Menos de um mês",
+    "years": "ano",
+    "years_plural": "anos",
+    "months_text": "mês",
+    "months_plural": "meses"
+  },
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
   "email": "angelojbgama@gmail.com",
@@ -71,9 +93,9 @@
       "github": true
     },
     {
-      "name": "Petpedia",
-      "url": "https://github.com/angelojbgama/Petpedia",
-      "github": true
+      "name": "Cardapio Digital",
+      "url": "https://angelojbgama.github.io/terra_e_p-o/",
+      "github": false
     },
     {
       "name": "APP Gerador de Senhas em React.Native",
