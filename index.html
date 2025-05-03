@@ -1,132 +1,447 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carregando...</title>
 
-    <!-- DaisyUI + Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        plugins: [window.daisyui],
-      };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/daisyui@latest"></script>
+<html lang="pt-BR">  <head><!-- Ícone da página (favicon) -->
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<link
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet"/>
-  </head>
+  rel="icon"
 
-  <body class="bg-base-100 text-base-content font-sans">
-    <main class="container mx-auto p-4">
-      <!-- Header -->
-      <header class="flex flex-col items-center gap-4 mb-8">
-        <div class="avatar">
-          <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-            <img src="../assets/img/my-photo.jpg" alt="Foto de Perfil" />
-          </div>
+  type="image/svg+xml"
+
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 512'%3E%3Cpath d='M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z'/%3E%3C/svg%3E"
+
+/>
+
+
+
+<!-- Metadados básicos -->
+
+<meta charset="UTF-8" />
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+
+<!-- Título da página -->
+
+<title>Carregando...</title>
+
+
+
+<!-- Normalize CSS para padronizar estilos entre navegadores -->
+
+<link
+
+  rel="stylesheet"
+
+  href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+
+/>
+
+
+
+<!-- Font Awesome para ícones -->
+
+<link
+
+  rel="stylesheet"
+
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+
+/>
+
+
+
+<!-- Google Fonts: Open Sans -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+<link
+
+  rel="stylesheet"
+
+  href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
+
+/>
+
+
+
+<!-- CSS Customizado -->
+
+<link rel="stylesheet" href="assets/css/global.css" />
+
+  </head>  <body><main class="main">
+
+  <!-- Cabeçalho com foto e informações do perfil -->
+
+  <header class="header">
+
+    <!-- Foto de perfil -->
+
+    <img
+
+      src="../assets/img/my-photo.jpg"
+
+      alt="Foto de Perfil"
+
+      class="photo"
+
+      id="profile.photo"
+
+    />
+
+
+
+    <!-- Nome do perfil -->
+
+    <h1 class="title">
+
+      <span id="profile.name">Carregando...</span>
+
+    </h1>
+
+
+
+    <!-- Informações adicionais do perfil -->
+
+    <div class="information">
+
+      <!-- Profissão -->
+
+      <p class="job" id="profile.job">
+
+        <i
+
+          class="fas fa-briefcase"
+
+          aria-hidden="true"
+
+          aria-label="Profissão"
+
+        ></i>
+
+        <span class="info-text">Carregando...</span>
+
+      </p>
+
+
+
+      <!-- Formação acadêmica -->
+
+      <p class="graduate" id="profile.graduate">
+
+        <i
+
+          class="fas fa-user-graduate"
+
+          aria-hidden="true"
+
+          aria-label="Formação"
+
+        ></i>
+
+        <span class="info-text">Carregando...</span>
+
+      </p>
+
+
+
+      <!-- Barra de Progresso da Graduação -->
+
+      <div class="progress-container" id="profile.graduetescale">
+
+        <div class="progress-bar">
+
+          <div class="progress"></div>
+
         </div>
-        <h1 class="text-3xl font-bold"><span id="profile.name">Carregando...</span></h1>
 
-        <div class="space-y-2 text-center">
-          <p><i class="fas fa-briefcase mr-1"></i><span id="profile.job">Carregando...</span></p>
-          <p><i class="fas fa-user-graduate mr-1"></i><span id="profile.graduate">Carregando...</span></p>
+        <span class="progress-text">Carregando...</span>
 
-          <div class="flex flex-col items-center">
-            <progress class="progress progress-primary w-56" value="40" max="100"></progress>
-            <span class="text-sm" id="profile.graduetescale">Carregando...</span>
-          </div>
-
-          <p><i class="fas fa-map-marker-alt mr-1"></i><span id="profile.location">Carregando...</span></p>
-          <p><i class="fas fa-phone mr-1"></i><a id="profile.phone" href="#">Carregando...</a></p>
-          <p><i class="fas fa-envelope mr-1"></i><a id="profile.email" href="#">Carregando...</a></p>
-        </div>
-
-        <!-- Toggle de tema -->
-        <button id="theme-toggle" class="btn btn-outline btn-sm">
-          <i class="fa-solid fa-toggle-off mr-2"></i> Alternar Tema
-        </button>
-      </header>
-
-      <!-- Acordeões DaisyUI -->
-      <div class="join join-vertical w-full space-y-2">
-        <!-- Skills -->
-        <div class="collapse collapse-arrow join-item bg-base-200">
-          <input type="checkbox" checked />
-          <div class="collapse-title text-xl font-medium" id="acordeon.titleSkills">
-            Carregando...
-          </div>
-          <div class="collapse-content">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h3 class="font-bold mb-2" id="skills.titleHardSkills">Carregando...</h3>
-                <ul id="profile.skills.hardSkills" class="list-disc ml-5"></ul>
-              </div>
-              <div>
-                <h3 class="font-bold mb-2" id="skills.titleSoftSkills">Carregando...</h3>
-                <ul id="profile.skills.softSkills" class="list-disc ml-5">
-                  <li>Carregando...</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Idiomas -->
-        <div class="collapse collapse-arrow join-item bg-base-200">
-          <input type="checkbox" />
-          <div class="collapse-title text-xl font-medium" id="acordeon.titleLanguages">
-            Carregando...
-          </div>
-          <div class="collapse-content">
-            <ul class="list-disc ml-5" id="profile.languages">
-              <li>Carregando...</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Portfólio -->
-        <div class="collapse collapse-arrow join-item bg-base-200">
-          <input type="checkbox" />
-          <div class="collapse-title text-xl font-medium" id="acordeon.titlePortfolio">
-            Carregando...
-          </div>
-          <div class="collapse-content">
-            <ul id="profile.portfolio" class="list-disc ml-5"></ul>
-          </div>
-        </div>
-
-        <!-- Experiência Profissional -->
-        <div class="collapse collapse-arrow join-item bg-base-200">
-          <input type="checkbox" />
-          <div class="collapse-title text-xl font-medium" id="acordeon.titleProfessionalExperience">
-            Carregando...
-          </div>
-          <div class="collapse-content">
-            <ul id="profile.professionalExperience" class="list-disc ml-5"></ul>
-          </div>
-        </div>
       </div>
 
-      <!-- Footer -->
-      <footer class="mt-10 flex justify-center space-x-6">
-        <a href="https://github.com/angelojbgama" target="_blank" class="btn btn-ghost btn-circle text-xl">
-          <i class="fab fa-github"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/angelojbgama/" target="_blank" class="btn btn-ghost btn-circle text-xl">
-          <i class="fab fa-linkedin"></i>
-        </a>
-      </footer>
-    </main>
 
-    <!-- Scripts -->
-    <script src="assets/js/acordeon.js"></script>
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/main.js"></script>
-  </body>
-</html>
+
+      <!-- Localização -->
+
+      <p class="location" id="profile.location">
+
+        <i
+
+          class="fas fa-map-marker-alt"
+
+          aria-hidden="true"
+
+          aria-label="Localização"
+
+        ></i>
+
+        <span class="info-text">Carregando...</span>
+
+      </p>
+
+
+
+      <!-- Telefone -->
+
+      <p class="phone" id="profile.phone-container">
+
+        <i
+
+          class="fas fa-phone"
+
+          aria-hidden="true"
+
+          aria-label="Telefone"
+
+        ></i>
+
+        <a href="" id="profile.phone" class="info-text">Carregando...</a>
+
+      </p>
+
+
+
+      <!-- Email -->
+
+      <p class="email" id="profile.email-container">
+
+        <i
+
+          class="fas fa-envelope"
+
+          aria-hidden="true"
+
+          aria-label="Email"
+
+        ></i>
+
+        <a href="mailto:ex@mail.com" id="profile.email" class="info-text">
+
+          Carregando...
+
+        </a>
+
+      </p>
+
+    </div>
+
+
+
+    <!-- Botão para alternar tema (claro/escuro) -->
+
+    <button
+
+      id="theme-toggle"
+
+      class="theme-toggle"
+
+      aria-label="Alternar Tema"
+
+    >
+
+      <i class="fa-solid fa-toggle-off"></i>
+
+    </button>
+
+  </header>
+
+
+
+  <!-- Seção de Acordeão: Habilidades -->
+
+  <section class="acordeon open">
+
+    <button class="trigger" type="button">
+
+      <h2 id="acordeon.titleSkills">Carregando...</h2>
+
+    </button>
+
+
+
+    <div class="content">
+
+      <div class="skills">
+
+        <!-- Habilidades Técnicas -->
+
+        <section class="tools">
+
+          <h3 id="skills.titleHardSkills">Carregando...</h3>
+
+          <ul id="profile.skills.hardSkills" class="hard-skills">
+
+            <!-- Itens de habilidades técnicas -->
+
+          </ul>
+
+        </section>
+
+
+
+        <!-- Habilidades Pessoais -->
+
+        <section class="personal">
+
+          <h3 id="skills.titleSoftSkills">Carregando...</h3>
+
+          <ul id="profile.skills.softSkills">
+
+            <li>Carregando...</li>
+
+            <li>Carregando...</li>
+
+            <li>Carregando...</li>
+
+          </ul>
+
+        </section>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- Seção de Acordeão: Idiomas -->
+
+  <section class="acordeon">
+
+    <button class="trigger" type="button">
+
+      <h2 id="acordeon.titleLanguages">Carregando...</h2>
+
+    </button>
+
+
+
+    <div class="content">
+
+      <ul class="languages" id="profile.languages">
+
+        <li>Carregando...</li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- Seção de Acordeão: Portfólio -->
+
+  <section class="acordeon">
+
+    <button class="trigger" type="button">
+
+      <h2 id="acordeon.titlePortfolio">Carregando...</h2>
+
+    </button>
+
+
+
+    <div class="content">
+
+      <ul class="portfolio" id="profile.portfolio">
+
+        <!-- Itens do portfólio -->
+
+      </ul>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- Seção de Acordeão: Experiência Profissional -->
+
+  <section class="acordeon">
+
+    <button class="trigger" type="button">
+
+      <h2 id="acordeon.titleProfessionalExperience">Carregando...</h2>
+
+    </button>
+
+
+
+    <div class="content">
+
+      <ul class="experience" id="profile.professionalExperience">
+
+        <!-- Itens de experiência profissional -->
+
+      </ul>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- Contêiner para seções de acordeão inseridas dinamicamente -->
+
+  <section id="acordeon-container" class="acordeon-container">
+
+    <!-- As seções do acordeon serão inseridas aqui dinamicamente pelo JavaScript -->
+
+  </section>
+
+
+
+  <!-- Rodapé com links para GitHub e LinkedIn -->
+
+  <footer>
+
+    <a
+
+      href="https://github.com/angelojbgama"
+
+      target="_blank"
+
+      aria-label="GitHub"
+
+    >
+
+      <i class="fab fa-github"></i>
+
+    </a>
+
+    <a
+
+      href="https://www.linkedin.com/in/angelojbgama/"
+
+      target="_blank"
+
+      aria-label="LinkedIn"
+
+    >
+
+      <i class="fab fa-linkedin"></i>
+
+    </a>
+
+  </footer>
+
+</main>
+
+
+
+<!-- Scripts JavaScript -->
+
+<script src="assets/js/acordeon.js"></script>
+
+<script src="assets/js/api.js"></script>
+
+<script src="assets/js/main.js"></script>
+
+  </body></html>
