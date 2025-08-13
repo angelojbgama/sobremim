@@ -288,14 +288,14 @@ a:hover {
   opacity: 0;
   transition: opacity 0.25s ease-in-out, height 0.25s ease-in-out,
     padding 0.25s ease-in-out;
-  padding: 0 1rem 0 2rem;
+  padding: 0 1rem;
 }
 
 .acordeon.open .content {
   display: block;
   height: auto;
   opacity: 1;
-  padding: 0 1rem 1rem 2rem;
+  padding: 0 1rem 1rem;
 }
 
 /* ===========================================================
