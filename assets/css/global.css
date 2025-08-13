@@ -25,6 +25,12 @@
   /* Variáveis para os balões */
   --balloon-bg-color: rgba(0, 0, 0, 0.8);
   --balloon-text-color: #ffffff;
+  /* Variáveis de estilo global */
+  --icon-size: 1.5rem;
+  --icon-size-large: 2rem;
+  --spacing-unit: 0.5rem;
+  --border-radius: 0.5rem;
+  --border-radius-large: 1rem;
   /* Adicione mais variáveis conforme necessário */
 }
 
@@ -73,7 +79,7 @@ a:hover {
   max-width: 1100px; /* Reduz a largura máxima para permitir o background nas bordas */
   width: 80%; /* Largura relativa para responsividade */
   border: 1px solid var(--border-color);
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   background-color: var(--header-bg-color);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s, background-color 0.3s;
@@ -136,13 +142,13 @@ a:hover {
 .information p {
   display: flex;
   align-items: center;
-  margin: 0.5rem 0;
+  margin: var(--spacing-unit) 0;
   font-size: 1.125rem;
 }
 
 .information p i {
-  margin-right: 0.5rem; /* Espaçamento entre o ícone e o texto */
-  font-size: 1.25rem; /* Tamanho do ícone */
+  margin-right: var(--spacing-unit); /* Espaçamento entre o ícone e o texto */
+  font-size: var(--icon-size); /* Tamanho do ícone */
   color: var(--text-color); /* Cor do ícone, adaptável ao tema */
   transition: color 0.3s;
 }
@@ -154,13 +160,13 @@ a:hover {
 /* Estilos para a Barra de Progresso */
 .progress-container {
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-unit);
 }
 
 .progress-bar {
   width: 100%;
   background-color: #e0e0e0;
-  border-radius: 0.5rem;
+  border-radius: var(--border-radius);
   overflow: hidden;
   height: 20px;
 }
@@ -175,20 +181,20 @@ a:hover {
 .progress-text {
   display: block;
   text-align: center;
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-unit);
   font-size: 0.9rem;
   color: var(--text-color);
 }
 
 .tools h3 {
-  margin-bottom: 1rem;
+  margin-bottom: calc(var(--spacing-unit) * 2);
   color: var(--text-color);
 }
 
 .hard-skills {
   display: grid;
   grid-template-columns: repeat(4, 1fr); /* 4 colunas */
-  gap: 1rem; /* Espaçamento entre os itens */
+  gap: calc(var(--spacing-unit) * 2); /* Espaçamento entre os itens */
   list-style: none;
   padding: 0;
   margin: 0;
@@ -198,8 +204,8 @@ a:hover {
   display: flex;
   align-items: center; /* Alinha verticalmente ícone e texto */
   background-color: var(--accordion-bg-color);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+  border-radius: var(--border-radius);
   transition: transform 0.3s, background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer; /* Indica que o item é clicável */
@@ -212,8 +218,8 @@ a:hover {
 }
 
 .hard-skills li i {
-  font-size: 1.5rem;
-  margin-right: 0.75rem; /* Espaçamento entre o ícone e o nome */
+  font-size: var(--icon-size);
+  margin-right: calc(var(--spacing-unit) * 1.5); /* Espaçamento entre o ícone e o nome */
   color: var(--text-color);
   transition: color 0.3s;
 }
@@ -232,7 +238,7 @@ a:hover {
   width: 100%;
   margin: 1rem 0;
   border: 1px solid var(--border-color);
-  border-radius: 1rem;
+  border-radius: var(--border-radius-large);
   background-color: var(--accordion-bg-color);
   transition: background-color 0.3s, border-color 0.3s;
 }
@@ -307,14 +313,14 @@ a:hover {
 .experience li {
   background-color: var(--accordion-bg-color);
   border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  padding: 1rem;
-  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 2);
+  margin-bottom: calc(var(--spacing-unit) * 2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .experience li .title {
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--spacing-unit);
 }
 
 .experience li .period {
@@ -323,14 +329,14 @@ a:hover {
   align-items: center;
   font-size: 0.9rem;
   opacity: 0.8;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--spacing-unit);
 }
 
 .experience li .period::before {
   font-family: "Font Awesome 6 Free"; /* Família de fontes do Font Awesome */
   content: "\f133"; /* Unicode do ícone de calendário (fa-calendar) */
   font-weight: 900; /* Peso da fonte para ícones sólidos */
-  margin-right: 0.5rem;
+  margin-right: var(--spacing-unit);
   color: var(--text-color); /* Cor do ícone, adaptável ao tema */
   font-size: 1rem; /* Tamanho do ícone */
 }
@@ -350,8 +356,8 @@ footer {
 /* Estilização dos Links do Footer */
 footer a {
   color: var(--text-color); /* Cor do ícone adaptável ao tema */
-  font-size: 2rem; /* Tamanho dos ícones no footer */
-  margin: 0 0.5rem;
+  font-size: var(--icon-size-large); /* Tamanho dos ícones no footer */
+  margin: 0 var(--spacing-unit);
   transition: color 0.3s, transform 0.3s;
 }
 
@@ -381,13 +387,13 @@ footer a:hover {
   font-weight: 700;
   position: relative; /* Para posicionar o ícone */
   padding-left: 1.5rem; /* Espaço para o ícone */
-  margin-bottom: 0.5rem; /* Espaçamento entre os itens */
+  margin-bottom: var(--spacing-unit); /* Espaçamento entre os itens */
   list-style: none; /* Remove marcadores padrão */
 }
 
 .languages li i {
-  margin-right: 0.5rem; /* Espaçamento entre o ícone e o texto */
-  font-size: 1.5rem; /* Tamanho do ícone */
+  margin-right: var(--spacing-unit); /* Espaçamento entre o ícone e o texto */
+  font-size: var(--icon-size); /* Tamanho do ícone */
   color: var(--text-color); /* Cor do ícone, adaptável ao tema */
   transition: color 0.3s;
 }
@@ -410,8 +416,8 @@ footer a:hover {
 .portfolio li {
   background-color: var(--accordion-bg-color);
   border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 2);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -430,12 +436,12 @@ footer a:hover {
   justify-content: flex-start;
   font-size: 1.1rem;
   font-weight: 700;
-  margin: 0 0 0.5rem;
+  margin: 0 0 var(--spacing-unit);
 }
 
 .portfolio li h3 i.fas.fa-link,
 .portfolio li h3 i.fab.fa-github {
-  margin-right: 0.5rem;
+  margin-right: var(--spacing-unit);
 }
 
 .portfolio li a.portfolio-link {
@@ -469,8 +475,8 @@ footer a:hover {
   display: flex;
   align-items: center;
   background-color: var(--accordion-bg-color);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
+  padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
+  border-radius: var(--border-radius);
   transition: transform 0.3s, background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -481,8 +487,8 @@ footer a:hover {
 }
 
 .skills .tools ul li i {
-  font-size: 1.5rem;
-  margin-right: 0.75rem; /* Espaçamento entre o ícone e o nome */
+  font-size: var(--icon-size);
+  margin-right: calc(var(--spacing-unit) * 1.5); /* Espaçamento entre o ícone e o nome */
   color: var(--text-color);
   transition: color 0.3s;
 }
@@ -504,7 +510,7 @@ footer a:hover {
 
 .skills .personal ul li {
   margin-left: 2rem;
-  padding: 0.5rem;
+  padding: var(--spacing-unit);
 }
 
 /* ===========================================================
@@ -524,7 +530,7 @@ footer a:hover {
 
 /* Estilização do Ícone dentro do Botão de Alternância */
 .theme-toggle i {
-  font-size: 2rem; /* Tamanho do ícone */
+  font-size: var(--icon-size-large); /* Tamanho do ícone */
   transition: transform 0.3s, color 0.3s; /* Transições para efeitos */
 }
 
@@ -541,7 +547,8 @@ footer a:hover {
 }
 
 .download-pdf i {
-  font-size: 2rem;
+  font-size: var(--icon-size-large);
+  color: var(--text-color);
   transition: transform 0.3s, color 0.3s;
 }
 
@@ -566,15 +573,15 @@ footer,
 /* Ajuste para Telas Menores */
 @media only screen and (max-width: 600px) {
   .main {
-    padding: 1rem;
-    margin: 1rem auto;
-    border-radius: 0.5rem;
+    padding: calc(var(--spacing-unit) * 2);
+    margin: calc(var(--spacing-unit) * 2) auto;
+    border-radius: var(--border-radius);
   }
   .hard-skills {
     display: flex; /* Altera o display para flex */
     flex-wrap: wrap; /* Permite quebra de linha para evitar overflow */
     justify-content: center; /* Centraliza os itens */
-    gap: 0.5rem; /* Reduz o espaçamento entre os itens */
+    gap: var(--spacing-unit); /* Reduz o espaçamento entre os itens */
     padding: 0;
     margin: 0;
   }
@@ -586,7 +593,7 @@ footer,
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5rem;
+    padding: var(--spacing-unit);
     cursor: pointer; /* Indica que o item é clicável */
   }
 
@@ -598,8 +605,8 @@ footer,
     transform: translateX(-50%);
     background-color: var(--balloon-bg-color); /* Usa a variável de fundo */
     color: var(--balloon-text-color); /* Usa a variável de texto */
-    padding: 0.5rem;
-    border-radius: 0.5rem;
+    padding: var(--spacing-unit);
+    border-radius: var(--border-radius);
     white-space: nowrap; /* Evita que o texto quebre em várias linhas */
     font-size: 0.8rem;
     z-index: 10;
@@ -616,8 +623,9 @@ footer,
   }
 
   .hard-skills li i {
-    font-size: 2rem; /* Aumenta o tamanho dos ícones para melhor visibilidade */
+    font-size: var(--icon-size-large); /* Aumenta o tamanho dos ícones para melhor visibilidade */
     margin: 0; /* Remove a margem direita */
+    color: var(--text-color);
   }
 
   .skills .tools ul li i {
@@ -632,7 +640,7 @@ footer,
     align-items: center;
     background-color: var(--accordion-bg-color);
     padding: 0rem 0rem;
-    border-radius: 0.5rem;
+    border-radius: var(--border-radius);
     transition: transform 0.3s, background-color 0.3s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -649,6 +657,26 @@ footer,
   .theme-toggle {
     top: 0rem;
     right: 0rem;
+  }
+}
+
+/* Ajustes adicionais para telas muito pequenas */
+@media only screen and (max-width: 480px) {
+  .main {
+    width: 95%;
+  }
+
+  .header .photo {
+    width: 10rem;
+    height: 10rem;
+  }
+
+  .header .title {
+    font-size: 1.5rem;
+  }
+
+  footer a {
+    font-size: var(--icon-size);
   }
 }
 
