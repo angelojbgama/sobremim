@@ -479,21 +479,21 @@ function updatePortfolio(profileData) {
   if (portfolio) {
     portfolio.innerHTML = profileData.portfolio
       .map((project) => {
-        // Escolhe o ícone com base na existência do link do GitHub
+        // Ícone principal indica se o link é para o GitHub ou externo
         const iconClass = project.github ? "fab fa-github" : "fas fa-link";
-        // Se houver um link do GitHub, adiciona um ícone adicional para o GitHub
+        // Ícone adicional clicável para o GitHub
         const githubLink = project.github
-          ? `<a href="${project.url}" target="_blank" aria-label="GitHub">
+          ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                <i class="fab fa-github"></i>
              </a>`
           : "";
         return `
-          <li>
-            <h3>
+          <li class="portfolio-item">
+            <h3 class="portfolio-title">
               <i class="${iconClass}"></i> ${project.name}
               ${githubLink}
             </h3>
-            <a href="${project.url}" target="_blank">${project.url}</a>
+            <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="portfolio-link">${project.url}</a>
           </li>
         `;
       })
@@ -561,10 +561,10 @@ function updateProfessionalExperience(profileData) {
           .map((experience) => {
               const duracao = calcularDuracao(experience.period, profileData.translations);
               return `
-                <li>
+                <li class="experience-item">
                     <h3 class="title">${experience.name}</h3>
                     <p class="period">${experience.period} (${duracao})</p>
-                    <p>${experience.description}</p>
+                    <p class="description">${experience.description}</p>
                 </li>
               `;
           })
