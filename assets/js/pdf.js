@@ -45,11 +45,21 @@ document.addEventListener("DOMContentLoaded", () => {
           li.querySelector(".description")?.innerText.trim() || "",
       }));
 
-    const hardSkills = collectListItems("profile.skills.hardSkills");
-    const softSkills = collectListItems("profile.skills.softSkills");
-    const languages = collectListItems("profile.languages");
-    const portfolio = collectPortfolio();
-    const experiences = collectExperiences();
+    const sortItems = (arr) =>
+      arr
+        .filter((item) => item)
+        .sort((a, b) => a.localeCompare(b));
+    const sortByTitle = (arr) =>
+      arr
+        .filter((item) => item.title)
+        .sort((a, b) => a.title.localeCompare(b.title));
+
+    const hardSkills = sortItems(collectListItems("profile.skills.hardSkills"));
+    const softSkills = sortItems(collectListItems("profile.skills.softSkills"));
+    const languages = sortItems(collectListItems("profile.languages"));
+    const portfolio = sortByTitle(collectPortfolio());
+    const experiences = sortByTitle(collectExperiences());
+
 
     const hardSkillsTitle =
       document.getElementById("skills.titleHardSkills")?.innerText ||
@@ -75,33 +85,41 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     };
 
-    doc.setFontSize(16);
-    doc.text(name, 10, y);
-    y += 10;
-    doc.setFontSize(12);
-    if (job) {
-      doc.text(job, 10, y);
-      y += 10;
-    }
-    if (graduate) {
-      doc.text(`Formação: ${graduate}`, 10, y);
-      y += 10;
-    }
-    if (graduateProgress) {
-      doc.text(graduateProgress, 10, y);
-      y += 10;
-    }
-    if (location) {
-      doc.text(`Localização: ${location}`, 10, y);
-      y += 10;
-    }
-    if (phone) {
-      doc.text(`Telefone: ${phone}`, 10, y);
-      y += 10;
-    }
-    if (email) {
-      doc.text(`Email: ${email}`, 10, y);
-      y += 10;
+    const asciiArt = [
+      '                  .----.',
+      '      .---------. | == |',
+      '      |.-"""""-.| |----|',
+      '      ||       || | == |',
+      '      ||       || |----|',
+      "      |'-.....-'| |::::|",
+      "      `\"\")---(\"\"` |___.|",
+      '     /:::::::::::\\" _  "',
+      '    /:::=======:::\\`\\`',
+      "    `\"\"\"\"\"\"\"\"\"\"\"`  '-'",
+    ];
+
+    doc.setFont("courier", "normal");
+    asciiArt.forEach((line) => {
+      doc.text(line, 10, y);
+      y += 4;
+    });
+    doc.setFont("helvetica", "normal");
+    y += 6;
+
+
+
+    const infoLines = [
+      job,
+      graduate && `Formação: ${graduate}`,
+      graduateProgress,
+      location && `Localização: ${location}`,
+      phone && `Telefone: ${phone}`,
+      email && `Email: ${email}`,
+    ].filter(Boolean);
+
+    infoLines.forEach((line) => {
+      checkPageBreak();
+      doc.text(line, 10, y);
     }
 
     if (about) {
