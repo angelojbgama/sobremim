@@ -577,6 +577,13 @@ footer,
     margin: calc(var(--spacing-unit) * 2) auto;
     border-radius: var(--border-radius);
   }
+  .acordeon .content {
+    padding: 0 1rem;
+  }
+
+  .acordeon.open .content {
+    padding: 0 1rem 1rem;
+  }
   .hard-skills {
     display: flex; /* Altera o display para flex */
     flex-wrap: wrap; /* Permite quebra de linha para evitar overflow */
