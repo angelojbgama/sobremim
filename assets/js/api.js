@@ -28,14 +28,6 @@ async function fetchProfileData() {
         // Opcional: Retornar dados padrão ou exibir uma mensagem de erro para o usuário
         return null;
     }
-}
-
-// Exporta a função para uso em testes ou outros módulos
-if (typeof module !== 'undefined') {
-    module.exports = { fetchProfileData };
-}
-
-// Exemplo de uso da função no navegador
 if (typeof window !== 'undefined') {
     fetchProfileData().then(profileData => {
         if (profileData) {

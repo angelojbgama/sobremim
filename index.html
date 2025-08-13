@@ -84,7 +84,7 @@
 
     <img
 
-      src="../assets/img/my-photo.jpg"
+      src="assets/img/my-photo.jpg"
 
       alt="Foto de Perfil"
 
@@ -152,7 +152,7 @@
 
       <!-- Barra de Progresso da Graduação -->
 
-      <div class="progress-container" id="profile.graduetescale">
+      <div class="progress-container" id="profile.graduateScale">
 
         <div class="progress-bar">
 
@@ -232,21 +232,38 @@
 
 
 
-    <!-- Botão para alternar tema (claro/escuro) -->
+      <!-- Botão para gerar PDF do currículo -->
 
-    <button
+      <button
 
-      id="theme-toggle"
+        id="download-pdf"
 
-      class="theme-toggle"
+        class="download-pdf"
 
-      aria-label="Alternar Tema"
+        aria-label="Baixar currículo em PDF"
 
-    >
+      >
 
-      <i class="fa-solid fa-toggle-off"></i>
+        <i class="fa-solid fa-file-pdf"></i>
 
-    </button>
+      </button>
+
+
+      <!-- Botão para alternar tema (claro/escuro) -->
+
+      <button
+
+        id="theme-toggle"
+
+        class="theme-toggle"
+
+        aria-label="Alternar Tema"
+
+      >
+
+        <i class="fa-solid fa-toggle-off"></i>
+
+      </button>
 
   </header>
 
@@ -438,10 +455,14 @@
 
 <!-- Scripts JavaScript -->
 
-<script src="assets/js/acordeon.js"></script>
+  <script src="assets/js/acordeon.js"></script>
 
-<script src="assets/js/api.js"></script>
+  <script src="assets/js/api.js"></script>
 
-<script src="assets/js/main.js"></script>
+  <script src="assets/js/main.js"></script>
 
-  </body></html>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script src="assets/js/pdf.js"></script>
+
+    </body></html>
