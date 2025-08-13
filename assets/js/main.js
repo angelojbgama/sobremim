@@ -483,7 +483,7 @@ function updatePortfolio(profileData) {
         const iconClass = project.github ? "fab fa-github" : "fas fa-link";
         // Se houver um link do GitHub, adiciona um ícone adicional para o GitHub
         const githubLink = project.github
-          ? `<a href="${project.github}" target="_blank" aria-label="GitHub">
+          ? `<a href="${project.url}" target="_blank" aria-label="GitHub">
                <i class="fab fa-github"></i>
              </a>`
           : "";
@@ -491,6 +491,7 @@ function updatePortfolio(profileData) {
           <li>
             <h3>
               <i class="${iconClass}"></i> ${project.name}
+              ${githubLink}
             </h3>
             <a href="${project.url}" target="_blank">${project.url}</a>
           </li>
