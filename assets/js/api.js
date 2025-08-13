@@ -1,5 +1,5 @@
-function detectLanguage() {
-    let language = navigator.language || navigator.userLanguage;
+function detectLanguage(lang) {
+    let language = lang || navigator.language || navigator.userLanguage;
     language = language.substring(0, 2).toLowerCase();
     const supportedLanguages = ['pt', 'en', 'es'];
     if (!supportedLanguages.includes(language)) {
@@ -9,7 +9,7 @@ function detectLanguage() {
 }
 
 async function fetchProfileData(lang) {
-    const language = lang || detectLanguage();
+    const language = detectLanguage(lang);
     const url = `data/profile_${language}.json`;
     try {
         const response = await fetch(url);
@@ -25,7 +25,7 @@ async function fetchProfileData(lang) {
 }
 
 async function fetchUiText(lang) {
-    const language = lang || detectLanguage();
+    const language = detectLanguage(lang);
     const url = `data/ui_${language}.json`;
     try {
         const response = await fetch(url);
