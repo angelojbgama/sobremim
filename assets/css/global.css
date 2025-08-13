@@ -494,6 +494,23 @@ footer a:hover {
   transition: transform 0.3s, color 0.3s; /* Transições para efeitos */
 }
 
+/* Estilo para o botão de download em PDF */
+.download-pdf {
+  position: absolute;
+  top: 1rem;
+  right: 4rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--toggle-button-color);
+  transition: color 0.3s;
+}
+
+.download-pdf i {
+  font-size: 2rem;
+  transition: transform 0.3s, color 0.3s;
+}
+
 
 /* ===========================================================
    15. Transições Suaves
