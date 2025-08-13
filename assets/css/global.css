@@ -303,14 +303,27 @@ a:hover {
   list-style: none;
 }
 
+/* Estilo em forma de cartão para cada experiência */
 .experience li {
+  background-color: var(--accordion-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
   margin-bottom: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.experience li .title {
+  margin: 0 0 0.5rem;
 }
 
 .experience li .period {
   display: flex;
   flex-direction: row;
   align-items: center;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
 }
 
 .experience li .period::before {
@@ -382,36 +395,53 @@ footer a:hover {
 /* ===========================================================
    12. Portfolio
 =========================================================== */
+/* Grade responsiva para o portfólio */
 .portfolio {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
   width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* Cartões de projetos */
 .portfolio li {
+  background-color: var(--accordion-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin: 1rem 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.portfolio li:hover {
+  transform: translateY(-4px);
 }
 
 .portfolio li h3 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 1.25rem;
+  justify-content: space-between;
+  font-size: 1.1rem;
   font-weight: 700;
-  margin: 0;
-  margin-bottom: 0.5rem;
+  margin: 0 0 0.5rem;
 }
 
 .portfolio li h3 i.fas.fa-link,
 .portfolio li h3 i.fab.fa-github {
-  margin-right: 0.5rem; 
+  margin-right: 0.5rem;
+}
+
+.portfolio li a {
+  word-break: break-all;
+  color: var(--text-color);
+  font-size: 0.9rem;
 }
 
 /* ===========================================================
