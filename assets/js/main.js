@@ -351,15 +351,15 @@ function updateProfileInfo(profileData) {
   }
 
   // Atualizar a Barra de Progresso da Graduação
-  const graduetescaleContainer = document.getElementById(
-    "profile.graduetescale"
+  const graduateScaleContainer = document.getElementById(
+    "profile.graduateScale"
   );
-  if (graduetescaleContainer && profileData.graduetescale) {
-    const progress = graduetescaleContainer.querySelector(".progress");
-    const progressText = graduetescaleContainer.querySelector(".progress-text");
+  if (graduateScaleContainer && profileData.graduateScale) {
+    const progress = graduateScaleContainer.querySelector(".progress");
+    const progressText = graduateScaleContainer.querySelector(".progress-text");
     if (progress && progressText) {
-      const completed = profileData.graduetescale.completed;
-      const total = profileData.graduetescale.total;
+      const completed = profileData.graduateScale.completed;
+      const total = profileData.graduateScale.total;
       const percentage = Math.min((completed / total) * 100, 100).toFixed(2); // Limita a 100% e formata para 2 casas decimais
       progress.style.width = `${percentage}%`;
       progressText.innerText = `${completed} disciplinas cursadas de ${total} (${percentage}%)`;

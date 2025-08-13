@@ -4,7 +4,7 @@
   "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
   "job": "Programador",
   "graduate": "Analise e Desenvolvimento de Sistemas",
-  "graduetescale": {
+  "graduateScale": {
     "completed": 25,
     "total": 35
   },
