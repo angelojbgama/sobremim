@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const portfolio = sortByTitle(collectPortfolio());
     const experiences = sortByTitle(collectExperiences());
 
+
     const hardSkillsTitle =
       document.getElementById("skills.titleHardSkills")?.innerText ||
       "Hard Skills";
@@ -105,10 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
     doc.setFont("helvetica", "normal");
     y += 6;
 
-    doc.setFontSize(16);
-    doc.text(name, 10, y);
-    y += 10;
-    doc.setFontSize(12);
+
 
     const infoLines = [
       job,
@@ -122,8 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     infoLines.forEach((line) => {
       checkPageBreak();
       doc.text(line, 10, y);
-      y += 10;
-    });
+    }
 
     if (about) {
       doc.text("Sobre", 10, y);
