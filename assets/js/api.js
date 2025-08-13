@@ -16,7 +16,7 @@ async function fetchProfileData() {
 
     try {
         const response = await fetch(url);
-        
+
         if (!response.ok) {
             throw new Error(`Erro ao carregar o arquivo JSON: ${response.statusText}`);
         }
@@ -28,6 +28,8 @@ async function fetchProfileData() {
         // Opcional: Retornar dados padrão ou exibir uma mensagem de erro para o usuário
         return null;
     }
+}
+
 if (typeof window !== 'undefined') {
     fetchProfileData().then(profileData => {
         if (profileData) {
@@ -39,3 +41,5 @@ if (typeof window !== 'undefined') {
         }
     });
 }
+
+module.exports = { fetchProfileData };
