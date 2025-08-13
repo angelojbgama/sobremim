@@ -606,8 +606,15 @@ function updateSkillTitles(profileData) {
 
 // --- Função Principal para Carregar e Atualizar o Perfil ---
 (async () => {
+  const uiText = await fetchUiText();
+  document.documentElement.lang = uiText.language;
+  document.title = uiText.loading;
+  document.querySelectorAll('.loading-text').forEach(el => {
+    el.innerText = uiText.loading;
+  });
+
   try {
-    const profileData = await fetchProfileData();
+    const profileData = await fetchProfileData(uiText.language);
     if (profileData) {
       updateProfileInfo(profileData);
       updateSoftSkills(profileData);
@@ -618,10 +625,10 @@ function updateSkillTitles(profileData) {
       updateAccordionTitles(profileData); // Atualizar títulos dos accordions
       updateSkillTitles(profileData); // Atualizar títulos das seções internas das habilidades
     } else {
-      console.error("Dados do perfil não foram carregados.");
+      console.error(uiText.profileNotLoaded);
     }
   } catch (error) {
-    console.error("Erro ao atualizar o perfil:", error);
+    console.error(uiText.profileLoadError, error);
   }
 })();
 

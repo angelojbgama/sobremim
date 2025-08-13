@@ -1,0 +1,5 @@
+{
+  "loading": "Carregando...",
+  "profileLoadError": "Não foi possível carregar os dados do perfil.",
+  "profileNotLoaded": "Dados do perfil não foram carregados."
+}
