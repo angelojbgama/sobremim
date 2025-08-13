@@ -11,6 +11,9 @@ async function fetchProfileData() {
         language = 'pt';
     }
 
+    // Define o atributo "lang" do documento para refletir o idioma ativo
+    document.documentElement.lang = language;
+
     // Define o caminho do arquivo JSON baseado no idioma
     const url = `data/profile_${language}.json`;
 
@@ -29,14 +32,3 @@ async function fetchProfileData() {
         return null;
     }
 }
-
-// Exemplo de uso da função
-fetchProfileData().then(profileData => {
-    if (profileData) {
-        // Aqui você pode manipular os dados do perfil e atualizar a interface da página
-        console.log(profileData);
-    } else {
-        // Lógica para caso os dados não sejam carregados
-        console.log("Não foi possível carregar os dados do perfil.");
-    }
-});

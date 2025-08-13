@@ -28,7 +28,9 @@
     "years": "year",
     "years_plural": "years",
     "months_text": "month",
-    "months_plural": "months"
+    "months_plural": "months",
+    "connector": "and",
+    "coursesCompletedText": "subjects completed out of"
   },
   "location": "Brazil - RJ",
   "phone": "(21) 98030-9664",
