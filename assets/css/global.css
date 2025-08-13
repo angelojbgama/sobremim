@@ -416,18 +416,18 @@ footer a:hover {
   flex-direction: column;
   justify-content: flex-start;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
+  transition: box-shadow 0.2s;
 }
 
 .portfolio li:hover {
-  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .portfolio li h3 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   font-size: 1.1rem;
   font-weight: 700;
   margin: 0 0 0.5rem;
@@ -438,10 +438,14 @@ footer a:hover {
   margin-right: 0.5rem;
 }
 
-.portfolio li a {
+.portfolio li a.portfolio-link {
   word-break: break-all;
   color: var(--text-color);
   font-size: 0.9rem;
+}
+
+.portfolio li h3 a:hover {
+  text-decoration: none;
 }
 
 /* ===========================================================
