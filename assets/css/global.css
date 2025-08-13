@@ -538,7 +538,7 @@ footer a:hover {
 .download-pdf {
   position: absolute;
   top: 1rem;
-  right: 4rem;
+  left: 1rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -652,6 +652,11 @@ footer,
     list-style: none;
     padding: 0;
     margin: 0;
+  }
+
+  .download-pdf {
+    top: 0rem;
+    left: 0rem;
   }
 
   .theme-toggle {
