@@ -120,7 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
     infoLines.forEach((line) => {
       checkPageBreak();
       doc.text(line, 10, y);
-    }
+      y += 10;
+    });
 
     if (about) {
       doc.text("Sobre", 10, y);
