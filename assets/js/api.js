@@ -30,13 +30,20 @@ async function fetchProfileData() {
     }
 }
 
-// Exemplo de uso da função
-fetchProfileData().then(profileData => {
-    if (profileData) {
-        // Aqui você pode manipular os dados do perfil e atualizar a interface da página
-        console.log(profileData);
-    } else {
-        // Lógica para caso os dados não sejam carregados
-        console.log("Não foi possível carregar os dados do perfil.");
-    }
-});
+// Exporta a função para uso em testes ou outros módulos
+if (typeof module !== 'undefined') {
+    module.exports = { fetchProfileData };
+}
+
+// Exemplo de uso da função no navegador
+if (typeof window !== 'undefined') {
+    fetchProfileData().then(profileData => {
+        if (profileData) {
+            // Aqui você pode manipular os dados do perfil e atualizar a interface da página
+            console.log(profileData);
+        } else {
+            // Lógica para caso os dados não sejam carregados
+            console.log("Não foi possível carregar os dados do perfil.");
+        }
+    });
+}
