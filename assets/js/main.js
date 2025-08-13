@@ -362,7 +362,8 @@ function updateProfileInfo(profileData) {
       const total = profileData.graduetescale.total;
       const percentage = Math.min((completed / total) * 100, 100).toFixed(2); // Limita a 100% e formata para 2 casas decimais
       progress.style.width = `${percentage}%`;
-      progressText.innerText = `${completed} disciplinas cursadas de ${total} (${percentage}%)`;
+      const progressLabel = profileData.translations.coursesCompletedText;
+      progressText.innerText = `${completed} ${progressLabel} ${total} (${percentage}%)`;
     }
   }
 
@@ -546,7 +547,7 @@ function calcularDuracao(periodo, traducoes) {
       duracao += `${anos} ${anos > 1 ? traducoes.years_plural : traducoes.years}`;
   }
   if (mesesDuracao > 0) {
-      if (anos > 0) duracao += " e ";
+      if (anos > 0) duracao += ` ${traducoes.connector} `;
       duracao += `${mesesDuracao} ${mesesDuracao > 1 ? traducoes.months_plural : traducoes.months_text}`;
   }
   return duracao || traducoes.lessThanAMonth;

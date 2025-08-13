@@ -28,7 +28,9 @@
     "years": "ano",
     "years_plural": "anos",
     "months_text": "mês",
-    "months_plural": "meses"
+    "months_plural": "meses",
+    "connector": "e",
+    "coursesCompletedText": "disciplinas cursadas de"
   },
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
