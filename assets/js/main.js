@@ -479,19 +479,15 @@ function updatePortfolio(profileData) {
   if (portfolio) {
     portfolio.innerHTML = profileData.portfolio
       .map((project) => {
-        // Ícone principal indica se o link é para o GitHub ou externo
-        const iconClass = project.github ? "fab fa-github" : "fas fa-link";
-        // Ícone adicional clicável para o GitHub
-        const githubLink = project.github
+        const iconHTML = project.github
           ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                <i class="fab fa-github"></i>
              </a>`
-          : "";
+          : `<i class="fas fa-link"></i>`;
         return `
           <li class="portfolio-item">
             <h3 class="portfolio-title">
-              <i class="${iconClass}"></i> ${project.name}
-              ${githubLink}
+              ${iconHTML} ${project.name}
             </h3>
             <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="portfolio-link">${project.url}</a>
           </li>
