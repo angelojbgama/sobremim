@@ -30,6 +30,21 @@ describe('fetchProfileData', () => {
     expect(global.fetch).toHaveBeenCalledWith('data/profile_pt.json');
     expect(data).toBeNull();
   });
+
+  test('falls back to pt when explicit language is unsupported', async () => {
+    const profilePt = require('../data/profile_pt.json');
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(profilePt),
+      })
+    );
+
+    const data = await fetchProfileData('fr');
+
+    expect(global.fetch).toHaveBeenCalledWith('data/profile_pt.json');
+    expect(data).toEqual(profilePt);
+  });
 });
 
 describe('fetchUiText', () => {
@@ -62,5 +77,20 @@ describe('fetchUiText', () => {
     expect(global.fetch).toHaveBeenCalledWith('data/ui_pt.json');
     expect(data.loading).toBe('Loading...');
     expect(data.language).toBe('pt');
+  });
+
+  test('falls back to pt when explicit language is unsupported', async () => {
+    const uiPt = require('../data/ui_pt.json');
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(uiPt),
+      })
+    );
+
+    const data = await fetchUiText('fr');
+
+    expect(global.fetch).toHaveBeenCalledWith('data/ui_pt.json');
+    expect(data).toEqual({ ...uiPt, language: 'pt' });
   });
 });
