@@ -316,6 +316,82 @@ const skillIconMapping = {
 };
 
 // --- Funções para Atualizar Diferentes Partes do Perfil ---
+// === Certificações — helpers ===
+
+// Formata "YYYY-MM" -> "MM/YYYY"
+function formatYM(ym) {
+  if (!ym || typeof ym !== 'string') return '';
+  const [y, m] = ym.split('-');
+  if (!y || !m) return ym;
+  return `${m}/${y}`;
+}
+
+// Liga/desliga o <dialog> do modal de certificado
+// Liga/desliga o <dialog> do modal de certificado
+let __certModalBound = false;
+function bindCertModal(ui) {
+  if (__certModalBound) return; // evita listeners duplicados
+  const modal  = document.getElementById('cert-modal');
+  const frame  = document.getElementById('cert-modal-frame');
+  const title  = document.getElementById('cert-modal-title');
+  const close1 = document.getElementById('cert-modal-close'); // só o X do topo
+  if (!modal || !frame) return;
+
+  // Helper: aplica parâmetros de visualização ao PDF
+  function withPdfParams(url) {
+    // oculta UI do viewer e ajusta a página à área (page-fit)
+    const params = 'toolbar=0&navpanes=0&scrollbar=0&zoom=page-fit';
+    return url.includes('#') ? `${url}&${params}` : `${url}#${params}`;
+  }
+
+  function openModal(pdfUrl, certTitle) {
+    frame.src = withPdfParams(pdfUrl);       // << aqui aplica os params
+    if (title) title.textContent = certTitle || 'Certificação';
+    document.body.classList.add('body--no-scroll');
+    if (typeof modal.showModal === 'function') modal.showModal();
+    else modal.setAttribute('open', 'open'); // fallback
+  }
+
+  function closeModal() {
+    frame.src = 'about:blank';
+    document.body.classList.remove('body--no-scroll');
+    if (typeof modal.close === 'function') modal.close();
+    else modal.removeAttribute('open');
+  }
+
+  if (close1) close1.addEventListener('click', closeModal);
+
+  // Fecha ao clicar fora da caixa
+  modal.addEventListener('click', (e) => {
+    const box = modal.querySelector('.modal__box');
+    if (box && !box.contains(e.target)) closeModal();
+  });
+
+  // Fecha no ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && (modal.hasAttribute('open') || modal.open)) {
+      closeModal();
+    }
+  });
+
+  __certModalBound = true;
+
+  // Conecta os botões "Abrir PDF"
+  return function wireOpeners() {
+    document.querySelectorAll('.btn-open-pdf[data-pdf]').forEach(btn => {
+      if (btn.__cert_handler_attached) return;
+      btn.__cert_handler_attached = true;
+
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-pdf');
+        if (!url) return;
+        const item = btn.closest('.certifications__item');
+        const certTitle = item?.querySelector('.certifications__title')?.textContent || 'Certificação';
+        openModal(url, certTitle);
+      });
+    });
+  };
+}
 
 // 1. Atualizar Informações do Perfil
 function updateProfileInfo(profileData) {
@@ -568,22 +644,95 @@ function updateProfessionalExperience(profileData) {
   }
 }
 
-// 7. Atualizar Títulos dos Accordions
-function updateAccordionTitles(profileData) {
+// 7. Atualizar Títulos dos Accordions (com fallback ao uiText)
+function updateAccordionTitles(profileData, uiText) {
   const accordionTitlesMapping = {
     titleSkills: "acordeon.titleSkills",
     titleLanguages: "acordeon.titleLanguages",
     titlePortfolio: "acordeon.titlePortfolio",
     titleProfessionalExperience: "acordeon.titleProfessionalExperience",
+    titleCertifications: "acordeon.titleCertifications" // <-- NOVO
   };
 
   for (const [jsonKey, elementId] of Object.entries(accordionTitlesMapping)) {
     const titleElement = document.getElementById(elementId);
-    if (titleElement && profileData[jsonKey]) {
-      titleElement.innerText = profileData[jsonKey];
+    if (!titleElement) continue;
+
+    // Prioriza o profileData; se não houver, tenta uiText; se não, mantém como está
+    const textFromProfile = profileData && profileData[jsonKey];
+    const textFromUi = uiText && uiText[jsonKey];
+    const value = textFromProfile || textFromUi;
+
+    if (value) {
+      titleElement.innerText = value;
+      titleElement.classList.remove('loading-text');
     }
   }
 }
+// 5.1 Atualizar Certificações (lista + botões que abrem o modal)
+function updateCertifications(profileData, uiText) {
+  const list = document.getElementById('profile.certifications');
+  const titleNode = document.getElementById('acordeon.titleCertifications');
+
+  // Define título da seção (tenta pegar do profile; se não tiver, usa uiText; se não, padrão)
+  const sectionTitle =
+    (profileData && profileData.titleCertifications) ||
+    (uiText && uiText.titleCertifications) ||
+    'Certificações';
+
+  if (titleNode) {
+    titleNode.innerText = sectionTitle;
+    titleNode.classList.remove('loading-text');
+  }
+  if (!list) return;
+
+  const certs = (profileData && Array.isArray(profileData.certifications))
+    ? profileData.certifications
+    : [];
+
+  if (!certs.length) {
+    list.innerHTML = `<li class="certifications__empty">Nenhuma certificação cadastrada.</li>`;
+    return;
+  }
+
+  const issuerLabel = (uiText && uiText.certIssuer) || 'Emissor';
+  const dateLabel   = (uiText && uiText.certDate)   || 'Data';
+  const openLabel   = (uiText && uiText.openPdf)    || 'Abrir PDF';
+
+  list.innerHTML = certs.map(cert => {
+    const dateFmt = formatYM(cert.date);
+    const tags = Array.isArray(cert.tags) && cert.tags.length
+      ? `<div class="certifications__tags">
+           ${cert.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+         </div>`
+      : '';
+
+    return `
+      <li class="certifications__item">
+        <div class="certifications__head">
+          <span class="certifications__title">${cert.title || '—'}</span>
+          <span class="certifications__meta">
+            ${issuerLabel}: ${cert.issuer || '—'} · ${dateLabel}: ${dateFmt || '—'}
+          </span>
+        </div>
+        <div class="certifications__actions">
+          <button type="button"
+                  class="btn btn-open-pdf"
+                  data-pdf="${cert.pdfUrl ? cert.pdfUrl : ''}"
+                  ${cert.pdfUrl ? '' : 'disabled'}>
+            ${openLabel}
+          </button>
+          ${tags}
+        </div>
+      </li>
+    `;
+  }).join('');
+
+  // Conecta os botões ao modal (liga listeners uma única vez e “fios” atuais)
+  const wireOpeners = bindCertModal(uiText);
+  if (typeof wireOpeners === 'function') wireOpeners();
+}
+
 
 // 8. Atualizar Títulos das Seções Internas das Habilidades
 function updateSkillTitles(profileData) {
@@ -618,8 +767,12 @@ function updateSkillTitles(profileData) {
       updateLanguages(profileData);
       updatePortfolio(profileData);
       updateProfessionalExperience(profileData);
-      updateAccordionTitles(profileData); // Atualizar títulos dos accordions
-      updateSkillTitles(profileData); // Atualizar títulos das seções internas das habilidades
+
+      // >>>>> ADICIONE ESTA LINHA:
+      updateCertifications(profileData, uiText);
+
+      updateAccordionTitles(profileData, uiText); // agora com ui fallback e certificações
+      updateSkillTitles(profileData);
     } else {
       console.error(uiText.profileNotLoaded);
     }
@@ -627,6 +780,7 @@ function updateSkillTitles(profileData) {
     console.error(uiText.profileLoadError, error);
   }
 })();
+
 
 // --- Funções para Alternar Tema (Claro/Escuro) ---
 document.addEventListener("DOMContentLoaded", () => {

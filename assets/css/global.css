@@ -1,19 +1,23 @@
+@charset "UTF-8";
 /* ===========================================================
-   1. Inclusão da Fonte Personalizada
+   global.scss — versão SCSS do seu global.css
+   - Mantém CSS Custom Properties (var(--...)) para temas dinâmicos
+   - Usa maps + mixin para gerar variáveis do tema (dark e light)
+   - Organiza regras com nesting
 =========================================================== */
+/* 1) Fonte personalizada */
 @font-face {
   font-family: "Neue Machina";
-  src: url("assets/font/neue-machina-regular.otf") format("opentype");
+  src: url("../font/neue-machina-regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
-
-/* ===========================================================
-   2. Variáveis de Tema
-=========================================================== */
+/* -----------------------------------------------------------
+   2) Tokens de tema via SCSS (geram CSS custom properties)
+----------------------------------------------------------- */
+/* Aplica DARK por padrão e LIGHT quando body tiver .light-theme */
 :root {
-  /* Tema Escuro (Padrão) */
   --bg-color: #121212;
   --text-color: #ffffff;
   --header-bg-color: #1f1f1f;
@@ -22,20 +26,17 @@
   --accordion-bg-color: #1f1f1f;
   --accordion-hover-bg-color: #333333;
   --toggle-button-color: #ffffff;
-  /* Variáveis para os balões */
   --balloon-bg-color: rgba(0, 0, 0, 0.8);
   --balloon-text-color: #ffffff;
-  /* Variáveis de estilo global */
   --icon-size: 1.5rem;
   --icon-size-large: 2rem;
   --spacing-unit: 0.5rem;
   --border-radius: 0.5rem;
   --border-radius-large: 1rem;
-  /* Adicione mais variáveis conforme necessário */
+  --modal-gap: clamp(8px, 2vw, 20px);
 }
 
 body.light-theme {
-  /* Tema Claro */
   --bg-color: #d3d3d3;
   --text-color: #000000;
   --header-bg-color: #f0f0f0;
@@ -44,15 +45,19 @@ body.light-theme {
   --accordion-bg-color: #f0f0f0;
   --accordion-hover-bg-color: #d3d3d3;
   --toggle-button-color: #000000;
-  /* Variáveis para os balões no tema claro */
   --balloon-bg-color: rgba(255, 255, 255, 0.9);
   --balloon-text-color: #000000;
-  /* Ajuste mais variáveis conforme necessário */
+  --icon-size: 1.5rem;
+  --icon-size-large: 2rem;
+  --spacing-unit: 0.5rem;
+  --border-radius: 0.5rem;
+  --border-radius-large: 1rem;
 }
 
-/* ===========================================================
-   3. Estilos Básicos
-=========================================================== */
+/* Utilidades SCSS */
+/* -----------------------------------------------------------
+   3) Básicos
+----------------------------------------------------------- */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
@@ -65,33 +70,27 @@ a {
   text-decoration: none;
   transition: color 0.3s;
 }
-
 a:hover {
   text-decoration: underline;
 }
 
-/* ===========================================================
-   4. Contêiner Principal
-=========================================================== */
+/* -----------------------------------------------------------
+   4) Contêiner Principal + 5) Background Decorativo
+----------------------------------------------------------- */
 .main {
-  margin: 4rem auto; /* Centraliza o contêiner com margem superior e inferior */
+  margin: 4rem auto;
   padding: 1rem;
-  max-width: 1100px; /* Reduz a largura máxima para permitir o background nas bordas */
-  width: 80%; /* Largura relativa para responsividade */
+  max-width: 1100px;
+  width: 80%;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-large);
   background-color: var(--header-bg-color);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: border-color 0.3s, background-color 0.3s;
 }
-
-/* ===========================================================
-   5. Background Decorativo
-=========================================================== */
-.main::before,
-.main::after {
+.main::before, .main::after {
   content: "";
-  background-image: url("../img/background.svg");
+  background-image: url(../img/background.svg);
   background-repeat: no-repeat;
   background-size: contain;
   display: inline-block;
@@ -102,7 +101,6 @@ a:hover {
   height: 100vh;
   z-index: -1;
 }
-
 .main::after {
   top: auto;
   left: auto;
@@ -111,24 +109,22 @@ a:hover {
   transform: rotate(180deg);
 }
 
-/* ===========================================================
-   6. Header
-=========================================================== */
+/* -----------------------------------------------------------
+   6) Header
+----------------------------------------------------------- */
 .header {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
 }
-
 .header .photo {
   width: 14rem;
   height: 14rem;
   border-radius: 50%;
 }
-
 .header .title {
-  font-family: "Neue Machina", sans-serif; /* Aplica a fonte personalizada */
+  font-family: "Neue Machina", sans-serif;
   text-align: center;
 }
 
@@ -138,26 +134,22 @@ a:hover {
   align-items: flex-start;
   width: 100%;
 }
-
 .information p {
   display: flex;
   align-items: center;
   margin: var(--spacing-unit) 0;
   font-size: 1.125rem;
 }
-
 .information p i {
-  margin-right: var(--spacing-unit); /* Espaçamento entre o ícone e o texto */
-  font-size: var(--icon-size); /* Tamanho do ícone */
-  color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+  margin-right: var(--spacing-unit);
+  font-size: var(--icon-size);
+  color: var(--text-color);
   transition: color 0.3s;
 }
 
-/* ===========================================================
-   7. Seção de Ferramentas
-=========================================================== */
-
-/* Estilos para a Barra de Progresso */
+/* -----------------------------------------------------------
+   7) Ferramentas / Progress Bar / Hard Skills
+----------------------------------------------------------- */
 .progress-container {
   width: 100%;
   margin-top: var(--spacing-unit);
@@ -174,7 +166,7 @@ a:hover {
 .progress {
   height: 100%;
   width: 0%;
-  background-color: var(--text-color); 
+  background-color: var(--text-color);
   transition: width 0.5s ease-in-out;
 }
 
@@ -193,45 +185,41 @@ a:hover {
 
 .hard-skills {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colunas */
-  gap: calc(var(--spacing-unit) * 2); /* Espaçamento entre os itens */
+  grid-template-columns: repeat(4, 1fr);
+  gap: calc(var(--spacing-unit) * 2);
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .hard-skills li {
   display: flex;
-  align-items: center; /* Alinha verticalmente ícone e texto */
+  align-items: center;
   background-color: var(--accordion-bg-color);
   padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 2);
   border-radius: var(--border-radius);
   transition: transform 0.3s, background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer; /* Indica que o item é clicável */
-  position: relative; /* Para posicionar o balão */
+  cursor: pointer;
+  position: relative;
 }
-
 .hard-skills li:hover {
   transform: translateY(-5px);
   background-color: var(--accordion-hover-bg-color);
 }
-
 .hard-skills li i {
   font-size: var(--icon-size);
-  margin-right: calc(var(--spacing-unit) * 1.5); /* Espaçamento entre o ícone e o nome */
+  margin-right: calc(var(--spacing-unit) * 1.5);
   color: var(--text-color);
   transition: color 0.3s;
 }
-
 .hard-skills li .skill-name {
   font-size: 1rem;
   color: var(--text-color);
 }
 
-/* ===========================================================
-   8. Accordion
-=========================================================== */
+/* -----------------------------------------------------------
+   8) Accordion
+----------------------------------------------------------- */
 .acordeon {
   display: flex;
   flex-direction: column;
@@ -242,13 +230,10 @@ a:hover {
   background-color: var(--accordion-bg-color);
   transition: background-color 0.3s, border-color 0.3s;
 }
-
-.acordeon.open,
-.acordeon:hover {
+.acordeon.open, .acordeon:hover {
   background-color: var(--accordion-hover-bg-color);
   border-color: var(--accordion-hover-bg-color);
 }
-
 .acordeon .trigger {
   display: flex;
   flex-direction: row;
@@ -263,34 +248,28 @@ a:hover {
   cursor: pointer;
   transition: color 0.3s;
 }
-
 .acordeon .trigger h2 {
   margin: 0;
   font-size: 1.5rem;
   text-align: start;
 }
-
 .acordeon .trigger::after {
-  font-family: "Font Awesome 6 Free"; /* Família de fontes do Font Awesome */
-  content: "\f077"; /* Unicode do ícone de seta para cima (fa-chevron-up) */
-  font-weight: 900; /* Peso da fonte para ícones sólidos */
+  font-family: "Font Awesome 6 Free";
+  content: "\f077";
+  font-weight: 900;
   transition: transform 0.25s;
-  color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+  color: var(--text-color);
 }
-
-.acordeon.open .trigger::after {
-  transform: rotate(180deg);
-}
-
 .acordeon .content {
   overflow: hidden;
   height: 0;
   opacity: 0;
-  transition: opacity 0.25s ease-in-out, height 0.25s ease-in-out,
-    padding 0.25s ease-in-out;
+  transition: opacity 0.25s ease-in-out, height 0.25s ease-in-out, padding 0.25s ease-in-out;
   padding: 0 1rem;
 }
-
+.acordeon.open .trigger::after {
+  transform: rotate(180deg);
+}
 .acordeon.open .content {
   display: block;
   height: auto;
@@ -298,9 +277,9 @@ a:hover {
   padding: 0 1rem 1rem;
 }
 
-/* ===========================================================
-   9. Experiência
-=========================================================== */
+/* -----------------------------------------------------------
+   9) Experiência
+----------------------------------------------------------- */
 .experience {
   display: flex;
   flex-direction: column;
@@ -308,8 +287,6 @@ a:hover {
   padding: 0;
   list-style: none;
 }
-
-/* Estilo em forma de cartão para cada experiência */
 .experience li {
   background-color: var(--accordion-bg-color);
   border: 1px solid var(--border-color);
@@ -318,11 +295,9 @@ a:hover {
   margin-bottom: calc(var(--spacing-unit) * 2);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .experience li .title {
   margin: 0 0 var(--spacing-unit);
 }
-
 .experience li .period {
   display: flex;
   flex-direction: row;
@@ -331,19 +306,18 @@ a:hover {
   opacity: 0.8;
   margin-bottom: var(--spacing-unit);
 }
-
 .experience li .period::before {
-  font-family: "Font Awesome 6 Free"; /* Família de fontes do Font Awesome */
-  content: "\f133"; /* Unicode do ícone de calendário (fa-calendar) */
-  font-weight: 900; /* Peso da fonte para ícones sólidos */
+  font-family: "Font Awesome 6 Free";
+  content: "\f133";
+  font-weight: 900;
   margin-right: var(--spacing-unit);
-  color: var(--text-color); /* Cor do ícone, adaptável ao tema */
-  font-size: 1rem; /* Tamanho do ícone */
+  color: var(--text-color);
+  font-size: 1rem;
 }
 
-/* ===========================================================
-   10. Footer
-=========================================================== */
+/* -----------------------------------------------------------
+   10) Footer
+----------------------------------------------------------- */
 footer {
   width: 100%;
   display: flex;
@@ -352,23 +326,19 @@ footer {
   align-items: center;
   padding: 0rem;
 }
-
-/* Estilização dos Links do Footer */
 footer a {
-  color: var(--text-color); /* Cor do ícone adaptável ao tema */
-  font-size: var(--icon-size-large); /* Tamanho dos ícones no footer */
+  color: var(--text-color);
+  font-size: var(--icon-size-large);
   margin: 0 var(--spacing-unit);
   transition: color 0.3s, transform 0.3s;
 }
-
-/* Efeito de Hover nos Ícones */
 footer a:hover {
-  transform: scale(1.2); /* Aumenta o tamanho do ícone no hover */
+  transform: scale(1.2);
 }
 
-/* ===========================================================
-   11. Languages
-=========================================================== */
+/* -----------------------------------------------------------
+   11) Languages
+----------------------------------------------------------- */
 .languages {
   display: flex;
   flex-direction: row;
@@ -378,30 +348,27 @@ footer a:hover {
   padding: 0;
   list-style: none;
 }
-
 .languages li {
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-right: 1rem;
   font-weight: 700;
-  position: relative; /* Para posicionar o ícone */
-  padding-left: 1.5rem; /* Espaço para o ícone */
-  margin-bottom: var(--spacing-unit); /* Espaçamento entre os itens */
-  list-style: none; /* Remove marcadores padrão */
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: var(--spacing-unit);
+  list-style: none;
 }
-
 .languages li i {
-  margin-right: var(--spacing-unit); /* Espaçamento entre o ícone e o texto */
-  font-size: var(--icon-size); /* Tamanho do ícone */
-  color: var(--text-color); /* Cor do ícone, adaptável ao tema */
+  margin-right: var(--spacing-unit);
+  font-size: var(--icon-size);
+  color: var(--text-color);
   transition: color 0.3s;
 }
 
-/* ===========================================================
-   12. Portfolio
-=========================================================== */
-/* Grade responsiva para o portfólio */
+/* -----------------------------------------------------------
+   12) Portfolio
+----------------------------------------------------------- */
 .portfolio {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -411,8 +378,6 @@ footer a:hover {
   padding: 0;
   list-style: none;
 }
-
-/* Cartões de projetos */
 .portfolio li {
   background-color: var(--accordion-bg-color);
   border: 1px solid var(--border-color);
@@ -424,11 +389,9 @@ footer a:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.2s;
 }
-
 .portfolio li:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
-
 .portfolio li h3 {
   display: flex;
   flex-direction: row;
@@ -438,39 +401,34 @@ footer a:hover {
   font-weight: 700;
   margin: 0 0 var(--spacing-unit);
 }
-
 .portfolio li h3 i.fas.fa-link,
 .portfolio li h3 i.fab.fa-github {
   margin-right: var(--spacing-unit);
 }
-
 .portfolio li a.portfolio-link {
   word-break: break-all;
   color: var(--text-color);
   font-size: 0.9rem;
 }
-
 .portfolio li h3 a:hover {
   text-decoration: none;
 }
 
-/* ===========================================================
-   13. Skills
-=========================================================== */
+/* -----------------------------------------------------------
+   13) Skills
+----------------------------------------------------------- */
 .skills {
   display: flex;
   flex-direction: column;
 }
-
 .skills .tools ul {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colunas */
-  gap: 1rem; /* Espaçamento entre os itens */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .skills .tools ul li {
   display: flex;
   align-items: center;
@@ -480,24 +438,20 @@ footer a:hover {
   transition: transform 0.3s, background-color 0.3s;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 .skills .tools ul li:hover {
   transform: translateY(-5px);
   background-color: var(--accordion-hover-bg-color);
 }
-
 .skills .tools ul li i {
   font-size: var(--icon-size);
-  margin-right: calc(var(--spacing-unit) * 1.5); /* Espaçamento entre o ícone e o nome */
+  margin-right: calc(var(--spacing-unit) * 1.5);
   color: var(--text-color);
   transition: color 0.3s;
 }
-
 .skills .tools ul li .skill-name {
   font-size: 1rem;
   color: var(--text-color);
 }
-
 .skills .personal ul {
   display: flex;
   flex-direction: row;
@@ -507,16 +461,14 @@ footer a:hover {
   margin: 0;
   padding: 0;
 }
-
 .skills .personal ul li {
   margin-left: 2rem;
   padding: var(--spacing-unit);
 }
 
-/* ===========================================================
-   14. Theme Toggle
-=========================================================== */
-/* Estilo para o botão de alternância */
+/* -----------------------------------------------------------
+   14) Theme Toggle + Download PDF
+----------------------------------------------------------- */
 .theme-toggle {
   position: absolute;
   top: 1rem;
@@ -527,14 +479,11 @@ footer a:hover {
   color: var(--toggle-button-color);
   transition: color 0.3s;
 }
-
-/* Estilização do Ícone dentro do Botão de Alternância */
 .theme-toggle i {
-  font-size: var(--icon-size-large); /* Tamanho do ícone */
-  transition: transform 0.3s, color 0.3s; /* Transições para efeitos */
+  font-size: var(--icon-size-large);
+  transition: transform 0.3s, color 0.3s;
 }
 
-/* Estilo para o botão de download em PDF */
 .download-pdf {
   position: absolute;
   top: 1rem;
@@ -545,17 +494,15 @@ footer a:hover {
   color: var(--toggle-button-color);
   transition: color 0.3s;
 }
-
 .download-pdf i {
   font-size: var(--icon-size-large);
   color: var(--text-color);
   transition: transform 0.3s, color 0.3s;
 }
 
-
-/* ===========================================================
-   15. Transições Suaves
-=========================================================== */
+/* -----------------------------------------------------------
+   15) Transições Suaves (elementos gerais)
+----------------------------------------------------------- */
 .acordeon,
 .header,
 footer,
@@ -567,10 +514,10 @@ footer,
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
 
-/* ===========================================================
-   16. Responsividade
-=========================================================== */
-/* Ajuste para Telas Menores */
+/* -----------------------------------------------------------
+   16) Responsividade
+----------------------------------------------------------- */
+/* <= 600px */
 @media only screen and (max-width: 600px) {
   .main {
     padding: calc(var(--spacing-unit) * 2);
@@ -580,154 +527,313 @@ footer,
   .acordeon .content {
     padding: 0 1rem;
   }
-
   .acordeon.open .content {
     padding: 0 1rem 1rem;
   }
   .hard-skills {
-    display: flex; /* Altera o display para flex */
-    flex-wrap: wrap; /* Permite quebra de linha para evitar overflow */
-    justify-content: center; /* Centraliza os itens */
-    gap: var(--spacing-unit); /* Reduz o espaçamento entre os itens */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-unit);
     padding: 0;
     margin: 0;
   }
-
   .hard-skills li {
-    position: relative; /* Necessário para posicionar o balão */
+    position: relative;
     width: 50px;
     height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--spacing-unit);
-    cursor: pointer; /* Indica que o item é clicável */
+    cursor: pointer;
   }
-
   .hard-skills li .skill-name {
-    display: none; /* O texto está escondido por padrão */
+    display: none;
     position: absolute;
-    bottom: 60px; /* Posiciona o balão acima do ícone */
+    bottom: 60px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: var(--balloon-bg-color); /* Usa a variável de fundo */
-    color: var(--balloon-text-color); /* Usa a variável de texto */
+    background-color: var(--balloon-bg-color);
+    color: var(--balloon-text-color);
     padding: var(--spacing-unit);
     border-radius: var(--border-radius);
-    white-space: nowrap; /* Evita que o texto quebre em várias linhas */
+    white-space: nowrap;
     font-size: 0.8rem;
     z-index: 10;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra do balão */
-    transition: background-color 0.3s, color 0.3s; /* Transições suaves */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s;
   }
-
   .hard-skills li.active .skill-name {
-    display: block; /* Mostra o balão quando o item está ativo */
+    display: block;
   }
-  
-  .hard-skills li .skill-name {
-    display: none; /* Esconde o texto do nome da habilidade */
-  }
-
   .hard-skills li i {
-    font-size: var(--icon-size-large); /* Aumenta o tamanho dos ícones para melhor visibilidade */
-    margin: 0; /* Remove a margem direita */
+    font-size: var(--icon-size-large);
+    margin: 0;
     color: var(--text-color);
   }
-
-  .skills .tools ul li i {
-    font-size: 1.5rem;
-    margin-right: 0rem; /* Espaçamento entre o ícone e o nome */
-    color: var(--text-color);
-    transition: color 0.3s;
+  .skills .tools ul {
+    grid-template-columns: repeat(3, 1fr);
   }
-
   .skills .tools ul li {
     display: flex;
     align-items: center;
     background-color: var(--accordion-bg-color);
-    padding: 0rem 0rem;
-    border-radius: var(--border-radius);
-    transition: transform 0.3s, background-color 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 0 0;
   }
-
-  .skills .tools ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 colunas para telas menores */
-    gap: 1rem; /* Espaçamento entre os itens */
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  .skills .tools ul li i {
+    font-size: 1.5rem;
+    margin-right: 0;
+    color: var(--text-color);
+    transition: color 0.3s;
   }
-
   .download-pdf {
     top: 0rem;
     left: 0rem;
   }
-
   .theme-toggle {
     top: 0rem;
     right: 0rem;
   }
 }
-
-/* Ajustes adicionais para telas muito pequenas */
+/* <= 480px */
 @media only screen and (max-width: 480px) {
   .main {
     width: 95%;
   }
-
   .header .photo {
     width: 10rem;
     height: 10rem;
   }
-
   .header .title {
     font-size: 1.5rem;
   }
-
   footer a {
     font-size: var(--icon-size);
   }
 }
-
-/* Ajustes para Telas a partir de 768px */
+/* >= 768px */
 @media only screen and (min-width: 768px) {
   .main {
     max-width: 1024px;
     margin: 2rem auto;
   }
-
-  .main::before,
-  .main::after {
+  .main::before, .main::after {
     width: 70vw;
   }
-
   .header {
     display: grid;
-    grid-template-areas:
-      "photo title"
-      "photo information";
+    grid-template-areas: "photo title" "photo information";
   }
-
   .header .photo {
     grid-area: photo;
     margin: 0 auto;
   }
-
   .header .title {
     grid-area: title;
     text-align: start;
     max-width: 210px;
   }
-
   .header .information {
     grid-area: information;
   }
-
   .skills {
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+}
+/* ===== Certificações ===== */
+.certifications {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+.certifications__item {
+  background-color: var(--accordion-bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing-unit) * 1.5);
+}
+.certifications__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-unit);
+}
+.certifications__title {
+  font-weight: 700;
+  color: var(--text-color);
+}
+.certifications__meta {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.certifications__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-unit);
+  align-items: center;
+}
+.certifications__actions .btn-open-pdf {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--text-color);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.certifications__actions .btn-open-pdf:hover {
+  transform: translateY(-1px);
+}
+.certifications__actions .btn-open-pdf:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.certifications__tags {
+  display: flex;
+  gap: 0.5rem;
+}
+.certifications__tags .tag {
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+.certifications__empty {
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* ===== Modal de PDF — centralizado, sem overflow ===== */
+/* ===== Modal de PDF — mobile-first, sem corte ===== */
+.modal {
+  border: none;
+  padding: 0;
+  background: transparent;
+  /* Overlay do <dialog> */
+}
+.modal[open] {
+  position: fixed;
+  inset: 0;
+  /* Flex é mais estável que grid em mobile para dialog */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  /* Margem que respeita notch/barras */
+  --pad-top: max(var(--modal-gap), env(safe-area-inset-top));
+  --pad-right: max(var(--modal-gap), env(safe-area-inset-right));
+  --pad-bottom: max(var(--modal-gap), env(safe-area-inset-bottom));
+  --pad-left: max(var(--modal-gap), env(safe-area-inset-left));
+  padding: var(--pad-top) var(--pad-right) var(--pad-bottom) var(--pad-left);
+  /* Altura do overlay acompanha viewport em mobile */
+  block-size: 100svh; /* fallback */
+  overflow: hidden; /* evita duplo scroll no HTML */
+}
+@supports (block-size: 100dvh) {
+  .modal[open] {
+    block-size: 100dvh;
+  }
+  .modal { /* VH dinâmico quando suportado */ }
+}
+.modal::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+}
+.modal {
+  /* Caixa do modal */
+}
+.modal .modal__box {
+  display: flex;
+  flex-direction: column;
+  /* largura responsiva */
+  inline-size: min(100%, 1200px);
+  /* <<< chave para não “cortar”: limite de altura (não fixa) */
+  max-block-size: calc(100% - var(--pad-top) - var(--pad-bottom));
+  background: var(--accordion-bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-large);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  /* recorta dentro dos cantos arredondados sem vazar */
+  overflow: clip;
+  /* iOS WebKit: garante máscara com border-radius + overflow */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+.modal .modal__header {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* fica visível durante o scroll no mobile */
+  position: sticky;
+  top: 0;
+  background: inherit;
+  z-index: 1;
+}
+.modal .modal__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.modal .modal__close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+}
+.modal {
+  /* Corpo rolável (e só ele) */
+}
+.modal .modal__body {
+  flex: 1 1 auto;
+  min-block-size: 0; /* permite encolher dentro do flex */
+  overflow: auto; /* <<< ativa scroll interno */
+  -webkit-overflow-scrolling: touch; /* momentum no iOS */
+  overscroll-behavior: contain; /* evita bounce na página atrás */
+  padding: 0;
+  display: grid;
+  place-items: center;
+}
+.modal {
+  /* Iframe ocupa toda a área útil do body */
+}
+.modal #cert-modal-frame {
+  display: block;
+  border: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+}
+
+/* Travar scroll do body quando o modal estiver aberto */
+.body--no-scroll {
+  overflow: hidden;
+  touch-action: none;
+}
+
+/* Mobile tweaks */
+@media (max-width: 600px) {
+  .modal .modal__box {
+    border-radius: var(--border-radius);
+  }
+}
+/* Preferir DVH quando disponível (melhora com teclado/URL bar) */
+@supports (height: 100dvh) {
+  .modal .modal__box {
+    /* Mantém o mesmo limite, mas usando DVH diretamente */
+    max-block-size: calc(100dvh - var(--pad-top) - var(--pad-bottom));
   }
 }

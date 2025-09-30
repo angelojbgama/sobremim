@@ -145,5 +145,16 @@
       "period": "Julho de 2012 - Outubro de 2015",
       "description": "Reparei eletrônicos (smartphones, desktops, laptops), ofereci suporte técnico ao cliente e melhorei sistemas administrativos através de atualizações."
     }
+  ],
+  "certifications": [
+    {
+      "id": "aws-cp",
+      "title": "PROGRAMAÇÃO DE ALGORITMOS ESCALÁVEIS",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2025-03",
+      "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
+      "tags": ["algoritmos", "matematica", "estruturas de dados"]
+    }
   ]
+
 }
