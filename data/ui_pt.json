@@ -1,5 +1,12 @@
-{
+﻿{
   "loading": "Carregando...",
   "profileLoadError": "Não foi possível carregar os dados do perfil.",
-  "profileNotLoaded": "Dados do perfil não foram carregados."
+  "profileNotLoaded": "Dados do perfil não foram carregados.",
+  "titleAcademicFormation": "Formação Acadêmica",
+  "titleLanguageCertifications": "Certificações de domínio da língua",
+  "progressLabel": "Progresso",
+  "langLevelBasic": "Básico",
+  "langLevelIntermediate": "Intermediário",
+  "langLevelAdvanced": "Avançado",
+  "langLevelFluent": "Fluente"
 }

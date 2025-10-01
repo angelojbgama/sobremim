@@ -1,5 +1,12 @@
-{
+﻿{
   "loading": "Loading...",
   "profileLoadError": "Could not load profile data.",
-  "profileNotLoaded": "Profile data was not loaded."
+  "profileNotLoaded": "Profile data was not loaded.",
+  "titleAcademicFormation": "Academic Formation",
+  "titleLanguageCertifications": "Language Proficiency Certifications",
+  "progressLabel": "Progress",
+  "langLevelBasic": "Basic",
+  "langLevelIntermediate": "Intermediate",
+  "langLevelAdvanced": "Advanced",
+  "langLevelFluent": "Fluent"
 }

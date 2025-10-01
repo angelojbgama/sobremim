@@ -3,13 +3,13 @@
   "name": "Angelo Gama",
   "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
   "job": "Programador",
-  "graduate": "Análise e Desenvolvimento de Sistemas",
-  "graduateScale": { "completed": 25, "total": 35 },
+  "graduate": "An\u00E1lise e Desenvolvimento de Sistemas",
+  "graduateScale": { "completed": 30, "total": 35 },
   "translations": {
     "months": {
       "Janeiro": 0,
       "Fevereiro": 1,
-      "Março": 2,
+      "Mar\u00E7o": 2,
       "Abril": 3,
       "Maio": 4,
       "Junho": 5,
@@ -20,11 +20,11 @@
       "Novembro": 10,
       "Dezembro": 11
     },
-    "current": "Até o momento",
-    "lessThanAMonth": "Menos de um mês",
+    "current": "At\u00E9 o momento",
+    "lessThanAMonth": "Menos de um m\u00EAs",
     "years": "ano",
     "years_plural": "anos",
-    "months_text": "mês",
+    "months_text": "m\u00EAs",
     "months_plural": "meses"
   },
   "location": "Brasil - RJ",
@@ -32,7 +32,7 @@
   "email": "angelojbgama@gmail.com",
   "titleSkills": "Habilidades",
   "skills": {
-    "titleHardSkills": "Habilidades Técnicas",
+    "titleHardSkills": "Habilidades T\u00E9cnicas",
     "hardSkills": [
       { "name": "Python", "iconClass": "fab fa-python" },
       { "name": "C++", "iconClass": "fas fa-code" },
@@ -46,63 +46,82 @@
     ],
     "titleSoftSkills": "Habilidades Comportamentais",
     "softSkills": [
-      { "name": "Persuasão e negociação", "percent": 78 },
-      { "name": "Resolução de problemas", "percent": 82 },
-      { "name": "Inteligência emocional", "percent": 76 },
+      { "name": "Persuas\u00E3o e negocia\u00E7\u00E3o", "percent": 78 },
+      { "name": "Resolu\u00E7\u00E3o de problemas", "percent": 82 },
+      { "name": "Intelig\u00EAncia emocional", "percent": 76 },
       { "name": "Relacionamento interpessoal", "percent": 80 },
       { "name": "Autoconhecimento", "percent": 74 },
-      { "name": "Autogestão", "percent": 77 },
+      { "name": "Autogest\u00E3o", "percent": 77 },
       { "name": "Empatia", "percent": 84 },
-      { "name": "Pensamento crítico", "percent": 79 },
+      { "name": "Pensamento cr\u00EDtico", "percent": 79 },
       { "name": "Produtividade", "percent": 81 },
       { "name": "Criatividade", "percent": 83 }
     ],
-    "softSkillsTest": { "label": "Faça o teste", "url": "https://estudante.estacio.br/mapeamento-socioemocional" }
+    "softSkillsTest": { "label": "Fa\u00E7a o teste", "url": "https://estudante.estacio.br/mapeamento-socioemocional" }
   },
   "titleLanguages": "Idiomas",
   "languages": [
-    { "name": "Português (BR)", "level": 4 },
-    { "name": "Inglês", "level": 2 },
+    { "name": "Portugu\u00EAs (BR)", "level": 4 },
+    { "name": "Ingl\u00EAs", "level": 2 },
     { "name": "Espanhol", "level": 1 }
   ],
-  "titlePortfolio": "Portfólio",
+  "titleLanguageCertifications": "Certifica\u00E7\u00F5es de dom\u00EDnio da l\u00EDngua",
+  "languagesCertifications": [
+    { "name": "IELTS Academic", "issuer": "British Council", "score": "7.5", "date": "2023", "url": "" },
+    { "name": "DELE A2", "issuer": "Instituto Cervantes", "date": "2022", "url": "" }
+  ],
+  "titleAcademicFormation": "Forma\u00E7\u00E3o Acad\u00EAmica",
+  "academicFormation": [
+    {
+      "name": "Tecn\u00F3logo em An\u00E1lise e Desenvolvimento de Sistemas",
+      "institution": "Est\u00E1cio",
+      "period": "Fevereiro de 2023 - At\u00E9 o momento",
+      "description": "Curso superior com foco em desenvolvimento de software, arquitetura e boas pr\u00E1ticas."
+    },
+    {
+      "name": "T\u00E9cnico em Eletr\u00F4nica",
+      "institution": "SENAI",
+      "period": "Janeiro de 2010 - Dezembro de 2012",
+      "description": "Forma\u00E7\u00E3o t\u00E9cnica com \u00EAnfase em circuitos, instrumenta\u00E7\u00E3o e manuten\u00E7\u00E3o."
+    }
+  ],
+  "titlePortfolio": "Portf\u00F3lio",
   "portfolio": [
     { "name": "Bike2Bike", "url": "https://github.com/angelojbgama/Bike2Bike", "github": true },
-    { "name": "Cardápio Digital", "url": "https://angelojbgama.github.io/terra_e_p-o/", "github": false },
+    { "name": "Card\u00E1pio Digital", "url": "https://angelojbgama.github.io/terra_e_p-o/", "github": false },
     { "name": "APP Gerador de Senhas em React Native", "url": "https://github.com/angelojbgama/bat-pass-app", "github": true },
     { "name": "Web Scraping de Notebooks com API RESTful", "url": "https://github.com/angelojbgama/crawler-jr", "github": true },
-    { "name": "Automação e leitura de PDF com Regex (Python)", "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex", "github": true },
-    { "name": "Automação e análise de dados em Python: IA e previsão de preços", "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es", "github": true },
+    { "name": "Automa\u00E7\u00E3o e leitura de PDF com Regex (Python)", "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex", "github": true },
+    { "name": "Automa\u00E7\u00E3o e an\u00E1lise de dados em Python: IA e previs\u00E3o de pre\u00E7os", "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es", "github": true },
     { "name": "Python Insights - Analisando Dados com Python", "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main", "github": true },
-    { "name": "Python Power UP - Projeto de Automação", "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main", "github": true }
+    { "name": "Python Power UP - Projeto de Automa\u00E7\u00E3o", "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main", "github": true }
   ],
-  "titleProfessionalExperience": "Experiência Profissional",
+  "titleProfessionalExperience": "Experi\u00EAncia Profissional",
   "professionalExperience": [
     {
-      "name": "Fundação COPPETEC, Rio de Janeiro - Programador",
-      "period": "Abril de 2024 - Até o momento",
-      "description": "Desenvolvo uma solução SaaS para detecção de danos em dutos. Analiso demandas, corrijo bugs, implemento melhorias e desenvolvo novas funcionalidades seguindo boas práticas."
+      "name": "Funda\u00E7\u00E3o COPPETEC, Rio de Janeiro - Programador",
+      "period": "Abril de 2024 - At\u00E9 o momento",
+      "description": "Desenvolvo uma solu\u00E7\u00E3o SaaS para detec\u00E7\u00E3o de danos em dutos. Analiso demandas, corrijo bugs, implemento melhorias e desenvolvo novas funcionalidades seguindo boas pr\u00E1ticas."
     },
     {
-      "name": "Grupo PLL, Rio de Janeiro - Técnico em Eletrônica",
+      "name": "Grupo PLL, Rio de Janeiro - T\u00E9cnico em Eletr\u00F4nica",
       "period": "Fevereiro de 2016 - Novembro de 2019",
-      "description": "Reparei dispositivos eletrônicos, ofereci suporte técnico, mantive sistemas administrativos e realizei diagnósticos para otimizar sistemas."
+      "description": "Reparei dispositivos eletr\u00F4nicos, ofereci suporte t\u00E9cnico, mantive sistemas administrativos e realizei diagn\u00F3sticos para otimizar sistemas."
     },
     {
-      "name": "GMX, Rio de Janeiro - Técnico em Eletrônica",
+      "name": "GMX, Rio de Janeiro - T\u00E9cnico em Eletr\u00F4nica",
       "period": "Julho de 2012 - Outubro de 2015",
-      "description": "Reparei eletrônicos (smartphones, desktops, laptops), ofereci suporte técnico ao cliente e melhorei sistemas administrativos através de atualizações."
+      "description": "Reparei eletr\u00F4nicos (smartphones, desktops, laptops), ofereci suporte t\u00E9cnico ao cliente e melhorei sistemas administrativos atrav\u00E9s de atualiza\u00E7\u00F5es."
     }
   ],
   "certifications": [
     {
       "id": "aws-cp",
-      "title": "PROGRAMAÇÃO DE ALGORITMOS ESCALÁVEIS",
-      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "title": "PROGRAMA\u00C7\u00C3O DE ALGORITMOS ESCAL\u00C1VEIS",
+      "issuer": "UNIVERSIDADE EST\u00C1CIO DE S\u00C1",
       "date": "2025-03",
-      "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
-      "tags": ["algoritmos", "matemática", "estruturas de dados"]
+      "pdfUrl": "assets/certificados/PROGRAMA\u00C7\u00C3O_DE_ALGORITMOS_ESCAL\u00C1VEIS.pdf",
+      "tags": ["algoritmos", "matem\u00E1tica", "estruturas de dados"]
     }
   ]
 }
-

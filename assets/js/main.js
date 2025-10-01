@@ -572,20 +572,21 @@ function updateSoftSkills(profileData) {
 }
 
 // 4. Atualizar Idiomas
-function updateLanguages(profileData) {
+function updateLanguages(profileData, uiText) {
   const list = document.getElementById("profile.languages");
   if (!list) return;
 
   const items = Array.isArray(profileData.languages) ? profileData.languages : [];
 
   const levelLabel = (lvl) => {
-    switch (Number(lvl)) {
-      case 4: return "Fluente";
-      case 3: return "Avançado";
-      case 2: return "Intermediário";
-      case 1: return "Básico";
-      default: return "";
-    }
+    const ui = uiText || {};
+    const map = {
+      1: ui.langLevelBasic || "Básico",
+      2: ui.langLevelIntermediate || "Intermediário",
+      3: ui.langLevelAdvanced || "Avançado",
+      4: ui.langLevelFluent || "Fluente",
+    };
+    return map[Number(lvl)] || "";
   };
 
   const parseStringItem = (str) => {
@@ -630,6 +631,58 @@ function updateLanguages(profileData) {
       </li>
     `;
   }).join('');
+
+  // Renderiza "Certificações de domínio da língua" (opcional)
+  try {
+    const container = list.parentElement; // .content do acordeon
+    if (!container) return;
+
+    const certs = Array.isArray(profileData.languagesCertifications)
+      ? profileData.languagesCertifications
+      : [];
+
+    // Se não houver certificações, remove o bloco (se existir) e sai
+    let certWrap = container.querySelector('.language-certs');
+    if (!certs.length) {
+      if (certWrap) certWrap.remove();
+      return;
+    }
+
+    if (!certWrap) {
+      certWrap = document.createElement('div');
+      certWrap.className = 'language-certs';
+      // insere após a lista de idiomas
+      list.insertAdjacentElement('afterend', certWrap);
+    }
+
+    const title = profileData.titleLanguageCertifications || 'Certificações de domínio da língua';
+    const itemsHtml = certs.map((c) => {
+      const name = c.name || c.title || '';
+      const issuer = c.issuer ? ` · ${c.issuer}` : '';
+      const score = (c.score || c.levelText) ? ` · ${c.score || c.levelText}` : '';
+      const date = c.date ? ` · ${c.date}` : '';
+      const meta = `${issuer}${score}${date}`;
+      const link = c.url ? `<a class="language-certs__link" href="${c.url}" target="_blank" rel="noopener noreferrer">Ver</a>` : '';
+      return `
+        <li class="language-certs__item">
+          <div class="language-certs__head">
+            <span class="language-certs__name">${name}</span>
+            <span class="language-certs__meta">${meta.trim().replace(/^·\s*/, '')}</span>
+          </div>
+          ${link}
+        </li>
+      `;
+    }).join('');
+
+    certWrap.innerHTML = `
+      <h3 class="language-certs__title">${title}</h3>
+      <ul class="language-certs__list">
+        ${itemsHtml}
+      </ul>
+    `;
+  } catch (e) {
+    console.warn('Falha ao renderizar certificações de idiomas', e);
+  }
 }
 
 // 5. Atualizar Portfólio
@@ -727,6 +780,27 @@ function updateProfessionalExperience(profileData) {
   }
 }
 
+// 6.1 Atualizar Formação Acadêmica
+function updateAcademicFormation(profileData) {
+  const list = document.getElementById("profile.academicFormation");
+  if (!list) return;
+
+  const items = Array.isArray(profileData.academicFormation) ? profileData.academicFormation : [];
+  list.innerHTML = items.map((edu) => {
+    const title = [edu.name, edu.institution].filter(Boolean).join(" — ");
+    const duracao = edu.period ? calcularDuracao(edu.period, profileData.translations) : '';
+    const periodText = edu.period ? `${edu.period}${duracao ? ` (${duracao})` : ''}` : '';
+    const desc = edu.description || '';
+    return `
+      <li class="experience-item">
+        <h3 class="title">${title}</h3>
+        ${periodText ? `<p class=\"period\">${periodText}</p>` : ''}
+        ${desc ? `<p class=\"description\">${desc}</p>` : ''}
+      </li>
+    `;
+  }).join("");
+}
+
 // 7. Atualizar Títulos dos Accordions (com fallback ao uiText)
 function updateAccordionTitles(profileData, uiText) {
   const accordionTitlesMapping = {
@@ -734,7 +808,8 @@ function updateAccordionTitles(profileData, uiText) {
     titleLanguages: "acordeon.titleLanguages",
     titlePortfolio: "acordeon.titlePortfolio",
     titleProfessionalExperience: "acordeon.titleProfessionalExperience",
-    titleCertifications: "acordeon.titleCertifications" // <-- NOVO
+    titleCertifications: "acordeon.titleCertifications",
+    titleAcademicFormation: "acordeon.titleAcademicFormation"
   };
 
   for (const [jsonKey, elementId] of Object.entries(accordionTitlesMapping)) {
@@ -836,9 +911,10 @@ function updateSkillTitles(profileData) {
       updateProfileInfo(profileData);
       updateSoftSkills(profileData);
       updateHardSkills(profileData);
-      updateLanguages(profileData);
+      updateLanguages(profileData, uiText);
       updatePortfolio(profileData);
       updateProfessionalExperience(profileData);
+      updateAcademicFormation(profileData);
 
       // >>>>> ADICIONE ESTA LINHA:
       updateCertifications(profileData, uiText);

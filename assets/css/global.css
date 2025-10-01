@@ -643,6 +643,30 @@ body.light-theme .soft-skill__bar { background: rgba(16, 18, 35, 0.12); }
 body.light-theme .languages li.language .language__stage { background: rgba(16, 18, 35, 0.18); }
 .languages li.language .language__stage.is-active { background: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt)); }
 
+/* Certificações de domínio da língua */
+.language-certs { margin-top: var(--space-2); }
+.language-certs__title { margin: 0 0 var(--space-1); font-weight: 700; }
+.language-certs__list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-1); }
+.language-certs__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--accordion-bg-color);
+}
+.language-certs__item:hover { border-color: var(--border-strong); }
+.language-certs__head { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+.language-certs__name { font-weight: 600; }
+.language-certs__meta { font-size: var(--font-small); opacity: 0.85; }
+.language-certs__link { align-self: flex-start; font-size: var(--font-small); text-decoration: underline; }
+.language-certs__link:hover { text-decoration: none; }
+
+@media (max-width: 480px) {
+  .language-certs__item { padding: var(--space-1); }
+}
+
 .languages li i {
   font-size: 1.15rem;
   color: var(--accent-color);

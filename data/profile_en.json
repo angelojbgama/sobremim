@@ -84,7 +84,24 @@
     ]
   },
   "titleLanguages": "Languages",
-  "languages": ["Portuguese BR", "English (Intermediate)", "Spanish (Basic)"],
+  "languages": [
+    { "name": "Portuguese (BR)", "level": 4 },
+    { "name": "English", "level": 2 },
+    { "name": "Spanish", "level": 1 }
+  ],
+  "titleLanguageCertifications": "Language Proficiency Certifications",
+  "languagesCertifications": [
+    { "name": "IELTS Academic", "issuer": "British Council", "score": "7.5", "date": "2023", "url": "" }
+  ],
+  "titleAcademicFormation": "Academic Formation",
+  "academicFormation": [
+    {
+      "name": "Technologist in Systems Analysis and Development",
+      "institution": "Estacio University",
+      "period": "February 2023 - Present",
+      "description": "Bachelor-level short program focused on software development, architecture and good practices."
+    }
+  ],
   "titlePortfolio": "Portfolio",
   "portfolio": [
     {
