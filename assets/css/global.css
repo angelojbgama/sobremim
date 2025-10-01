@@ -353,23 +353,14 @@ body.light-theme .progress-bar {
 }
 
 .acordeon .content {
-  display: grid;
-  gap: var(--space-2);
-  max-height: 0;
+  display: none;
   padding: 0 var(--space-3);
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
   /* Herda o raio na base para garantir cantos inferiores arredondados visíveis */
   border-bottom-left-radius: inherit;
   border-bottom-right-radius: inherit;
 }
 
-.acordeon.open .content {
-  max-height: 5000px;
-  opacity: 1;
-  padding: 0 var(--space-3) var(--space-3);
-}
+.acordeon.open .content { display: block; padding: 0 var(--space-3) var(--space-3); }
 
 
 /* --------------------------------------------------------------------------
@@ -639,9 +630,23 @@ body.light-theme .soft-skill__bar { background: rgba(16, 18, 35, 0.12); }
 .languages li.language .language__name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .languages li.language .language__leveltext { font-size: var(--font-small); opacity: 0.85; margin-left: auto; white-space: nowrap; }
 .languages li.language .language__bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem; }
-.languages li.language .language__stage { height: 0.45rem; border-radius: 999px; background: rgba(255, 255, 255, 0.18); }
-body.light-theme .languages li.language .language__stage { background: rgba(16, 18, 35, 0.18); }
-.languages li.language .language__stage.is-active { background: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt)); }
+.languages li.language .language__stage {
+  display: block; width: 100%; height: 0.45rem; border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.18);
+  background-image: none;
+}
+body.light-theme .languages li.language .language__stage {
+  background-color: rgba(16, 18, 35, 0.18);
+  background-image: none;
+}
+.languages li.language .language__stage.is-active {
+  background-color: var(--accent-color);
+  background-image: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt));
+}
+body.light-theme .languages li.language .language__stage.is-active {
+  background-color: var(--accent-color);
+  background-image: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt));
+}
 
 /* Certificações de domínio da língua */
 .language-certs { margin-top: var(--space-2); }
@@ -1025,3 +1030,24 @@ footer a:hover {
     scroll-behavior: auto !important;
   }
 }
+.hard-skills-chart { width: 100%; display: grid; place-items: center; gap: var(--space-1); position: relative; }
+.hard-skills-chart canvas { width: min(560px, 100%); height: auto; display: block; }
+.hard-skills-legend { font-size: var(--font-small); opacity: .95; text-align: center; display: grid; gap: .5rem; }
+.hard-skills-legend .legend-list { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem .6rem; }
+.hard-skills-legend .legend-item { display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .5rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background-color: var(--accordion-bg-color); }
+.hard-skills-legend .legend-item i { color: var(--accent-color); }
+.hard-skills-legend .legend-scale { opacity: .8; }
+
+/* Overlay de labels nos vértices do radar */
+.hard-skills-labels { position: absolute; top: 0; left: 0; pointer-events: none; }
+.hard-skills-label { position: absolute; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: .3rem; padding: .18rem .42rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background-color: var(--accordion-bg-color); color: var(--text-color); font-size: .78rem; white-space: nowrap; box-shadow: none; }
+.hard-skills-label i { color: var(--accent-color); font-size: .9rem; }
+
+/* Permitir interação (tooltip) em telas pequenas */
+.hard-skills-chart.compact .hard-skills-labels,
+.hard-skills-chart.xcompact .hard-skills-labels { pointer-events: auto; }
+
+/* Compact modes for very small screens */
+.hard-skills-chart.compact .hard-skills-label { font-size: .68rem; padding: .12rem .28rem; }
+.hard-skills-chart.compact .hard-skills-label small { display: none; }
+.hard-skills-chart.xcompact .hard-skills-label span { display: none; }

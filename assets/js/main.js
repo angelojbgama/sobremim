@@ -1,4 +1,4 @@
-// --- Mapeamento de Habilidades para Classes do Font Awesome ---
+﻿// --- Mapeamento de Habilidades para Classes do Font Awesome ---
 const skillIconMapping = {
   // **Linguagens de Programação**
   Python: "fab fa-python",
@@ -408,94 +408,201 @@ function updateProfileInfo(profileData) {
 
 // 2. Atualizar Habilidades Técnicas (Hard Skills)
 function updateHardSkills(profileData) {
-  const hardSkills = document.getElementById("profile.skills.hardSkills");
-  if (hardSkills) {
-    hardSkills.innerHTML = profileData.skills.hardSkills
-      .map(
-        (skill) => `
-          <li aria-label="${skill.name}">
-              <i class="${
-                skill.iconClass ||
-                skillIconMapping[skill.name] ||
-                "fas fa-tools"
-              }" aria-hidden="true"></i>
-              <span class="skill-name">${skill.name}</span>
-          </li>
-      `
-      )
-      .join("");
-  }
+  // Data normalization: expect [{ name, level: 0..10 }]
+  const items = (profileData?.skills?.hardSkills || []).map((s) => {
+    if (typeof s === 'string') return { name: s, level: 0 };
+    return { name: s.name || '', level: Math.max(0, Math.min(10, Number(s.level ?? s.score ?? 0))) };
+  }).filter(it => it.name);
 
-  // Tooltip global sobreposto (acima de qualquer elemento)
-  let tooltipEl = document.getElementById("app-tooltip");
-  if (!tooltipEl) {
-    tooltipEl = document.createElement("div");
-    tooltipEl.id = "app-tooltip";
-    tooltipEl.className = "app-tooltip";
-    document.body.appendChild(tooltipEl);
-  }
+  const container = document.getElementById('hard-skills-chart-container');
+  const canvas = document.getElementById('hardSkillsChart');
+  if (!container || !canvas) return;
 
-  const showTooltip = (text) => {
-    tooltipEl.textContent = text || "";
-    tooltipEl.setAttribute("data-show", "true");
+  // Resize canvas to devicePixelRatio
+  const dpr = window.devicePixelRatio || 1;
+  const size = Math.min(560, container.clientWidth || 560);
+  const compact = size < 420;
+  const xcompact = size < 340;
+  container.classList.toggle('compact', compact);
+  container.classList.toggle('xcompact', xcompact);
+  canvas.width = Math.floor(size * dpr);
+  canvas.height = Math.floor(size * dpr);
+  canvas.style.width = size + 'px';
+  canvas.style.height = size + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  // Theme colors from CSS vars
+  const cs = getComputedStyle(document.documentElement);
+  const accent = cs.getPropertyValue('--accent-color').trim() || '#7c5dfa';
+  const accentAlt = cs.getPropertyValue('--accent-color-alt').trim() || '#1bb9f1';
+  const textColor = cs.getPropertyValue('--text-color').trim() || '#ffffff';
+  const strokeColor = cs.getPropertyValue('--border-color').trim() || 'rgba(255,255,255,0.18)';
+  const isLight = document.body.classList.contains('light-theme') || !document.body.classList.contains('dark-theme');
+
+  const toRGB = (hex) => {
+    const h = hex.replace('#','');
+    const b = h.length === 3 ? h.split('').map(c=>c+c).join('') : h;
+    const n = parseInt(b,16); return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
   };
+  const lerp = (a,b,t)=>a+(b-a)*t;
+  const grad = ctx.createLinearGradient(0,0,size,0);
+  const a1 = toRGB(accent), a2 = toRGB(accentAlt);
+  grad.addColorStop(0, `rgba(${a1.r},${a1.g},${a1.b},0.9)`);
+  grad.addColorStop(1, `rgba(${a2.r},${a2.g},${a2.b},0.9)`);
 
-  const hideTooltip = () => {
-    tooltipEl.removeAttribute("data-show");
-  };
+  // Geometry
+  const pad = 28; // px padding inside canvas
+  const cx = size/2, cy = size/2;
+  const radius = (size/2) - pad;
+  const axes = items.length || 1;
+  const rings = 5; // grid rings
 
-  const placeTooltipAt = (x, y) => {
-    const rect = tooltipEl.getBoundingClientRect();
-    const vw = window.innerWidth || document.documentElement.clientWidth;
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    const margin = 6;
-    let left = Math.min(Math.max(x, margin), vw - rect.width - margin);
-    let top = Math.min(Math.max(y, margin), vh - rect.height - margin);
-    tooltipEl.style.left = left + "px";
-    tooltipEl.style.top = top + "px";
-  };
+  // Clear
+  ctx.clearRect(0,0,size,size);
 
-  const positionFromPointer = (e) => {
-    const pad = 12;
-    const h = tooltipEl.getBoundingClientRect().height || 24;
-    placeTooltipAt(e.clientX + pad, e.clientY - (h + pad));
-  };
-
-  // Liga os eventos por item
-  document.querySelectorAll(".hard-skills li").forEach((item) => {
-    const getText = () =>
-      item.querySelector(".skill-name")?.textContent?.trim() ||
-      item.getAttribute("aria-label") ||
-      "";
-
-    item.addEventListener("mouseenter", (e) => {
-      showTooltip(getText());
-      positionFromPointer(e);
-    });
-
-    item.addEventListener("mousemove", (e) => {
-      positionFromPointer(e);
-    });
-
-    item.addEventListener("mouseleave", () => {
-      hideTooltip();
-    });
-
-    // Mobile/toque: mostra por 2s
-    item.addEventListener("click", (e) => {
-      showTooltip(getText());
-      positionFromPointer(e);
-      window.clearTimeout(item._hideTimer);
-      item._hideTimer = window.setTimeout(hideTooltip, 2000);
-    });
-  });
-
-  // Clique fora dos itens: esconder tooltip
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest(".hard-skills li")) {
-      hideTooltip();
+  // Grid rings
+  ctx.lineWidth = isLight ? 1.2 : 1;
+  ctx.strokeStyle = isLight ? 'rgba(16,18,35,0.28)' : (strokeColor || 'rgba(255,255,255,0.22)');
+  for (let r=1; r<=rings; r++) {
+    const rr = (r/rings)*radius;
+    ctx.beginPath();
+    for (let i=0; i<axes; i++) {
+      const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
+      const x = cx + Math.cos(angle)*rr;
+      const y = cy + Math.sin(angle)*rr;
+      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
     }
+    ctx.closePath(); ctx.stroke();
+  }
+
+  // Axes
+  for (let i=0; i<axes; i++) {
+    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
+    const x = cx + Math.cos(angle)*radius;
+    const y = cy + Math.sin(angle)*radius;
+    ctx.beginPath();
+    ctx.strokeStyle = isLight ? 'rgba(16,18,35,0.35)' : 'rgba(255,255,255,0.28)';
+    ctx.lineWidth = isLight ? 1.0 : 0.8;
+    ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.stroke();
+  }
+
+  // Data polygon
+  ctx.beginPath();
+  items.forEach((it, i) => {
+    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
+    const rr = (Math.max(0, Math.min(10, it.level)) / 10) * radius;
+    const x = cx + Math.cos(angle)*rr;
+    const y = cy + Math.sin(angle)*rr;
+    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
   });
+  ctx.closePath();
+  const fillAlpha = isLight ? 0.28 : 0.18;
+  ctx.fillStyle = `rgba(${a1.r},${a1.g},${a1.b},${fillAlpha})`;
+  ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+
+  // Points
+  items.forEach((it, i) => {
+    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
+    const rr = (Math.max(0, Math.min(10, it.level)) / 10) * radius;
+    const x = cx + Math.cos(angle)*rr;
+    const y = cy + Math.sin(angle)*rr;
+    ctx.beginPath(); ctx.arc(x,y,isLight?3.5:3,0,Math.PI*2);
+    ctx.fillStyle = grad; ctx.fill();
+    // Halo para contraste
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = isLight ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)';
+    ctx.stroke();
+  });
+
+  // Overlay labels (HTML) com ícone, nome e nível
+  let labelsLayer = document.getElementById('hardSkillsLabels');
+  if (!labelsLayer) {
+    labelsLayer = document.createElement('div');
+    labelsLayer.id = 'hardSkillsLabels';
+    labelsLayer.className = 'hard-skills-labels';
+    container.appendChild(labelsLayer);
+  }
+  // Sincroniza tamanho e posição do overlay com o canvas
+  const contRect = container.getBoundingClientRect();
+  const canvRect = canvas.getBoundingClientRect();
+  labelsLayer.style.left = (canvRect.left - contRect.left) + 'px';
+  labelsLayer.style.top = (canvRect.top - contRect.top) + 'px';
+  labelsLayer.style.width = canvas.clientWidth + 'px';
+  labelsLayer.style.height = canvas.clientHeight + 'px';
+  labelsLayer.innerHTML = '';
+
+  items.forEach((it, i) => {
+    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
+    const labelR = radius + (compact ? 8 : 16);
+    let lx = (canvas.clientWidth/2) + Math.cos(angle)*labelR;
+    let ly = (canvas.clientHeight/2) + Math.sin(angle)*labelR;
+    const edge = compact ? 4 : 6;
+    // Clamps to keep inside canvas box
+    lx = Math.max(edge, Math.min(canvas.clientWidth - edge, lx));
+    ly = Math.max(edge, Math.min(canvas.clientHeight - edge, ly));
+    const ic = (it.iconClass || skillIconMapping[it.name] || 'fas fa-tools');
+    const el = document.createElement('div');
+    el.className = 'hard-skills-label';
+    el.innerHTML = `<i class="${ic}" aria-hidden="true"></i><span>${it.name}</span><small>${it.level}/10</small>`;
+    el.title = `${it.name} — ${it.level}/10`;
+    el.setAttribute('aria-label', `${it.name} ${it.level}/10`);
+    el.style.left = lx + 'px';
+    el.style.top = ly + 'px';
+    labelsLayer.appendChild(el);
+  });
+
+  // Tooltip nativo/custom em telas pequenas
+  if (compact || xcompact) {
+    let tooltipEl = document.getElementById('app-tooltip');
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.id = 'app-tooltip';
+      tooltipEl.className = 'app-tooltip';
+      document.body.appendChild(tooltipEl);
+    }
+    const showTip = (text, x, y) => {
+      tooltipEl.textContent = text;
+      tooltipEl.setAttribute('data-show', 'true');
+      const rect = tooltipEl.getBoundingClientRect();
+      const vw = window.innerWidth || document.documentElement.clientWidth;
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const left = Math.min(Math.max(x, 6), vw - rect.width - 6);
+      const top = Math.min(Math.max(y - rect.height - 10, 6), vh - rect.height - 6);
+      tooltipEl.style.left = left + 'px';
+      tooltipEl.style.top = top + 'px';
+    };
+    const hideTip = () => { tooltipEl.removeAttribute('data-show'); };
+
+    labelsLayer.querySelectorAll('.hard-skills-label').forEach((el) => {
+      const text = el.getAttribute('aria-label') || el.title || '';
+      el.addEventListener('mouseenter', (e) => showTip(text, e.clientX, e.clientY));
+      el.addEventListener('mousemove', (e) => showTip(text, e.clientX, e.clientY));
+      el.addEventListener('mouseleave', hideTip);
+      el.addEventListener('click', (e) => { showTip(text, e.clientX, e.clientY); setTimeout(hideTip, 2000); });
+      el.addEventListener('touchstart', (e) => { const t=e.touches[0]; showTip(text, t.clientX, t.clientY); setTimeout(hideTip, 2000); }, { passive: true });
+    });
+  }
+
+  if (legend) {
+    const listHTML = items.map((it) => {
+      const ic = (it.iconClass || skillIconMapping[it.name] || 'fas fa-tools');
+      return `<span class="legend-item"><i class="${ic}" aria-hidden="true"></i><span>${it.name}</span><small> ${it.level}/10</small></span>`;
+    }).join('');
+    legend.innerHTML = `<div class="legend-list" aria-hidden="true">${listHTML}</div><div class="legend-scale">0–10 (quanto maior, mais domínio)</div>`;
+  }
+
+  // Redraw on resize/theme toggle
+  if (!updateHardSkills._bound) {
+    updateHardSkills._bound = true;
+    let resizeTO = null;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTO);
+      resizeTO = window.setTimeout(() => updateHardSkills(profileData), 120);
+    });
+    const themeBtn = document.getElementById('theme-toggle');
+    if (themeBtn) themeBtn.addEventListener('click', () => setTimeout(() => updateHardSkills(profileData), 10));
+  }
 }
 
 // 3. Atualizar Habilidades Comportamentais (Soft Skills)
@@ -908,19 +1015,17 @@ function updateSkillTitles(profileData) {
   try {
     const profileData = await fetchProfileData(uiText.language);
     if (profileData) {
-      updateProfileInfo(profileData);
-      updateSoftSkills(profileData);
-      updateHardSkills(profileData);
-      updateLanguages(profileData, uiText);
-      updatePortfolio(profileData);
-      updateProfessionalExperience(profileData);
-      updateAcademicFormation(profileData);
-
-      // >>>>> ADICIONE ESTA LINHA:
-      updateCertifications(profileData, uiText);
-
-      updateAccordionTitles(profileData, uiText); // agora com ui fallback e certificações
-      updateSkillTitles(profileData);
+      const safe=(l,fn)=>{ try { fn(); } catch(e) { console.error(`[update:${l}]`, e); } };
+      safe('profileInfo',       ()=>updateProfileInfo(profileData));
+      safe('softSkills',        ()=>updateSoftSkills(profileData));
+      safe('hardSkills',        ()=>updateHardSkills(profileData));
+      safe('languages',         ()=>updateLanguages(profileData, uiText));
+      safe('portfolio',         ()=>updatePortfolio(profileData));
+      safe('experience',        ()=>updateProfessionalExperience(profileData));
+      safe('academicFormation', ()=>updateAcademicFormation(profileData));
+      safe('certifications',    ()=>updateCertifications(profileData, uiText));
+      safe('accordionTitles',   ()=>updateAccordionTitles(profileData, uiText));
+      safe('skillTitles',       ()=>updateSkillTitles(profileData));
     } else {
       console.error(uiText.profileNotLoaded);
     }
