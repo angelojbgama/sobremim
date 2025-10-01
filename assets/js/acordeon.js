@@ -1,13 +1,11 @@
-const acordeonTrigger = document.querySelectorAll('.acordeon .trigger')
+﻿const acordeonTriggers = document.querySelectorAll('.acordeon .trigger')
 
-acordeonTrigger.forEach((trigger)=>{
-    trigger.addEventListener('click', (e)=>{
-        const acordeon = trigger.parentElement
-        const isOpen = acordeon.classList.contains('open')
-        if (isOpen) {
-            acordeon.classList.remove('open')     
-        }else {
-            acordeon.classList.add('open')
-        }
-    })
+acordeonTriggers.forEach((trigger) => {
+  const acordeon = trigger.parentElement
+  trigger.setAttribute('aria-expanded', acordeon.classList.contains('open'))
+
+  trigger.addEventListener('click', () => {
+    const isOpen = acordeon.classList.toggle('open')
+    trigger.setAttribute('aria-expanded', isOpen)
+  })
 })

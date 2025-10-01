@@ -37,96 +37,46 @@
   "skills": {
     "titleHardSkills": "Habilidades Técnicas",
     "hardSkills": [
-      {
-        "name": "Python",
-        "iconClass": "fab fa-python"
-      },
-      {
-        "name": "C++",
-        "iconClass": "fas fa-code"
-      },
-      {
-        "name": "JavaScript",
-        "iconClass": "fab fa-js-square"
-      },
-      {
-        "name": "Django",
-        "iconClass": "fas fa-leaf"
-      },
-      {
-        "name": "Docker",
-        "iconClass": "fab fa-docker"
-      },
-      {
-        "name": "Celery",
-        "iconClass": "fas fa-rocket"
-      },
-      {
-        "name": "RabbitMQ",
-        "iconClass": "fas fa-server"
-      },
-      {
-        "name": "PostgreSQL",
-        "iconClass": "fas fa-database"
-      },
-      {
-        "name": "Git",
-        "iconClass": "fab fa-git-alt"
-      }
+      { "name": "Python", "iconClass": "fab fa-python" },
+      { "name": "C++", "iconClass": "fas fa-code" },
+      { "name": "JavaScript", "iconClass": "fab fa-js-square" },
+      { "name": "Django", "iconClass": "fas fa-leaf" },
+      { "name": "Docker", "iconClass": "fab fa-docker" },
+      { "name": "Celery", "iconClass": "fas fa-rocket" },
+      { "name": "RabbitMQ", "iconClass": "fas fa-server" },
+      { "name": "PostgreSQL", "iconClass": "fas fa-database" },
+      { "name": "Git", "iconClass": "fab fa-git-alt" }
     ],
     "titleSoftSkills": "Habilidades Comportamentais",
     "softSkills": [
-      "Adaptação a novas tecnologias",
-      "Resolução de problemas",
-      "Capacidade de abstração",
-      "Pensamento focado no usuário",
-      "Persistência"
-    ]
+      { "name": "Persuasão e negociação", "percent": 78 },
+      { "name": "Resolução de problemas", "percent": 82 },
+      { "name": "Inteligência emocional", "percent": 76 },
+      { "name": "Relacionamento interpessoal", "percent": 80 },
+      { "name": "Autoconhecimento", "percent": 74 },
+      { "name": "Autogestão", "percent": 77 },
+      { "name": "Empatia", "percent": 84 },
+      { "name": "Pensamento crítico", "percent": 79 },
+      { "name": "Produtividade", "percent": 81 },
+      { "name": "Criatividade", "percent": 83 }
+    ],
+    "softSkillsTest": {
+      "label": "Faça o teste",
+      "url": "https:estudante.estacio.brmapeamento-socioemocional"
+    }
   },
   "titleLanguages": "Idiomas",
-  "languages": ["Português BR", "Inglês (Intermediário)", "Espanhol (Basico)"],
+  "languages": ["Português BR", "Inglês (Intermediário)", "Espanhol (Básico)"],
   "titlePortfolio": "Portfólio",
   "portfolio": [
-    {
-      "name": "Bike2Bike",
-      "url": "https://github.com/angelojbgama/Bike2Bike",
-      "github": true
-    },
-    {
-      "name": "Cardapio Digital",
-      "url": "https://angelojbgama.github.io/terra_e_p-o/",
-      "github": false
-    },
-    {
-      "name": "APP Gerador de Senhas em React.Native",
-      "url": "https://github.com/angelojbgama/bat-pass-app",
-      "github": true
-    },
-    {
-      "name": "Web Scraping de Notebooks com API RESTful",
-      "url": "https://github.com/angelojbgama/crawler-jr",
-      "github": true
-    },
-    {
-      "name": "Automação e programa leitor de pdf e busca por regex em Python",
-      "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
-      "github": true
-    },
-    {
-      "name": "Automação e analise de dados em Python: Inteligência artificial e previsões de preços",
-      "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
-      "github": true
-    },
-    {
-      "name": "Python Insights - Analisando Dados com Python",
-      "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
-      "github": true
-    },
-    {
-      "name": "Python Power UP - Projeto de Automação",
-      "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
-      "github": true
-    }
+    { "name": "Bike2Bike", "url": "https://github.com/angelojbgama/Bike2Bike", "github": true },
+    { "name": "Cardápio Digital", "url": "https://angelojbgama.github.io/terra_e_p-o/", "github": false },
+    { "name": "APP Gerador de Senhas em React Native", "url": "https://github.com/angelojbgama/bat-pass-app", "github": true },
+    { "name": "Web Scraping de Notebooks com API RESTful", "url": "https://github.com/angelojbgama/crawler-jr", "github": true },
+    { "name": "Automação e leitura de PDF com Regex (Python)", "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex", "github": true },
+    { "name": "Automação e análise de dados em Python: IA e previsão de preços", "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es", "github": true },
+    { "name": "Python Insights - Analisando Dados com Python", "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main", "github": true },
+    { "name": "Python Power UP - Projeto de Automação", "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main", "github": true }
   ],
   "titleProfessionalExperience": "Experiência Profissional",
   "professionalExperience": [
@@ -153,8 +103,7 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-03",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
-      "tags": ["algoritmos", "matematica", "estruturas de dados"]
+      "tags": ["algoritmos", "matemática", "estruturas de dados"]
     }
   ]
-
 }

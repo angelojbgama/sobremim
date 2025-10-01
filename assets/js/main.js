@@ -326,73 +326,6 @@ function formatYM(ym) {
   return `${m}/${y}`;
 }
 
-// Liga/desliga o <dialog> do modal de certificado
-// Liga/desliga o <dialog> do modal de certificado
-let __certModalBound = false;
-function bindCertModal(ui) {
-  if (__certModalBound) return; // evita listeners duplicados
-  const modal  = document.getElementById('cert-modal');
-  const frame  = document.getElementById('cert-modal-frame');
-  const title  = document.getElementById('cert-modal-title');
-  const close1 = document.getElementById('cert-modal-close'); // só o X do topo
-  if (!modal || !frame) return;
-
-  // Helper: aplica parâmetros de visualização ao PDF
-  function withPdfParams(url) {
-    // oculta UI do viewer e ajusta a página à área (page-fit)
-    const params = 'toolbar=0&navpanes=0&scrollbar=0&zoom=page-fit';
-    return url.includes('#') ? `${url}&${params}` : `${url}#${params}`;
-  }
-
-  function openModal(pdfUrl, certTitle) {
-    frame.src = withPdfParams(pdfUrl);       // << aqui aplica os params
-    if (title) title.textContent = certTitle || 'Certificação';
-    document.body.classList.add('body--no-scroll');
-    if (typeof modal.showModal === 'function') modal.showModal();
-    else modal.setAttribute('open', 'open'); // fallback
-  }
-
-  function closeModal() {
-    frame.src = 'about:blank';
-    document.body.classList.remove('body--no-scroll');
-    if (typeof modal.close === 'function') modal.close();
-    else modal.removeAttribute('open');
-  }
-
-  if (close1) close1.addEventListener('click', closeModal);
-
-  // Fecha ao clicar fora da caixa
-  modal.addEventListener('click', (e) => {
-    const box = modal.querySelector('.modal__box');
-    if (box && !box.contains(e.target)) closeModal();
-  });
-
-  // Fecha no ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && (modal.hasAttribute('open') || modal.open)) {
-      closeModal();
-    }
-  });
-
-  __certModalBound = true;
-
-  // Conecta os botões "Abrir PDF"
-  return function wireOpeners() {
-    document.querySelectorAll('.btn-open-pdf[data-pdf]').forEach(btn => {
-      if (btn.__cert_handler_attached) return;
-      btn.__cert_handler_attached = true;
-
-      btn.addEventListener('click', () => {
-        const url = btn.getAttribute('data-pdf');
-        if (!url) return;
-        const item = btn.closest('.certifications__item');
-        const certTitle = item?.querySelector('.certifications__title')?.textContent || 'Certificação';
-        openModal(url, certTitle);
-      });
-    });
-  };
-}
-
 // 1. Atualizar Informações do Perfil
 function updateProfileInfo(profileData) {
   // Atualizar Foto de Perfil
@@ -480,7 +413,7 @@ function updateHardSkills(profileData) {
     hardSkills.innerHTML = profileData.skills.hardSkills
       .map(
         (skill) => `
-          <li>
+          <li aria-label="${skill.name}">
               <i class="${
                 skill.iconClass ||
                 skillIconMapping[skill.name] ||
@@ -493,42 +426,148 @@ function updateHardSkills(profileData) {
       .join("");
   }
 
-  // Adicionar Event Listeners para Interatividade
+  // Tooltip global sobreposto (acima de qualquer elemento)
+  let tooltipEl = document.getElementById("app-tooltip");
+  if (!tooltipEl) {
+    tooltipEl = document.createElement("div");
+    tooltipEl.id = "app-tooltip";
+    tooltipEl.className = "app-tooltip";
+    document.body.appendChild(tooltipEl);
+  }
+
+  const showTooltip = (text) => {
+    tooltipEl.textContent = text || "";
+    tooltipEl.setAttribute("data-show", "true");
+  };
+
+  const hideTooltip = () => {
+    tooltipEl.removeAttribute("data-show");
+  };
+
+  const placeTooltipAt = (x, y) => {
+    const rect = tooltipEl.getBoundingClientRect();
+    const vw = window.innerWidth || document.documentElement.clientWidth;
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+    const margin = 6;
+    let left = Math.min(Math.max(x, margin), vw - rect.width - margin);
+    let top = Math.min(Math.max(y, margin), vh - rect.height - margin);
+    tooltipEl.style.left = left + "px";
+    tooltipEl.style.top = top + "px";
+  };
+
+  const positionFromPointer = (e) => {
+    const pad = 12;
+    const h = tooltipEl.getBoundingClientRect().height || 24;
+    placeTooltipAt(e.clientX + pad, e.clientY - (h + pad));
+  };
+
+  // Liga os eventos por item
   document.querySelectorAll(".hard-skills li").forEach((item) => {
-    item.addEventListener("click", () => {
-      // Remove a classe 'active' de todos os itens
-      document
-        .querySelectorAll(".hard-skills li")
-        .forEach((el) => el.classList.remove("active"));
+    const getText = () =>
+      item.querySelector(".skill-name")?.textContent?.trim() ||
+      item.getAttribute("aria-label") ||
+      "";
 
-      // Adiciona a classe 'active' ao item clicado
-      item.classList.add("active");
+    item.addEventListener("mouseenter", (e) => {
+      showTooltip(getText());
+      positionFromPointer(e);
+    });
 
-      // Define um tempo para esconder o balão automaticamente
-      setTimeout(() => {
-        item.classList.remove("active");
-      }, 2000); // 2 segundos
+    item.addEventListener("mousemove", (e) => {
+      positionFromPointer(e);
+    });
+
+    item.addEventListener("mouseleave", () => {
+      hideTooltip();
+    });
+
+    // Mobile/toque: mostra por 2s
+    item.addEventListener("click", (e) => {
+      showTooltip(getText());
+      positionFromPointer(e);
+      window.clearTimeout(item._hideTimer);
+      item._hideTimer = window.setTimeout(hideTooltip, 2000);
     });
   });
 
-  // Adiciona um evento global para detectar cliques fora dos itens
+  // Clique fora dos itens: esconder tooltip
   document.addEventListener("click", (event) => {
-    // Verifica se o clique não foi em um item da lista
     if (!event.target.closest(".hard-skills li")) {
-      document
-        .querySelectorAll(".hard-skills li")
-        .forEach((el) => el.classList.remove("active"));
+      hideTooltip();
     }
   });
 }
 
 // 3. Atualizar Habilidades Comportamentais (Soft Skills)
 function updateSoftSkills(profileData) {
-  const softSkills = document.getElementById("profile.skills.softSkills");
-  if (softSkills) {
-    softSkills.innerHTML = profileData.skills.softSkills
-      .map((skill) => `<li>${skill}</li>`)
-      .join("");
+  const listEl = document.getElementById("profile.skills.softSkills");
+  if (!listEl) return;
+
+  const items = (profileData && profileData.skills && profileData.skills.softSkills) || [];
+
+  listEl.innerHTML = items
+    .map((item) => {
+      if (typeof item === "string") {
+        const name = item.trim();
+        return `
+          <li class="soft-skill" aria-label="${name}">
+            <div class="soft-skill__header">
+              <span class="soft-skill__name">${name}</span>
+              <span class="soft-skill__value"></span>
+            </div>
+          </li>
+        `;
+      }
+
+      if (item && typeof item === "object") {
+        const name = (item.name || "").trim();
+        const pct = Math.max(0, Math.min(100, Number(item.percent ?? item.percentage ?? 0)));
+        return `
+          <li class="soft-skill" aria-label="${name}">
+            <div class="soft-skill__header">
+              <span class="soft-skill__name">${name}</span>
+              <span class="soft-skill__value">${pct}%</span>
+            </div>
+            <div class="soft-skill__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${pct}">
+              <div class="soft-skill__progress" style="width: ${pct}%"></div>
+            </div>
+          </li>
+        `;
+      }
+      return "";
+    })
+    .join("");
+
+  // Link simples centralizado no rodapé da seção (configurável via JSON)
+  try {
+    const testCfg = profileData && profileData.skills && profileData.skills.softSkillsTest;
+    const section = document.querySelector('.skills .personal');
+    if (section) {
+      let wrap = section.querySelector('.soft-skills__testlink-wrap');
+      if (testCfg && testCfg.url) {
+        if (!wrap) {
+          wrap = document.createElement('div');
+          wrap.className = 'soft-skills__testlink-wrap';
+          // posiciona logo abaixo da lista
+          listEl.insertAdjacentElement('afterend', wrap);
+        }
+        let linkEl = wrap.querySelector('.soft-skills__testlink');
+        if (!linkEl) {
+          linkEl = document.createElement('a');
+          linkEl.className = 'soft-skills__testlink';
+          wrap.appendChild(linkEl);
+        }
+        linkEl.href = testCfg.url;
+        linkEl.target = '_blank';
+        linkEl.rel = 'noopener noreferrer';
+        linkEl.textContent = testCfg.label || 'Faça o teste';
+        wrap.style.display = '';
+      } else if (wrap) {
+        wrap.style.display = 'none';
+      }
+    }
+  } catch (e) {
+    console.warn('Falha ao atualizar link do teste de soft skills', e);
   }
 }
 
@@ -665,16 +704,15 @@ function updateAccordionTitles(profileData, uiText) {
 
     if (value) {
       titleElement.innerText = value;
-      titleElement.classList.remove('loading-text');
     }
   }
 }
-// 5.1 Atualizar Certificações (lista + botões que abrem o modal)
+// 5.1 Atualizar Certificações (lista + links para PDF)
 function updateCertifications(profileData, uiText) {
   const list = document.getElementById('profile.certifications');
   const titleNode = document.getElementById('acordeon.titleCertifications');
 
-  // Define título da seção (tenta pegar do profile; se não tiver, usa uiText; se não, padrão)
+  // Define título da seção (prioriza profile > UI > padrão)
   const sectionTitle =
     (profileData && profileData.titleCertifications) ||
     (uiText && uiText.titleCertifications) ||
@@ -682,7 +720,6 @@ function updateCertifications(profileData, uiText) {
 
   if (titleNode) {
     titleNode.innerText = sectionTitle;
-    titleNode.classList.remove('loading-text');
   }
   if (!list) return;
 
@@ -691,7 +728,7 @@ function updateCertifications(profileData, uiText) {
     : [];
 
   if (!certs.length) {
-    list.innerHTML = `<li class="certifications__empty">Nenhuma certificação cadastrada.</li>`;
+    list.innerHTML = `<li class='certifications__empty'>Nenhuma certificação cadastrada.</li>`;
     return;
   }
 
@@ -702,35 +739,30 @@ function updateCertifications(profileData, uiText) {
   list.innerHTML = certs.map(cert => {
     const dateFmt = formatYM(cert.date);
     const tags = Array.isArray(cert.tags) && cert.tags.length
-      ? `<div class="certifications__tags">
-           ${cert.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+      ? `<div class='certifications__tags'>
+           ${cert.tags.map(t => `<span class='tag'>${t}</span>`).join('')}
          </div>`
       : '';
 
+    const link = cert.pdfUrl
+      ? `<a class='btn btn-open-pdf' href='${cert.pdfUrl}' target='_blank' rel='noopener noreferrer'>${openLabel}</a>`
+      : `<button type='button' class='btn btn-open-pdf' disabled>${openLabel}</button>`;
+
     return `
-      <li class="certifications__item">
-        <div class="certifications__head">
-          <span class="certifications__title">${cert.title || '—'}</span>
-          <span class="certifications__meta">
+      <li class='certifications__item'>
+        <div class='certifications__head'>
+          <span class='certifications__title'>${cert.title || '—'}</span>
+          <span class='certifications__meta'>
             ${issuerLabel}: ${cert.issuer || '—'} · ${dateLabel}: ${dateFmt || '—'}
           </span>
         </div>
-        <div class="certifications__actions">
-          <button type="button"
-                  class="btn btn-open-pdf"
-                  data-pdf="${cert.pdfUrl ? cert.pdfUrl : ''}"
-                  ${cert.pdfUrl ? '' : 'disabled'}>
-            ${openLabel}
-          </button>
+        <div class='certifications__actions'>
+          ${link}
           ${tags}
         </div>
       </li>
     `;
   }).join('');
-
-  // Conecta os botões ao modal (liga listeners uma única vez e “fios” atuais)
-  const wireOpeners = bindCertModal(uiText);
-  if (typeof wireOpeners === 'function') wireOpeners();
 }
 
 
@@ -754,10 +786,6 @@ function updateSkillTitles(profileData) {
   const uiText = await fetchUiText();
   document.documentElement.lang = uiText.language;
   document.title = uiText.loading;
-  document.querySelectorAll('.loading-text').forEach(el => {
-    el.innerText = uiText.loading;
-  });
-
   try {
     const profileData = await fetchProfileData(uiText.language);
     if (profileData) {
