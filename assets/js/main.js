@@ -888,7 +888,7 @@ function updateProfessionalExperience(profileData) {
 }
 
 // 6.1 Atualizar Formação Acadêmica
-function updateAcademicFormation(profileData) {
+function updateAcademicFormation(profileData, uiText) {
   const list = document.getElementById("profile.academicFormation");
   if (!list) return;
 
@@ -898,11 +898,16 @@ function updateAcademicFormation(profileData) {
     const duracao = edu.period ? calcularDuracao(edu.period, profileData.translations) : '';
     const periodText = edu.period ? `${edu.period}${duracao ? ` (${duracao})` : ''}` : '';
     const desc = edu.description || '';
+    const openLabel = (uiText && uiText.openPdf) || 'Abrir PDF';
+    const pdfBtn = edu.pdfUrl
+      ? `<div class=\"certifications__actions\"><a class=\"btn btn-open-pdf\" href=\"${edu.pdfUrl}\" target=\"_blank\" rel=\"noopener noreferrer\">${openLabel}</a></div>`
+      : '';
     return `
       <li class="experience-item">
         <h3 class="title">${title}</h3>
         ${periodText ? `<p class=\"period\">${periodText}</p>` : ''}
         ${desc ? `<p class=\"description\">${desc}</p>` : ''}
+        ${pdfBtn}
       </li>
     `;
   }).join("");
@@ -1022,7 +1027,7 @@ function updateSkillTitles(profileData) {
       safe('languages',         ()=>updateLanguages(profileData, uiText));
       safe('portfolio',         ()=>updatePortfolio(profileData));
       safe('experience',        ()=>updateProfessionalExperience(profileData));
-      safe('academicFormation', ()=>updateAcademicFormation(profileData));
+      safe('academicFormation', ()=>updateAcademicFormation(profileData, uiText));
       safe('certifications',    ()=>updateCertifications(profileData, uiText));
       safe('accordionTitles',   ()=>updateAccordionTitles(profileData, uiText));
       safe('skillTitles',       ()=>updateSkillTitles(profileData));

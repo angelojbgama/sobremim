@@ -1,7 +1,7 @@
 {
   "title": "Yo y Mi Trabajo",
   "name": "Angelo Gama",
-  "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
+  "photo": "assets/img/my-photo.jpg",
   "job": "Programador",
   "graduate": "An\u00E1lisis y Desarrollo de Sistemas",
   "graduateScale": { "completed": 15, "total": 35 },
@@ -70,6 +70,13 @@
       "institution": "Est\u00E1cio",
       "period": "Febrero de 2023 - Hasta el momento",
       "description": "Formaci\u00F3n enfocada en desarrollo de software, arquitectura y buenas pr\u00E1cticas."
+    },
+    {
+      "name": "T\u00E9cnico en Electr\u00F3nica",
+      "institution": "UNICORP",
+      "period": "Enero de 2010 - Diciembre de 2012",
+      "description": "Formaci\u00F3n t\u00E9cnica con \u00E9nfasis en circuitos, instrumentaci\u00F3n y mantenimiento.",
+      "pdfUrl": "assets/formacao_academica/certificado_tecnico_em_eletronica.pdf"
     }
   ],
   "titlePortfolio": "Portafolio",
@@ -99,6 +106,64 @@
       "name": "GMX, R\u00EDo de Janeiro - T\u00E9cnico en Electr\u00F3nica",
       "period": "Julio de 2012 - Octubre de 2015",
       "description": "Repar\u00E9 electr\u00F3nicos (smartphones, desktops, laptops), ofrec\u00ED soporte t\u00E9cnico a clientes y mejor\u00E9 sistemas administrativos a trav\u00E9s de actualizaciones."
+    }
+  ],
+  "certifications": [
+    {
+      "id": "PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS",
+      "title": "PROGRAMAÇÃO DE ALGORITMOS ESCALÁVEIS",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2025-04",
+      "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
+      "tags": ["algoritmos", "estructuras de datos"]
+    },
+    {
+      "id": "PROGRAMAÇÃO_PARA_INTERNET",
+      "title": "PROGRAMAÇÃO PARA INTERNET",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2025-03",
+      "pdfUrl": "assets/certificados/PROGRAMAÇÃO_PARA_INTERNET.pdf",
+      "tags": ["web", "programación"]
+    },
+    {
+      "id": "Conceitos_basicos_de_rede",
+      "title": "Conceitos basicos de rede",
+      "issuer": "CISCO",
+      "date": "2024-02",
+      "pdfUrl": "assets/certificados/Conceitos_basicos_de_rede.pdf",
+      "tags": ["redes", "básico"]
+    },
+    {
+      "id": "Fundamentos_do_Hardware_do_Computador",
+      "title": "Fundamentos do Hardware do Computador",
+      "issuer": "CISCO",
+      "date": "2024-02",
+      "pdfUrl": "assets/certificados/Fundamentos_do_Hardware_do_Computador.pdf",
+      "tags": ["hardware", "fundamentos"]
+    },
+    {
+      "id": "Logica_de_Programação",
+      "title": "Logica de Programação",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2024-01",
+      "pdfUrl": "assets/certificados/Logica_de_Programação.pdf",
+      "tags": ["lógica", "programación"]
+    },
+    {
+      "id": "Computação_em_Nuvem_AWS_Discovery_Day",
+      "title": "Computação em Nuvem AWS Discovery Day",
+      "issuer": "Amazon Web Services",
+      "date": "2023-11",
+      "pdfUrl": "assets/certificados/Computação_em_Nuvem_AWS_Discovery_Day.pdf",
+      "tags": ["nube", "aws"]
+    },
+    {
+      "id": "Introdução_a_Programação",
+      "title": "Introdução a Programação",
+      "issuer": "EBAC",
+      "date": "2023-10",
+      "pdfUrl": "assets/certificados/Introdução_a_Programação.pdf",
+      "tags": ["programación", "introducción"]
     }
   ]
 }

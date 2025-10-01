@@ -1,7 +1,7 @@
 {
   "title": "Me and My Work",
   "name": "Angelo Gama",
-  "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
+  "photo": "assets/img/my-photo.jpg",
   "job": "Programmer",
   "graduate": "Systems Analysis and Development",
   "graduateScale": {
@@ -100,6 +100,13 @@
       "institution": "Estacio University",
       "period": "February 2023 - Present",
       "description": "Bachelor-level short program focused on software development, architecture and good practices."
+    },
+    {
+      "name": "Electronics Technician",
+      "institution": "UNICORP",
+      "period": "January 2010 - December 2012",
+      "description": "Technical training with emphasis on circuits, instrumentation, and maintenance.",
+      "pdfUrl": "assets/formacao_academica/certificado_tecnico_em_eletronica.pdf"
     }
   ],
   "titlePortfolio": "Portfolio",
@@ -161,6 +168,64 @@
       "name": "GMX, Rio de Janeiro - Electronics Technician",
       "period": "July 2012 - October 2015",
       "description": "I repaired electronics (smartphones, desktops, laptops), provided technical support to clients, and improved administrative systems through updates."
+    }
+  ],
+  "certifications": [
+    {
+      "id": "PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS",
+      "title": "PROGRAMAÇÃO DE ALGORITMOS ESCALÁVEIS",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2025-04",
+      "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
+      "tags": ["algorithms", "data structures"]
+    },
+    {
+      "id": "PROGRAMAÇÃO_PARA_INTERNET",
+      "title": "PROGRAMAÇÃO PARA INTERNET",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2025-03",
+      "pdfUrl": "assets/certificados/PROGRAMAÇÃO_PARA_INTERNET.pdf",
+      "tags": ["web", "programming"]
+    },
+    {
+      "id": "Conceitos_basicos_de_rede",
+      "title": "Conceitos basicos de rede",
+      "issuer": "CISCO",
+      "date": "2024-02",
+      "pdfUrl": "assets/certificados/Conceitos_basicos_de_rede.pdf",
+      "tags": ["networking", "basics"]
+    },
+    {
+      "id": "Fundamentos_do_Hardware_do_Computador",
+      "title": "Fundamentos do Hardware do Computador",
+      "issuer": "CISCO",
+      "date": "2024-02",
+      "pdfUrl": "assets/certificados/Fundamentos_do_Hardware_do_Computador.pdf",
+      "tags": ["hardware", "fundamentals"]
+    },
+    {
+      "id": "Logica_de_Programação",
+      "title": "Logica de Programação",
+      "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
+      "date": "2024-01",
+      "pdfUrl": "assets/certificados/Logica_de_Programação.pdf",
+      "tags": ["logic", "programming"]
+    },
+    {
+      "id": "Computação_em_Nuvem_AWS_Discovery_Day",
+      "title": "Computação em Nuvem AWS Discovery Day",
+      "issuer": "Amazon Web Services",
+      "date": "2023-11",
+      "pdfUrl": "assets/certificados/Computação_em_Nuvem_AWS_Discovery_Day.pdf",
+      "tags": ["cloud", "aws"]
+    },
+    {
+      "id": "Introdução_a_Programação",
+      "title": "Introdução a Programação",
+      "issuer": "EBAC",
+      "date": "2023-10",
+      "pdfUrl": "assets/certificados/Introdução_a_Programação.pdf",
+      "tags": ["programming", "introduction"]
     }
   ]
 }
