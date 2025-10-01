@@ -3,11 +3,8 @@
   "name": "Angelo Gama",
   "photo": "https://raw.githubusercontent.com/angelojbgama/sobremim/main/assets/img/my-photo.jpg",
   "job": "Programador",
-  "graduate": "Analise e Desenvolvimento de Sistemas",
-  "graduateScale": {
-    "completed": 25,
-    "total": 35
-  },
+  "graduate": "Análise e Desenvolvimento de Sistemas",
+  "graduateScale": { "completed": 25, "total": 35 },
   "translations": {
     "months": {
       "Janeiro": 0,
@@ -60,13 +57,14 @@
       { "name": "Produtividade", "percent": 81 },
       { "name": "Criatividade", "percent": 83 }
     ],
-    "softSkillsTest": {
-      "label": "Faça o teste",
-      "url": "https:estudante.estacio.brmapeamento-socioemocional"
-    }
+    "softSkillsTest": { "label": "Faça o teste", "url": "https://estudante.estacio.br/mapeamento-socioemocional" }
   },
   "titleLanguages": "Idiomas",
-  "languages": ["Português BR", "Inglês (Intermediário)", "Espanhol (Básico)"],
+  "languages": [
+    { "name": "Português (BR)", "level": 4 },
+    { "name": "Inglês", "level": 2 },
+    { "name": "Espanhol", "level": 1 }
+  ],
   "titlePortfolio": "Portfólio",
   "portfolio": [
     { "name": "Bike2Bike", "url": "https://github.com/angelojbgama/Bike2Bike", "github": true },
@@ -107,3 +105,4 @@
     }
   ]
 }
+

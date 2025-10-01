@@ -623,12 +623,25 @@ body.light-theme .soft-skill__bar { background: rgba(16, 18, 35, 0.12); }
   gap: var(--space-1);
 }
 
-.languages li {
+.languages li.language {
   display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  font-weight: 600;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--accordion-bg-color);
 }
+.languages li.language:hover { border-color: var(--border-strong); }
+.languages li.language .language__row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-1); min-width: 0; }
+.languages li.language .language__info { display: inline-flex; align-items: center; gap: var(--space-1); min-width: 0; }
+.languages li.language i { font-size: 1.15rem; color: var(--accent-color); }
+.languages li.language .language__name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.languages li.language .language__leveltext { font-size: var(--font-small); opacity: 0.85; margin-left: auto; white-space: nowrap; }
+.languages li.language .language__bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.3rem; }
+.languages li.language .language__stage { height: 0.45rem; border-radius: 999px; background: rgba(255, 255, 255, 0.18); }
+body.light-theme .languages li.language .language__stage { background: rgba(16, 18, 35, 0.18); }
+.languages li.language .language__stage.is-active { background: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt)); }
 
 .languages li i {
   font-size: 1.15rem;

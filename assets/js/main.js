@@ -573,19 +573,63 @@ function updateSoftSkills(profileData) {
 
 // 4. Atualizar Idiomas
 function updateLanguages(profileData) {
-  const languages = document.getElementById("profile.languages");
-  if (languages) {
-    languages.innerHTML = profileData.languages
-      .map(
-        (language) => `
-          <li>
-              <i class="fas fa-language" aria-hidden="true"></i>
-              <span class="info-text">${language}</span>
-          </li>
-      `
-      )
-      .join("");
-  }
+  const list = document.getElementById("profile.languages");
+  if (!list) return;
+
+  const items = Array.isArray(profileData.languages) ? profileData.languages : [];
+
+  const levelLabel = (lvl) => {
+    switch (Number(lvl)) {
+      case 4: return "Fluente";
+      case 3: return "Avançado";
+      case 2: return "Intermediário";
+      case 1: return "Básico";
+      default: return "";
+    }
+  };
+
+  const parseStringItem = (str) => {
+    if (typeof str !== 'string') return { name: '', level: 0 };
+    const m = str.match(/\(([^)]+)\)/);
+    const name = str.replace(/\s*\(([^)]+)\)\s*$/, '').trim();
+    let lvl = 0;
+    if (m && m[1]) {
+      const t = m[1].toLowerCase();
+      if (t.includes('fluente')) lvl = 4;
+      else if (t.includes('avanç') || t.includes('avanc')) lvl = 3;
+      else if (t.includes('inter')) lvl = 2;
+      else if (t.includes('bás') || t.includes('bas')) lvl = 1;
+    }
+    return { name, level: lvl };
+  };
+
+  const normalized = items.map((it) => {
+    if (typeof it === 'string') return parseStringItem(it);
+    if (it && typeof it === 'object') return { name: it.name || '', level: Number(it.level || 0) };
+    return { name: '', level: 0 };
+  });
+
+  list.innerHTML = normalized.map((lang) => {
+    const lvl = Math.max(0, Math.min(4, Number(lang.level || 0)));
+    const lbl = levelLabel(lvl);
+    const stages = Array.from({ length: 4 }, (_, i) =>
+      `<span class="language__stage ${i < lvl ? 'is-active' : ''}" aria-hidden="true"></span>`
+    ).join('');
+    return `
+      <li class="language" aria-label="${lang.name} ${lbl ? '- ' + lbl : ''}">
+        <div class="language__row">
+          <div class="language__info">
+            <i class="fas fa-language" aria-hidden="true"></i>
+            <span class="language__name">${lang.name}</span>
+          </div>
+          <span class="language__leveltext">${lbl}</span>
+        </div>
+        <div class="language__bar" role="meter" aria-valuemin="0" aria-valuemax="4" aria-valuenow="${lvl}" aria-label="Nível de ${lang.name}">
+          ${stages}
+        </div>
+      </li>
+    `;
+  }).join('');
 }
 
 // 5. Atualizar Portfólio
