@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const mm = (v) => v; // unidade mm
   const palettes = {
+    // Paleta monocromática (preto, branco e cinza)
+    mono:  { brand: [60,60,60], text: [0,0,0], muted: [96,96,96], stroke: [190,190,190], surface: [255,255,255] },
     light: { brand: [124, 93, 250], text: [31, 41, 55], muted: [100,116,139], stroke: [220, 224, 231], surface: [255,255,255] },
     dark:  { brand: [124, 93, 250], text: [243,244,246], muted: [156,163,175], stroke: [75, 85, 99],  surface: [31,41,55]   },
   };
@@ -44,9 +46,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await fetchProfileData(lang);
       if (!data) return;
 
-      // Paleta de cores baseada no tema do site
-      const isLight = document.body.classList.contains("light-theme") || !document.body.classList.contains("dark-theme");
-      const P = isLight ? palettes.light : palettes.dark;
+      // Forçar paleta monocromática (preto, branco e cinza)
+      const isLight = true; // mantém contrastes previstos ao desenhar barras
+      const P = palettes.mono;
       const setText = (rgb) => doc.setTextColor(rgb[0], rgb[1], rgb[2]);
       const setDraw = (rgb) => doc.setDrawColor(rgb[0], rgb[1], rgb[2]);
       const setFill = (rgb) => doc.setFillColor(rgb[0], rgb[1], rgb[2]);
@@ -92,7 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Espaçamento antes da barra
         ensure(BAR_TOP + BAR_H + BAR_BOTTOM);
         y += BAR_TOP;
-        setDraw(P.stroke); setFill(isLight ? [245,247,250] : [45,55,72]);
+        // trilho em cinza claro e preenchimento com cinza médio
+        setDraw(P.stroke); setFill([235,235,235]);
         doc.rect(x, y, w, BAR_H);
         setFill(P.brand);
         if (filled > 0) doc.rect(x, y, filled, BAR_H, 'F');

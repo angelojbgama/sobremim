@@ -594,7 +594,7 @@ body.light-theme .soft-skill__bar { background: rgba(16, 18, 35, 0.12); }
     box-sizing: border-box;
   }
   .certifications__actions { flex-direction: row; align-items: center; gap: var(--space-1); }
-  .btn-open-pdf { width: auto; justify-content: center; padding: 0.5rem 0.9rem; font-size: inherit; }
+  .btn-open-pdf, .btn-open-link { width: auto; justify-content: center; padding: 0.5rem 0.9rem; font-size: inherit; }
   .certifications__tags { width: auto; }
   .certifications__tags .tag { font-size: 0.75rem; padding: 0.2rem 0.6rem; }
   .certifications__title { font-size: inherit; }
@@ -777,7 +777,7 @@ body.light-theme .languages li.language .language__stage.is-active {
   min-width: 0;
 }
 
-.btn-open-pdf {
+.btn-open-pdf, .btn-open-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -790,11 +790,11 @@ body.light-theme .languages li.language .language__stage.is-active {
   transition: filter 0.3s ease;
 }
 
-.btn-open-pdf:hover {
+.btn-open-pdf:hover, .btn-open-link:hover {
   filter: brightness(1.1);
 }
 
-.btn-open-pdf:disabled {
+.btn-open-pdf:disabled, .btn-open-link:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
@@ -997,7 +997,7 @@ footer a:hover {
 
   /* Ações empilhadas e botão fluido para toque acessível */
   .certifications__actions { flex-direction: column; align-items: stretch; gap: 0.5rem; }
-  .btn-open-pdf { width: 100%; font-size: var(--font-small); padding: 0.45rem 0.6rem; }
+  .btn-open-pdf, .btn-open-link { width: 100%; font-size: var(--font-small); padding: 0.45rem 0.6rem; }
 }
 
 @media (min-width: 960px) {

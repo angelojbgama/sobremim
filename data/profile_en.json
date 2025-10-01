@@ -90,9 +90,7 @@
     { "name": "Spanish", "level": 1 }
   ],
   "titleLanguageCertifications": "Language Proficiency Certifications",
-  "languagesCertifications": [
-    { "name": "IELTS Academic", "issuer": "British Council", "score": "7.5", "date": "2023", "url": "" }
-  ],
+  "languagesCertifications": [],
   "titleAcademicFormation": "Academic Formation",
   "academicFormation": [
     {

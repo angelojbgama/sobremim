@@ -795,25 +795,28 @@ function updateLanguages(profileData, uiText) {
 // 5. Atualizar Portfólio
 function updatePortfolio(profileData) {
   const portfolio = document.getElementById("profile.portfolio");
-  if (portfolio) {
-    portfolio.innerHTML = profileData.portfolio
-      .map((project) => {
-        const iconHTML = project.github
-          ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-               <i class="fab fa-github"></i>
-             </a>`
-          : `<i class="fas fa-link"></i>`;
-        return `
-          <li class="portfolio-item">
-            <h3 class="portfolio-title">
-              ${iconHTML} ${project.name}
-            </h3>
-            <a href="${project.url}" target="_blank" rel="noopener noreferrer" class="portfolio-link">${project.url}</a>
-          </li>
-        `;
-      })
-      .join("");
-  }
+  if (!portfolio) return;
+
+  const items = Array.isArray(profileData.portfolio) ? profileData.portfolio : [];
+  portfolio.innerHTML = items
+    .map((project) => {
+      const isGithub = !!project.github;
+      const icon = isGithub ? 'fab fa-github' : 'fas fa-link';
+      const label = isGithub ? 'GitHub' : 'Link';
+      const url = project.url || '#';
+
+      return `
+        <li class="portfolio-item">
+          <h3 class="portfolio-title">
+            <i class="${icon}" aria-hidden="true"></i> ${project.name}
+          </h3>
+          <a class="btn btn-open-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="${label}: ${project.name}">
+            <i class="${icon}" aria-hidden="true"></i> <span>Abrir</span>
+          </a>
+        </li>
+      `;
+    })
+    .join("");
 }
 
 function calcularDuracao(periodo, traducoes) {
