@@ -1071,6 +1071,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   updateIcon(currentTheme);
 
+  // Atualiza ano no rodapé
+  const yearEl = document.getElementById('footer.year');
+  if (yearEl) {
+    yearEl.textContent = new Date().getFullYear();
+  }
+
   // Adicionar evento de clique para alternar o tema
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("light-theme");
