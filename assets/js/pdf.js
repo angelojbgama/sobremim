@@ -108,9 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
       y += mm(8);
       doc.setFont("helvetica", "normal"); doc.setFontSize(12);
       if (data.job) { doc.text(String(data.job), M, y); y += mm(6); }
-      simpleItem('E-mail', data.email);
-      simpleItem('Telefone', data.phone);
-      simpleItem('Localização', data.location);
+      const mailLabel = ui.contactEmailLabel || 'E-mail';
+      const phoneLabel = ui.contactPhoneLabel || 'Telefone';
+      const locationLabel = ui.contactLocationLabel || 'Localização';
+      simpleItem(mailLabel, data.email);
+      simpleItem(phoneLabel, data.phone);
+      simpleItem(locationLabel, data.location);
 
       // Formação (resumo + progresso)
       if (data.graduate) {
@@ -142,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Habilidades
       ensure(mm(10));
-      section(data.titleSkills || 'Habilidades');
+      section(data.titleSkills || ui.titleSkills || 'Habilidades');
       if (data.skills) {
         if (Array.isArray(data.skills.hardSkills) && data.skills.hardSkills.length) {
           doc.setFont("helvetica", "bold"); doc.text(String(data.skills.titleHardSkills || 'Hard Skills'), M, y); y += mm(6);
@@ -168,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Idiomas + Certificações de idioma
-      ensure(mm(10)); section(data.titleLanguages || 'Idiomas');
+      ensure(mm(10)); section(data.titleLanguages || ui.titleLanguages || 'Idiomas');
       const levelText = (lvl) => {
         switch (Number(lvl)) {
           case 4: return ui.langLevelFluent || 'Fluente';
@@ -205,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Portfólio
       if (Array.isArray(data.portfolio) && data.portfolio.length) {
-        ensure(mm(10)); section(data.titlePortfolio || 'Portfólio');
+        ensure(mm(10)); section(data.titlePortfolio || ui.titlePortfolio || 'Portfólio');
         // Cada item com QR do link à direita
         for (const p of data.portfolio) {
           const title = p.name || '';
@@ -249,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Experiência Profissional
       if (Array.isArray(data.professionalExperience) && data.professionalExperience.length) {
-        ensure(mm(10)); section(data.titleProfessionalExperience || 'Experiência Profissional');
+        ensure(mm(10)); section(data.titleProfessionalExperience || ui.titleProfessionalExperience || 'Experiência Profissional');
         data.professionalExperience.forEach(exp => {
           const title = exp.name || '';
           const period = exp.period || '';
@@ -262,7 +265,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Certificações (gerais)
       if (Array.isArray(data.certifications) && data.certifications.length) {
-        ensure(mm(10)); section(data.titleCertifications || 'Certificações');
+        ensure(mm(10)); section(data.titleCertifications || ui.titleCertifications || 'Certificações');
         data.certifications.forEach(c => {
           const title = c.title || '';
           const meta = [c.issuer, c.date].filter(Boolean).join(' · ');

@@ -692,7 +692,11 @@ body.light-theme .languages li.language .language__stage.is-active {
   border: 1px solid var(--border-color);
   background-color: var(--accordion-bg-color);
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  min-height: 100%;
 }
+.portfolio-info { display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+.portfolio-description { margin: 0; font-size: .92rem; line-height: 1.4; opacity: .85; }
+.portfolio-item .btn.btn-open-link { margin-top: auto; align-self: stretch; }
 
 .portfolio-item:hover {
   border-color: var(--border-strong);
@@ -1054,24 +1058,24 @@ body.light-theme .certifications__tags .tag {
     scroll-behavior: auto !important;
   }
 }
-.hard-skills-chart { width: 100%; display: grid; place-items: center; gap: var(--space-1); position: relative; }
-.hard-skills-chart canvas { width: min(560px, 100%); height: auto; display: block; }
-.hard-skills-legend { font-size: var(--font-small); opacity: .95; text-align: center; display: grid; gap: .5rem; }
-.hard-skills-legend .legend-list { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem .6rem; }
-.hard-skills-legend .legend-item { display: inline-flex; align-items: center; gap: .35rem; padding: .2rem .5rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background-color: var(--accordion-bg-color); }
-.hard-skills-legend .legend-item i { color: var(--accent-color); }
-.hard-skills-legend .legend-scale { opacity: .8; }
+.hard-skills-chart { width: 100%; display: flex; flex-direction: column; gap: var(--space-1); }
+.hard-skills-bars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; width: 100%; }
+.hard-skills-bars__item { display: flex; flex-direction: column; gap: .4rem; padding: .9rem 1rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0)); transition: border-color .3s ease, background .3s ease; }
+.hard-skills-bars__item:hover { border-color: var(--border-strong); background: linear-gradient(135deg, rgba(124,93,250,0.18), rgba(27,185,241,0.16)); }
+.hard-skills-bars__header { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
+.hard-skills-bars__info { display: inline-flex; align-items: center; gap: .55rem; font-weight: 600; color: var(--text-color); }
+.hard-skills-bars__info i { color: var(--accent-color); font-size: 1rem; }
+.hard-skills-bars__name { font-size: .95rem; }
+.hard-skills-bars__value { font-size: .85rem; opacity: .85; }
+.hard-skills-bars__track { position: relative; width: 100%; height: .55rem; border-radius: 999px; overflow: hidden; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid var(--border-color); }
+.hard-skills-bars__fill { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt)); transition: width .3s ease; }
+.hard-skills-empty { margin: 0; font-size: .9rem; opacity: .75; text-align: center; }
 
-/* Overlay de labels nos vértices do radar */
-.hard-skills-labels { position: absolute; top: 0; left: 0; pointer-events: none; }
-.hard-skills-label { position: absolute; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: .3rem; padding: .18rem .42rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background-color: var(--accordion-bg-color); color: var(--text-color); font-size: .78rem; white-space: nowrap; box-shadow: none; }
-.hard-skills-label i { color: var(--accent-color); font-size: .9rem; }
-
-/* Permitir interação (tooltip) em telas pequenas */
-.hard-skills-chart.compact .hard-skills-labels,
-.hard-skills-chart.xcompact .hard-skills-labels { pointer-events: auto; }
-
-/* Compact modes for very small screens */
-.hard-skills-chart.compact .hard-skills-label { font-size: .68rem; padding: .12rem .28rem; }
-.hard-skills-chart.compact .hard-skills-label small { display: none; }
-.hard-skills-chart.xcompact .hard-skills-label span { display: none; }
+@media (max-width: 720px) {
+  .hard-skills-bars {
+    grid-template-columns: 1fr;
+  }
+  .hard-skills-bars__info { gap: .45rem; }
+  .hard-skills-bars__name { font-size: .9rem; }
+  .hard-skills-bars__track { height: .5rem; }
+}

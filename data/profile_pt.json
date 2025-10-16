@@ -1,10 +1,14 @@
 {
   "title": "Eu e meu trabalho",
   "name": "Angelo Gama",
+  "shortName": "Angelo Gama",
   "photo": "assets/img/my-photo.jpg",
   "job": "Programador",
   "graduate": "Análise e Desenvolvimento de Sistemas",
-  "graduateScale": { "completed": 30, "total": 35 },
+  "graduateScale": {
+    "completed": 30,
+    "total": 35
+  },
   "translations": {
     "months": {
       "Janeiro": 0,
@@ -25,49 +29,134 @@
     "years": "ano",
     "years_plural": "anos",
     "months_text": "mês",
-    "months_plural": "meses"
+    "months_plural": "meses",
+    "and": "e",
+    "completedLabel": "disciplinas cursadas",
+    "ofLabel": "de"
   },
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
+  "phoneCountryCode": "+55",
   "email": "angelojbgama@gmail.com",
   "titleSkills": "Habilidades",
   "skills": {
     "titleHardSkills": "Habilidades Técnicas",
     "hardSkills": [
-      { "name": "Python", "level": 9 },
-      { "name": "C++", "level": 7 },
-      { "name": "Java", "level": 6 },
-      { "name": "JavaScript", "level": 7 },
-      { "name": "React Native", "level": 8 },
-      { "name": "Flutter", "level": 8 },
-      { "name": "Django", "level": 8 },
-      { "name": "Docker", "level": 7 },
-      { "name": "Kubernetes", "level": 7 },
-      { "name": "Celery", "level": 6 },
-      { "name": "RabbitMQ", "level": 6 },
-      { "name": "PostgreSQL", "level": 7 },
-      { "name": "Git", "level": 8 }
+      {
+        "name": "Python",
+        "level": 9
+      },
+      {
+        "name": "C++",
+        "level": 7
+      },
+      {
+        "name": "Java",
+        "level": 6
+      },
+      {
+        "name": "JavaScript",
+        "level": 7
+      },
+      {
+        "name": "React Native",
+        "level": 8
+      },
+      {
+        "name": "Flutter",
+        "level": 8
+      },
+      {
+        "name": "Django",
+        "level": 8
+      },
+      {
+        "name": "Docker",
+        "level": 7
+      },
+      {
+        "name": "Kubernetes",
+        "level": 7
+      },
+      {
+        "name": "Celery",
+        "level": 6
+      },
+      {
+        "name": "RabbitMQ",
+        "level": 6
+      },
+      {
+        "name": "PostgreSQL",
+        "level": 7
+      },
+      {
+        "name": "Git",
+        "level": 8
+      }
     ],
     "titleSoftSkills": "Habilidades Comportamentais",
     "softSkills": [
-      { "name": "Persuasão e negociação", "percent": 78 },
-      { "name": "Resolução de problemas", "percent": 82 },
-      { "name": "Inteligência emocional", "percent": 76 },
-      { "name": "Relacionamento interpessoal", "percent": 80 },
-      { "name": "Autoconhecimento", "percent": 74 },
-      { "name": "Autogestão", "percent": 77 },
-      { "name": "Empatia", "percent": 84 },
-      { "name": "Pensamento crítico", "percent": 79 },
-      { "name": "Produtividade", "percent": 81 },
-      { "name": "Criatividade", "percent": 83 }
+      {
+        "name": "Persuasão e negociação",
+        "percent": 78
+      },
+      {
+        "name": "Resolução de problemas",
+        "percent": 82
+      },
+      {
+        "name": "Inteligência emocional",
+        "percent": 76
+      },
+      {
+        "name": "Relacionamento interpessoal",
+        "percent": 80
+      },
+      {
+        "name": "Autoconhecimento",
+        "percent": 74
+      },
+      {
+        "name": "Autogestão",
+        "percent": 77
+      },
+      {
+        "name": "Empatia",
+        "percent": 84
+      },
+      {
+        "name": "Pensamento crítico",
+        "percent": 79
+      },
+      {
+        "name": "Produtividade",
+        "percent": 81
+      },
+      {
+        "name": "Criatividade",
+        "percent": 83
+      }
     ],
-    "softSkillsTest": { "label": "Faça o teste", "url": "https://estudante.estacio.br/mapeamento-socioemocional" }
+    "softSkillsTest": {
+      "label": "Faça o teste",
+      "url": "https://estudante.estacio.br/mapeamento-socioemocional"
+    }
   },
   "titleLanguages": "Idiomas",
   "languages": [
-    { "name": "Português (BR)", "level": 4 },
-    { "name": "Inglês", "level": 2 },
-    { "name": "Espanhol", "level": 1 }
+    {
+      "name": "Português (BR)",
+      "level": 4
+    },
+    {
+      "name": "Inglês",
+      "level": 2
+    },
+    {
+      "name": "Espanhol",
+      "level": 1
+    }
   ],
   "titleLanguageCertifications": "Certificações de domínio da língua",
   "languagesCertifications": [],
@@ -89,14 +178,54 @@
   ],
   "titlePortfolio": "Portfólio",
   "portfolio": [
-    { "name": "Bike2Bike", "url": "https://github.com/angelojbgama/Bike2Bike", "github": true },
-    { "name": "Cardápio Digital", "url": "https://angelojbgama.github.io/terra_e_p-o/", "github": false },
-    { "name": "APP Gerador de Senhas em React Native", "url": "https://github.com/angelojbgama/bat-pass-app", "github": true },
-    { "name": "Web Scraping de Notebooks com API RESTful", "url": "https://github.com/angelojbgama/crawler-jr", "github": true },
-    { "name": "Automação e leitura de PDF com Regex (Python)", "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex", "github": true },
-    { "name": "Automação e análise de dados em Python: IA e previsão de preços", "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es", "github": true },
-    { "name": "Python Insights - Analisando Dados com Python", "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main", "github": true },
-    { "name": "Python Power UP - Projeto de Automação", "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main", "github": true }
+    {
+      "name": "Bike2Bike",
+      "url": "https://github.com/angelojbgama/Bike2Bike",
+      "github": true,
+      "description": "Marketplace de bicicletas usadas com foco em trocas e doações entre ciclistas."
+    },
+    {
+      "name": "Cardápio Digital",
+      "url": "https://angelojbgama.github.io/terra_e_p-o/",
+      "github": false,
+      "description": "Cardápio online otimizado para tablets e totens em lanchonetes."
+    },
+    {
+      "name": "APP Gerador de Senhas em React Native",
+      "url": "https://github.com/angelojbgama/bat-pass-app",
+      "github": true,
+      "description": "Aplicativo mobile que gera senhas fortes com diferentes critérios."
+    },
+    {
+      "name": "Web Scraping de Notebooks com API RESTful",
+      "url": "https://github.com/angelojbgama/crawler-jr",
+      "github": true,
+      "description": "Crawler que coleta ofertas de notebooks e expõe dados via API."
+    },
+    {
+      "name": "Automação e leitura de PDF com Regex (Python)",
+      "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
+      "github": true,
+      "description": "Script que extrai campos de PDFs e gera relatórios estruturados."
+    },
+    {
+      "name": "Automação e análise de dados em Python: IA e previsão de preços",
+      "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
+      "github": true,
+      "description": "Pipeline de machine learning para prever preços com dados históricos."
+    },
+    {
+      "name": "Python Insights - Analisando Dados com Python",
+      "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
+      "github": true,
+      "description": "Coleção de notebooks explorando análises e visualizações em Python."
+    },
+    {
+      "name": "Python Power UP - Projeto de Automação",
+      "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
+      "github": true,
+      "description": "Ferramentas para automatizar tarefas repetitivas no dia a dia."
+    }
   ],
   "titleProfessionalExperience": "Experiência Profissional",
   "professionalExperience": [
@@ -123,7 +252,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-04",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
-      "tags": ["algoritmos", "estruturas de dados"]
+      "tags": [
+        "algoritmos",
+        "estruturas de dados"
+      ]
     },
     {
       "id": "PROGRAMAÇÃO_PARA_INTERNET",
@@ -131,7 +263,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-03",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_PARA_INTERNET.pdf",
-      "tags": ["web", "programação"]
+      "tags": [
+        "web",
+        "programação"
+      ]
     },
     {
       "id": "Conceitos_basicos_de_rede",
@@ -139,7 +274,10 @@
       "issuer": "CISCO",
       "date": "2024-02",
       "pdfUrl": "assets/certificados/Conceitos_basicos_de_rede.pdf",
-      "tags": ["redes", "básico"]
+      "tags": [
+        "redes",
+        "básico"
+      ]
     },
     {
       "id": "Fundamentos_do_Hardware_do_Computador",
@@ -147,7 +285,10 @@
       "issuer": "CISCO",
       "date": "2024-02",
       "pdfUrl": "assets/certificados/Fundamentos_do_Hardware_do_Computador.pdf",
-      "tags": ["hardware", "fundamentos"]
+      "tags": [
+        "hardware",
+        "fundamentos"
+      ]
     },
     {
       "id": "Logica_de_Programação",
@@ -155,7 +296,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2024-01",
       "pdfUrl": "assets/certificados/Logica_de_Programação.pdf",
-      "tags": ["lógica", "programação"]
+      "tags": [
+        "lógica",
+        "programação"
+      ]
     },
     {
       "id": "Computação_em_Nuvem_AWS_Discovery_Day",
@@ -163,7 +307,10 @@
       "issuer": "Amazon Web Services",
       "date": "2023-11",
       "pdfUrl": "assets/certificados/Computação_em_Nuvem_AWS_Discovery_Day.pdf",
-      "tags": ["nuvem", "aws"]
+      "tags": [
+        "nuvem",
+        "aws"
+      ]
     },
     {
       "id": "Introdução_a_Programação",
@@ -171,8 +318,10 @@
       "issuer": "EBAC",
       "date": "2023-10",
       "pdfUrl": "assets/certificados/Introdução_a_Programação.pdf",
-      "tags": ["programação", "introdução"]
+      "tags": [
+        "programação",
+        "introdução"
+      ]
     }
   ]
 }
-

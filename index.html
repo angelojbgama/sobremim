@@ -33,7 +33,7 @@
           <button
             id="download-pdf"
             class="download-pdf"
-            aria-label="Baixar curriculo em PDF"
+            aria-label="Baixar currículo em PDF"
           >
             <i class="fa-solid fa-file-pdf"></i>
           </button>
@@ -59,17 +59,19 @@
             <div class="information">
               <p class="job" id="profile.job">
                 <i
+                  id="icon.profile.job"
                   class="fas fa-briefcase"
                   aria-hidden="true"
-                  aria-label="Profissao"
+                  aria-label="Profissão"
                 ></i>
                 <span class="info-text"></span>
               </p>
               <p class="graduate" id="profile.graduate">
                 <i
+                  id="icon.profile.graduate"
                   class="fas fa-user-graduate"
                   aria-hidden="true"
-                  aria-label="Formacao"
+                  aria-label="Formação"
                 ></i>
                 <span class="info-text"></span>
               </p>
@@ -81,14 +83,16 @@
               </div>
               <p class="location" id="profile.location">
                 <i
+                  id="icon.profile.location"
                   class="fas fa-map-marker-alt"
                   aria-hidden="true"
-                  aria-label="Localizacao"
+                  aria-label="Localização"
                 ></i>
                 <span class="info-text"></span>
               </p>
               <p class="phone" id="profile.phone-container">
                 <i
+                  id="icon.profile.phone"
                   class="fas fa-phone"
                   aria-hidden="true"
                   aria-label="Telefone"
@@ -97,6 +101,7 @@
               </p>
               <p class="email" id="profile.email-container">
                 <i
+                  id="icon.profile.email"
                   class="fas fa-envelope"
                   aria-hidden="true"
                   aria-label="Email"
@@ -116,9 +121,8 @@
           <div class="skills">
             <section class="tools">
               <h3 id="skills.titleHardSkills"></h3>
-              <ul id="profile.skills.hardSkills" class="hard-skills" aria-hidden="true"></ul>
               <div class="hard-skills-chart" id="hard-skills-chart-container">
-                <canvas id="hardSkillsChart" aria-label="Mapa de habilidades técnicas" role="img"></canvas>
+                <div id="hardSkillsBars" class="hard-skills-bars" role="list"></div>
               </div>
             </section>
             <section class="personal">
@@ -187,10 +191,13 @@
       <footer class="site-footer" role="contentinfo">
         <div class="footer__inner">
           <p class="footer__copy">
-            <span id="footer.year"></span> • Feito com <span aria-hidden="true">❤</span>
-            <span class="sr-only">amor</span> por <strong id="profile.shortName">Angelo Gama</strong>
+            <span id="footer.year"></span> • <span id="footer.madeWith">Feito com</span>
+            <span aria-hidden="true">❤</span>
+            <span class="sr-only" id="footer.loveLabel">amor</span>
+            <span id="footer.byLabel">por</span>
+            <strong id="profile.shortName">Angelo Gama</strong>
           </p>
-          <nav class="footer__social" aria-label="Redes sociais">
+          <nav class="footer__social" id="footer.social" aria-label="Redes sociais">
             <a href="https://github.com/angelojbgama" target="_blank" rel="noopener" aria-label="GitHub">
               <i class="fab fa-github"></i>
               <span class="sr-only">GitHub</span>

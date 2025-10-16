@@ -315,6 +315,32 @@ const skillIconMapping = {
   "Unknown Skill 2": "fas fa-code",
 };
 
+function applyStaticUiText(uiText) {
+  if (!uiText || typeof uiText !== 'object') return;
+  const setAttrById = (id, attr, value) => {
+    if (!value) return;
+    const el = document.getElementById(id);
+    if (el) el.setAttribute(attr, value);
+  };
+
+  setAttrById('download-pdf', 'aria-label', uiText.downloadPdfAria);
+  setAttrById('theme-toggle', 'aria-label', uiText.toggleThemeAria);
+  setAttrById('icon.profile.job', 'aria-label', uiText.iconJobAria);
+  setAttrById('icon.profile.graduate', 'aria-label', uiText.iconGraduateAria);
+  setAttrById('icon.profile.location', 'aria-label', uiText.iconLocationAria);
+  setAttrById('icon.profile.phone', 'aria-label', uiText.iconPhoneAria);
+  setAttrById('icon.profile.email', 'aria-label', uiText.iconEmailAria);
+  setAttrById('hardSkillsBars', 'aria-label', uiText.hardSkillsChartLabel);
+  setAttrById('footer.social', 'aria-label', uiText.footerSocialAria);
+
+  const madeWith = document.getElementById('footer.madeWith');
+  if (madeWith && uiText.footerMadeWith) madeWith.textContent = uiText.footerMadeWith;
+  const loveLabel = document.getElementById('footer.loveLabel');
+  if (loveLabel && uiText.footerLoveSrLabel) loveLabel.textContent = uiText.footerLoveSrLabel;
+  const byLabel = document.getElementById('footer.byLabel');
+  if (byLabel && uiText.footerByLabel) byLabel.textContent = uiText.footerByLabel;
+}
+
 // --- Funções para Atualizar Diferentes Partes do Perfil ---
 // === Certificações — helpers ===
 
@@ -339,6 +365,11 @@ function updateProfileInfo(profileData) {
   const name = document.getElementById("profile.name");
   if (name) {
     name.innerText = profileData.name;
+  }
+
+  const shortName = document.getElementById("profile.shortName");
+  if (shortName) {
+    shortName.innerText = profileData.shortName || profileData.name || '';
   }
 
   // Atualizar Job
@@ -371,7 +402,9 @@ function updateProfileInfo(profileData) {
       const total = profileData.graduateScale.total;
       const percentage = Math.min((completed / total) * 100, 100).toFixed(2); // Limita a 100% e formata para 2 casas decimais
       progress.style.width = `${percentage}%`;
-      progressText.innerText = `${completed} disciplinas cursadas de ${total} (${percentage}%)`;
+      const ui = profileData.translations || {};
+      const completedLabel = ui.completedLabel || 'disciplinas cursadas';
+      progressText.innerText = `${completed} ${completedLabel} ${ui.ofLabel || 'de'} ${total} (${percentage}%)`;
     }
   }
 
@@ -388,9 +421,18 @@ function updateProfileInfo(profileData) {
   const phone = document.getElementById("profile.phone");
   if (phone) {
     phone.innerText = profileData.phone;
-    // Remova caracteres não numéricos para a URL do WhatsApp
-    const phoneNumber = profileData.phone.replace(/\D/g, "");
-    phone.href = `https://wa.me/55${phoneNumber}`;
+    const raw = String(profileData.phone || '');
+    const digits = raw.replace(/\D/g, "");
+    const ddiRaw = (profileData.phoneCountryCode || profileData.countryCode || "+55").replace(/[^\d+]/g, "");
+    const dialCode = ddiRaw.startsWith('+') ? ddiRaw.slice(1) : ddiRaw;
+    const normalizedDial = dialCode || '55';
+    const waNumber = digits.startsWith(normalizedDial) ? digits : `${normalizedDial}${digits}`;
+    if (digits) {
+      phone.href = `https://wa.me/${waNumber}`;
+    } else {
+      const telDigits = raw.replace(/[^\d+]/g, "");
+      phone.href = telDigits ? `tel:${telDigits}` : '#';
+    }
   }
 
   // Atualizar Email
@@ -407,202 +449,72 @@ function updateProfileInfo(profileData) {
 }
 
 // 2. Atualizar Habilidades Técnicas (Hard Skills)
-function updateHardSkills(profileData) {
-  // Data normalization: expect [{ name, level: 0..10 }]
-  const items = (profileData?.skills?.hardSkills || []).map((s) => {
-    if (typeof s === 'string') return { name: s, level: 0 };
-    return { name: s.name || '', level: Math.max(0, Math.min(10, Number(s.level ?? s.score ?? 0))) };
-  }).filter(it => it.name);
+function updateHardSkills(profileData, uiText) {
+  const locale = uiText || updateHardSkills._uiText || {};
+  updateHardSkills._uiText = locale;
+
+  const raw = Array.isArray(profileData?.skills?.hardSkills)
+    ? profileData.skills.hardSkills
+    : [];
+
+  const items = raw
+    .map((s) => {
+      if (typeof s === 'string') {
+        return { name: s, level: 0, iconClass: undefined };
+      }
+      const level = Math.max(0, Math.min(10, Number(s.level ?? s.score ?? 0)));
+      const iconClass = typeof s.iconClass === 'string' ? s.iconClass : undefined;
+      return { name: s.name || '', level, iconClass };
+    })
+    .filter((item) => item.name)
+    .sort((a, b) => b.level - a.level);
 
   const container = document.getElementById('hard-skills-chart-container');
-  const canvas = document.getElementById('hardSkillsChart');
-  if (!container || !canvas) return;
+  if (!container) return;
 
-  // Resize canvas to devicePixelRatio
-  const dpr = window.devicePixelRatio || 1;
-  const size = Math.min(560, container.clientWidth || 560);
-  const compact = size < 420;
-  const xcompact = size < 340;
-  container.classList.toggle('compact', compact);
-  container.classList.toggle('xcompact', xcompact);
-  canvas.width = Math.floor(size * dpr);
-  canvas.height = Math.floor(size * dpr);
-  canvas.style.width = size + 'px';
-  canvas.style.height = size + 'px';
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  // Theme colors from CSS vars
-  const cs = getComputedStyle(document.documentElement);
-  const accent = cs.getPropertyValue('--accent-color').trim() || '#7c5dfa';
-  const accentAlt = cs.getPropertyValue('--accent-color-alt').trim() || '#1bb9f1';
-  const textColor = cs.getPropertyValue('--text-color').trim() || '#ffffff';
-  const strokeColor = cs.getPropertyValue('--border-color').trim() || 'rgba(255,255,255,0.18)';
-  const isLight = document.body.classList.contains('light-theme') || !document.body.classList.contains('dark-theme');
-
-  const toRGB = (hex) => {
-    const h = hex.replace('#','');
-    const b = h.length === 3 ? h.split('').map(c=>c+c).join('') : h;
-    const n = parseInt(b,16); return { r:(n>>16)&255, g:(n>>8)&255, b:n&255 };
-  };
-  const lerp = (a,b,t)=>a+(b-a)*t;
-  const grad = ctx.createLinearGradient(0,0,size,0);
-  const a1 = toRGB(accent), a2 = toRGB(accentAlt);
-  grad.addColorStop(0, `rgba(${a1.r},${a1.g},${a1.b},0.9)`);
-  grad.addColorStop(1, `rgba(${a2.r},${a2.g},${a2.b},0.9)`);
-
-  // Geometry
-  const pad = 28; // px padding inside canvas
-  const cx = size/2, cy = size/2;
-  const radius = (size/2) - pad;
-  const axes = items.length || 1;
-  const rings = 5; // grid rings
-
-  // Clear
-  ctx.clearRect(0,0,size,size);
-
-  // Grid rings
-  ctx.lineWidth = isLight ? 1.2 : 1;
-  ctx.strokeStyle = isLight ? 'rgba(16,18,35,0.28)' : (strokeColor || 'rgba(255,255,255,0.22)');
-  for (let r=1; r<=rings; r++) {
-    const rr = (r/rings)*radius;
-    ctx.beginPath();
-    for (let i=0; i<axes; i++) {
-      const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
-      const x = cx + Math.cos(angle)*rr;
-      const y = cy + Math.sin(angle)*rr;
-      if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-    }
-    ctx.closePath(); ctx.stroke();
+  let root = document.getElementById('hardSkillsBars');
+  if (!root) {
+    root = document.createElement('div');
+    root.id = 'hardSkillsBars';
+    root.className = 'hard-skills-bars';
+    container.innerHTML = '';
+    container.appendChild(root);
   }
 
-  // Axes
-  for (let i=0; i<axes; i++) {
-    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
-    const x = cx + Math.cos(angle)*radius;
-    const y = cy + Math.sin(angle)*radius;
-    ctx.beginPath();
-    ctx.strokeStyle = isLight ? 'rgba(16,18,35,0.35)' : 'rgba(255,255,255,0.28)';
-    ctx.lineWidth = isLight ? 1.0 : 0.8;
-    ctx.moveTo(cx,cy); ctx.lineTo(x,y); ctx.stroke();
+  const chartLabel = locale.hardSkillsChartLabel || 'Technical skills overview';
+  root.setAttribute('role', 'list');
+  root.setAttribute('aria-label', chartLabel);
+
+  if (!items.length) {
+    const emptyText = locale.noHardSkills || 'No skills registered.';
+    root.innerHTML = `<p class="hard-skills-empty">${emptyText}</p>`;
+    return;
   }
 
-  // Data polygon
-  ctx.beginPath();
-  items.forEach((it, i) => {
-    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
-    const rr = (Math.max(0, Math.min(10, it.level)) / 10) * radius;
-    const x = cx + Math.cos(angle)*rr;
-    const y = cy + Math.sin(angle)*rr;
-    if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  });
-  ctx.closePath();
-  const fillAlpha = isLight ? 0.28 : 0.18;
-  ctx.fillStyle = `rgba(${a1.r},${a1.g},${a1.b},${fillAlpha})`;
-  ctx.strokeStyle = grad; ctx.lineWidth = 2; ctx.fill(); ctx.stroke();
+  const progressLabel = locale.hardSkillsProgressLabel || 'Skill level';
 
-  // Points
-  items.forEach((it, i) => {
-    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
-    const rr = (Math.max(0, Math.min(10, it.level)) / 10) * radius;
-    const x = cx + Math.cos(angle)*rr;
-    const y = cy + Math.sin(angle)*rr;
-    ctx.beginPath(); ctx.arc(x,y,isLight?3.5:3,0,Math.PI*2);
-    ctx.fillStyle = grad; ctx.fill();
-    // Halo para contraste
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = isLight ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.4)';
-    ctx.stroke();
-  });
-
-  // Overlay labels (HTML) com ícone, nome e nível
-  let labelsLayer = document.getElementById('hardSkillsLabels');
-  if (!labelsLayer) {
-    labelsLayer = document.createElement('div');
-    labelsLayer.id = 'hardSkillsLabels';
-    labelsLayer.className = 'hard-skills-labels';
-    container.appendChild(labelsLayer);
-  }
-  // Sincroniza tamanho e posição do overlay com o canvas
-  const contRect = container.getBoundingClientRect();
-  const canvRect = canvas.getBoundingClientRect();
-  labelsLayer.style.left = (canvRect.left - contRect.left) + 'px';
-  labelsLayer.style.top = (canvRect.top - contRect.top) + 'px';
-  labelsLayer.style.width = canvas.clientWidth + 'px';
-  labelsLayer.style.height = canvas.clientHeight + 'px';
-  labelsLayer.innerHTML = '';
-
-  items.forEach((it, i) => {
-    const angle = (-Math.PI/2) + (i * 2*Math.PI/axes);
-    const labelR = radius + (compact ? 8 : 16);
-    let lx = (canvas.clientWidth/2) + Math.cos(angle)*labelR;
-    let ly = (canvas.clientHeight/2) + Math.sin(angle)*labelR;
-    const edge = compact ? 4 : 6;
-    // Clamps to keep inside canvas box
-    lx = Math.max(edge, Math.min(canvas.clientWidth - edge, lx));
-    ly = Math.max(edge, Math.min(canvas.clientHeight - edge, ly));
-    const ic = (it.iconClass || skillIconMapping[it.name] || 'fas fa-tools');
-    const el = document.createElement('div');
-    el.className = 'hard-skills-label';
-    el.innerHTML = `<i class="${ic}" aria-hidden="true"></i><span>${it.name}</span><small>${it.level}/10</small>`;
-    el.title = `${it.name} — ${it.level}/10`;
-    el.setAttribute('aria-label', `${it.name} ${it.level}/10`);
-    el.style.left = lx + 'px';
-    el.style.top = ly + 'px';
-    labelsLayer.appendChild(el);
-  });
-
-  // Tooltip nativo/custom em telas pequenas
-  if (compact || xcompact) {
-    let tooltipEl = document.getElementById('app-tooltip');
-    if (!tooltipEl) {
-      tooltipEl = document.createElement('div');
-      tooltipEl.id = 'app-tooltip';
-      tooltipEl.className = 'app-tooltip';
-      document.body.appendChild(tooltipEl);
-    }
-    const showTip = (text, x, y) => {
-      tooltipEl.textContent = text;
-      tooltipEl.setAttribute('data-show', 'true');
-      const rect = tooltipEl.getBoundingClientRect();
-      const vw = window.innerWidth || document.documentElement.clientWidth;
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      const left = Math.min(Math.max(x, 6), vw - rect.width - 6);
-      const top = Math.min(Math.max(y - rect.height - 10, 6), vh - rect.height - 6);
-      tooltipEl.style.left = left + 'px';
-      tooltipEl.style.top = top + 'px';
-    };
-    const hideTip = () => { tooltipEl.removeAttribute('data-show'); };
-
-    labelsLayer.querySelectorAll('.hard-skills-label').forEach((el) => {
-      const text = el.getAttribute('aria-label') || el.title || '';
-      el.addEventListener('mouseenter', (e) => showTip(text, e.clientX, e.clientY));
-      el.addEventListener('mousemove', (e) => showTip(text, e.clientX, e.clientY));
-      el.addEventListener('mouseleave', hideTip);
-      el.addEventListener('click', (e) => { showTip(text, e.clientX, e.clientY); setTimeout(hideTip, 2000); });
-      el.addEventListener('touchstart', (e) => { const t=e.touches[0]; showTip(text, t.clientX, t.clientY); setTimeout(hideTip, 2000); }, { passive: true });
-    });
-  }
-
-  if (legend) {
-    const listHTML = items.map((it) => {
-      const ic = (it.iconClass || skillIconMapping[it.name] || 'fas fa-tools');
-      return `<span class="legend-item"><i class="${ic}" aria-hidden="true"></i><span>${it.name}</span><small> ${it.level}/10</small></span>`;
-    }).join('');
-    legend.innerHTML = `<div class="legend-list" aria-hidden="true">${listHTML}</div><div class="legend-scale">0–10 (quanto maior, mais domínio)</div>`;
-  }
-
-  // Redraw on resize/theme toggle
-  if (!updateHardSkills._bound) {
-    updateHardSkills._bound = true;
-    let resizeTO = null;
-    window.addEventListener('resize', () => {
-      window.clearTimeout(resizeTO);
-      resizeTO = window.setTimeout(() => updateHardSkills(profileData), 120);
-    });
-    const themeBtn = document.getElementById('theme-toggle');
-    if (themeBtn) themeBtn.addEventListener('click', () => setTimeout(() => updateHardSkills(profileData), 10));
-  }
+  root.innerHTML = items
+    .map((item) => {
+      const level = Math.max(0, Math.min(10, item.level));
+      const percent = (level / 10) * 100;
+      const icon = item.iconClass || skillIconMapping[item.name] || 'fas fa-tools';
+      const progressAria = `${progressLabel}: ${item.name}`;
+      return `
+        <div class="hard-skills-bars__item" role="listitem">
+          <div class="hard-skills-bars__header">
+            <span class="hard-skills-bars__info">
+              <i class="${icon}" aria-hidden="true"></i>
+              <span class="hard-skills-bars__name">${item.name}</span>
+            </span>
+            <span class="hard-skills-bars__value">${level}/10</span>
+          </div>
+          <div class="hard-skills-bars__track" role="progressbar" aria-label="${progressAria}" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${level}" aria-valuetext="${level}/10">
+            <span class="hard-skills-bars__fill" style="width: ${percent}%"></span>
+          </div>
+        </div>
+      `;
+    })
+    .join('');
 }
 
 // 3. Atualizar Habilidades Comportamentais (Soft Skills)
@@ -763,13 +675,14 @@ function updateLanguages(profileData, uiText) {
     }
 
     const title = profileData.titleLanguageCertifications || 'Certificações de domínio da língua';
+    const viewLabel = (uiText && uiText.viewLanguageCertification) || 'View';
     const itemsHtml = certs.map((c) => {
       const name = c.name || c.title || '';
       const issuer = c.issuer ? ` · ${c.issuer}` : '';
       const score = (c.score || c.levelText) ? ` · ${c.score || c.levelText}` : '';
       const date = c.date ? ` · ${c.date}` : '';
       const meta = `${issuer}${score}${date}`;
-      const link = c.url ? `<a class="language-certs__link" href="${c.url}" target="_blank" rel="noopener noreferrer">Ver</a>` : '';
+      const link = c.url ? `<a class="language-certs__link" href="${c.url}" target="_blank" rel="noopener noreferrer">${viewLabel}</a>` : '';
       return `
         <li class="language-certs__item">
           <div class="language-certs__head">
@@ -793,25 +706,34 @@ function updateLanguages(profileData, uiText) {
 }
 
 // 5. Atualizar Portfólio
-function updatePortfolio(profileData) {
+function updatePortfolio(profileData, uiText) {
   const portfolio = document.getElementById("profile.portfolio");
   if (!portfolio) return;
 
   const items = Array.isArray(profileData.portfolio) ? profileData.portfolio : [];
+  const locale = uiText || {};
+  const openLabel = locale.openProject || 'Open';
+  const githubLabel = locale.portfolioGithubLabel || 'GitHub';
+  const linkLabel = locale.portfolioLinkLabel || 'Link';
+
   portfolio.innerHTML = items
     .map((project) => {
       const isGithub = !!project.github;
       const icon = isGithub ? 'fab fa-github' : 'fas fa-link';
-      const label = isGithub ? 'GitHub' : 'Link';
+      const label = isGithub ? githubLabel : linkLabel;
       const url = project.url || '#';
+      const desc = (project.description || '').trim();
 
       return `
         <li class="portfolio-item">
-          <h3 class="portfolio-title">
-            <i class="${icon}" aria-hidden="true"></i> ${project.name}
-          </h3>
+          <div class="portfolio-info">
+            <h3 class="portfolio-title">
+              <i class="${icon}" aria-hidden="true"></i> ${project.name}
+            </h3>
+            ${desc ? `<p class="portfolio-description">${desc}</p>` : ''}
+          </div>
           <a class="btn btn-open-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="${label}: ${project.name}">
-            <i class="${icon}" aria-hidden="true"></i> <span>Abrir</span>
+            <i class="${icon}" aria-hidden="true"></i> <span>${openLabel}</span>
           </a>
         </li>
       `;
@@ -824,9 +746,8 @@ function calcularDuracao(periodo, traducoes) {
 
   // Função para converter a string da data em objeto Date
   function parseData(dataStr) {
-      console.log(`Parsing date string: "${dataStr}"`);
-      if (dataStr.toLowerCase() === traducoes.current.toLowerCase()) {
-          console.log(`Detected current position: "${dataStr}"`);
+      if (!dataStr) return new Date();
+      if (traducoes && typeof traducoes.current === 'string' && dataStr.toLowerCase() === traducoes.current.toLowerCase()) {
           return new Date();
       }
 
@@ -834,17 +755,12 @@ function calcularDuracao(periodo, traducoes) {
       const mes = partes[0];
       const ano = partes[partes.length - 1];
 
-      console.log(`Extracted month: "${mes}", year: "${ano}"`);
-
-      const mesIndex = traducoes.months[mes];
+      const mesIndex = traducoes && traducoes.months ? traducoes.months[mes] : undefined;
       if (mesIndex === undefined) {
-          console.error(`Mês inválido ou não mapeado: "${mes}"`);
           return new Date(); // Retorna a data atual para evitar falhas
       }
 
-      const date = new Date(parseInt(ano), mesIndex, 1);
-      console.log(`Parsed date: ${date}`);
-      return date;
+      return new Date(parseInt(ano, 10), mesIndex, 1);
   }
 
   const dataInicio = parseData(inicio);
@@ -858,14 +774,13 @@ function calcularDuracao(periodo, traducoes) {
       mesesDuracao += 12;
   }
 
-  console.log(`Duration: ${anos} anos e ${mesesDuracao} meses`);
-
+  const joinWord = (traducoes && typeof traducoes.and === 'string' && traducoes.and.trim()) || 'e';
   let duracao = "";
   if (anos > 0) {
       duracao += `${anos} ${anos > 1 ? traducoes.years_plural : traducoes.years}`;
   }
   if (mesesDuracao > 0) {
-      if (anos > 0) duracao += " e ";
+      if (anos > 0) duracao += ` ${joinWord} `;
       duracao += `${mesesDuracao} ${mesesDuracao > 1 ? traducoes.months_plural : traducoes.months_text}`;
   }
   return duracao || traducoes.lessThanAMonth;
@@ -962,7 +877,8 @@ function updateCertifications(profileData, uiText) {
     : [];
 
   if (!certs.length) {
-    list.innerHTML = `<li class='certifications__empty'>Nenhuma certificação cadastrada.</li>`;
+    const emptyText = (uiText && uiText.noCertifications) || 'No certifications available.';
+    list.innerHTML = `<li class='certifications__empty'>${emptyText}</li>`;
     return;
   }
 
@@ -1020,15 +936,16 @@ function updateSkillTitles(profileData) {
   const uiText = await fetchUiText();
   document.documentElement.lang = uiText.language;
   document.title = uiText.loading;
+  applyStaticUiText(uiText);
   try {
     const profileData = await fetchProfileData(uiText.language);
     if (profileData) {
       const safe=(l,fn)=>{ try { fn(); } catch(e) { console.error(`[update:${l}]`, e); } };
       safe('profileInfo',       ()=>updateProfileInfo(profileData));
       safe('softSkills',        ()=>updateSoftSkills(profileData));
-      safe('hardSkills',        ()=>updateHardSkills(profileData));
+      safe('hardSkills',        ()=>updateHardSkills(profileData, uiText));
       safe('languages',         ()=>updateLanguages(profileData, uiText));
-      safe('portfolio',         ()=>updatePortfolio(profileData));
+      safe('portfolio',         ()=>updatePortfolio(profileData, uiText));
       safe('experience',        ()=>updateProfessionalExperience(profileData));
       safe('academicFormation', ()=>updateAcademicFormation(profileData, uiText));
       safe('certifications',    ()=>updateCertifications(profileData, uiText));

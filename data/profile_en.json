@@ -1,6 +1,7 @@
 {
   "title": "Me and My Work",
   "name": "Angelo Gama",
+  "shortName": "Angelo Gama",
   "photo": "assets/img/my-photo.jpg",
   "job": "Programmer",
   "graduate": "Systems Analysis and Development",
@@ -28,10 +29,14 @@
     "years": "year",
     "years_plural": "years",
     "months_text": "month",
-    "months_plural": "months"
+    "months_plural": "months",
+    "and": "and",
+    "completedLabel": "subjects completed",
+    "ofLabel": "of"
   },
   "location": "Brazil - RJ",
   "phone": "(21) 98030-9664",
+  "phoneCountryCode": "+55",
   "email": "angelojbgama@gmail.com",
   "titleSkills": "Skills",
   "skills": {
@@ -39,39 +44,48 @@
     "hardSkills": [
       {
         "name": "Python",
-        "iconClass": "fab fa-python"
+        "iconClass": "fab fa-python",
+        "level": 9
       },
       {
         "name": "C++",
-        "iconClass": "fas fa-code"
+        "iconClass": "fas fa-code",
+        "level": 7
       },
       {
         "name": "JavaScript",
-        "iconClass": "fab fa-js-square"
+        "iconClass": "fab fa-js-square",
+        "level": 7
       },
       {
         "name": "Django",
-        "iconClass": "fas fa-leaf"
+        "iconClass": "fas fa-leaf",
+        "level": 8
       },
       {
         "name": "Docker",
-        "iconClass": "fab fa-docker"
+        "iconClass": "fab fa-docker",
+        "level": 7
       },
       {
         "name": "Celery",
-        "iconClass": "fas fa-rocket"
+        "iconClass": "fas fa-rocket",
+        "level": 6
       },
       {
         "name": "RabbitMQ",
-        "iconClass": "fas fa-server"
+        "iconClass": "fas fa-server",
+        "level": 6
       },
       {
         "name": "PostgreSQL",
-        "iconClass": "fas fa-database"
+        "iconClass": "fas fa-database",
+        "level": 7
       },
       {
         "name": "Git",
-        "iconClass": "fab fa-git-alt"
+        "iconClass": "fab fa-git-alt",
+        "level": 8
       }
     ],
     "titleSoftSkills": "Behavioral Skills",
@@ -85,9 +99,18 @@
   },
   "titleLanguages": "Languages",
   "languages": [
-    { "name": "Portuguese (BR)", "level": 4 },
-    { "name": "English", "level": 2 },
-    { "name": "Spanish", "level": 1 }
+    {
+      "name": "Portuguese (BR)",
+      "level": 4
+    },
+    {
+      "name": "English",
+      "level": 2
+    },
+    {
+      "name": "Spanish",
+      "level": 1
+    }
   ],
   "titleLanguageCertifications": "Language Proficiency Certifications",
   "languagesCertifications": [],
@@ -112,42 +135,50 @@
     {
       "name": "Bike2Bike",
       "url": "https://github.com/angelojbgama/Bike2Bike",
-      "github": true
+      "github": true,
+      "description": "Marketplace that lets cyclists trade or donate used bikes."
     },
     {
       "name": "Petpedia",
       "url": "https://github.com/angelojbgama/Petpedia",
-      "github": true
+      "github": true,
+      "description": "Discovery platform that aggregates pet care articles and products."
     },
     {
       "name": "Password Generator App in React.Native",
       "url": "https://github.com/angelojbgama/bat-pass-app",
-      "github": true
+      "github": true,
+      "description": "Mobile app to create strong passwords with customizable rules."
     },
     {
       "name": "Notebook Web Scraping with RESTful API",
       "url": "https://github.com/angelojbgama/crawler-jr",
-      "github": true
+      "github": true,
+      "description": "Crawler that scrapes laptop offers and exposes them through an API."
     },
     {
       "name": "Automation and PDF Reader Program with Regex Search in Python",
       "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
-      "github": true
+      "github": true,
+      "description": "Regex-powered extractor that parses PDFs and builds structured outputs."
     },
     {
       "name": "Automation and Data Analysis in Python: Artificial Intelligence and Price Predictions",
       "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
-      "github": true
+      "github": true,
+      "description": "ML pipeline that forecasts prices using historical datasets."
     },
     {
       "name": "Python Insights - Analyzing Data with Python",
       "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
-      "github": true
+      "github": true,
+      "description": "Notebook collection showcasing exploratory data analysis."
     },
     {
       "name": "Python Power UP - Automation Project",
       "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
-      "github": true
+      "github": true,
+      "description": "Utilities for automating repetitive workflow tasks."
     }
   ],
   "titleProfessionalExperience": "Professional Experience",
@@ -175,7 +206,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-04",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
-      "tags": ["algorithms", "data structures"]
+      "tags": [
+        "algorithms",
+        "data structures"
+      ]
     },
     {
       "id": "PROGRAMAÇÃO_PARA_INTERNET",
@@ -183,7 +217,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-03",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_PARA_INTERNET.pdf",
-      "tags": ["web", "programming"]
+      "tags": [
+        "web",
+        "programming"
+      ]
     },
     {
       "id": "Conceitos_basicos_de_rede",
@@ -191,7 +228,10 @@
       "issuer": "CISCO",
       "date": "2024-02",
       "pdfUrl": "assets/certificados/Conceitos_basicos_de_rede.pdf",
-      "tags": ["networking", "basics"]
+      "tags": [
+        "networking",
+        "basics"
+      ]
     },
     {
       "id": "Fundamentos_do_Hardware_do_Computador",
@@ -199,7 +239,10 @@
       "issuer": "CISCO",
       "date": "2024-02",
       "pdfUrl": "assets/certificados/Fundamentos_do_Hardware_do_Computador.pdf",
-      "tags": ["hardware", "fundamentals"]
+      "tags": [
+        "hardware",
+        "fundamentals"
+      ]
     },
     {
       "id": "Logica_de_Programação",
@@ -207,7 +250,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2024-01",
       "pdfUrl": "assets/certificados/Logica_de_Programação.pdf",
-      "tags": ["logic", "programming"]
+      "tags": [
+        "logic",
+        "programming"
+      ]
     },
     {
       "id": "Computação_em_Nuvem_AWS_Discovery_Day",
@@ -215,7 +261,10 @@
       "issuer": "Amazon Web Services",
       "date": "2023-11",
       "pdfUrl": "assets/certificados/Computação_em_Nuvem_AWS_Discovery_Day.pdf",
-      "tags": ["cloud", "aws"]
+      "tags": [
+        "cloud",
+        "aws"
+      ]
     },
     {
       "id": "Introdução_a_Programação",
@@ -223,7 +272,10 @@
       "issuer": "EBAC",
       "date": "2023-10",
       "pdfUrl": "assets/certificados/Introdução_a_Programação.pdf",
-      "tags": ["programming", "introduction"]
+      "tags": [
+        "programming",
+        "introduction"
+      ]
     }
   ]
 }

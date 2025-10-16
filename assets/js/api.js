@@ -37,7 +37,43 @@ async function fetchUiText(lang) {
         return uiData;
     } catch (error) {
         console.error(error);
-        return { loading: "Loading...", profileLoadError: "Could not load profile data.", profileNotLoaded: "Profile data was not loaded.", language };
+        return {
+            loading: "Loading...",
+            profileLoadError: "Could not load profile data.",
+            profileNotLoaded: "Profile data was not loaded.",
+            language,
+            titleAcademicFormation: "Academic Formation",
+            titleLanguageCertifications: "Language Proficiency Certifications",
+            titleCertifications: "Certifications",
+            certIssuer: "Issuer",
+            certDate: "Date",
+            openPdf: "Open PDF",
+            progressLabel: "Progress",
+            langLevelBasic: "Basic",
+            langLevelIntermediate: "Intermediate",
+            langLevelAdvanced: "Advanced",
+            langLevelFluent: "Fluent",
+            hardSkillsLegendHint: "0–10 (higher means more mastery)",
+            hardSkillsChartLabel: "Technical skills radar chart",
+            hardSkillsProgressLabel: "Skill level",
+            noHardSkills: "No skills registered.",
+            openProject: "Open",
+            noCertifications: "No certifications available.",
+            viewLanguageCertification: "View",
+            downloadPdfAria: "Download resume as PDF",
+            toggleThemeAria: "Toggle theme",
+            iconJobAria: "Occupation",
+            iconGraduateAria: "Education",
+            iconLocationAria: "Location",
+            iconPhoneAria: "Phone",
+            iconEmailAria: "Email",
+            footerSocialAria: "Social media",
+            footerMadeWith: "Made with",
+            footerLoveSrLabel: "love",
+            footerByLabel: "by",
+            portfolioGithubLabel: "GitHub",
+            portfolioLinkLabel: "Link",
+        };
     }
 }
 

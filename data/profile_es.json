@@ -1,10 +1,14 @@
 {
   "title": "Yo y Mi Trabajo",
   "name": "Angelo Gama",
+  "shortName": "Angelo Gama",
   "photo": "assets/img/my-photo.jpg",
   "job": "Programador",
-  "graduate": "An\u00E1lisis y Desarrollo de Sistemas",
-  "graduateScale": { "completed": 15, "total": 35 },
+  "graduate": "Análisis y Desarrollo de Sistemas",
+  "graduateScale": {
+    "completed": 15,
+    "total": 35
+  },
   "translations": {
     "months": {
       "Enero": 0,
@@ -22,88 +26,177 @@
     },
     "current": "Hasta el momento",
     "lessThanAMonth": "Menos de un mes",
-    "years": "a\u00F1o",
-    "years_plural": "a\u00F1os",
+    "years": "año",
+    "years_plural": "años",
     "months_text": "mes",
-    "months_plural": "meses"
+    "months_plural": "meses",
+    "and": "y",
+    "completedLabel": "materias cursadas",
+    "ofLabel": "de"
   },
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
+  "phoneCountryCode": "+55",
   "email": "angelojbgama@gmail.com",
   "titleSkills": "Habilidades",
   "skills": {
-    "titleHardSkills": "Habilidades T\u00E9cnicas",
+    "titleHardSkills": "Habilidades Técnicas",
     "hardSkills": [
-      { "name": "Python", "iconClass": "fab fa-python" },
-      { "name": "C++", "iconClass": "fas fa-code" },
-      { "name": "JavaScript", "iconClass": "fab fa-js-square" },
-      { "name": "Django", "iconClass": "fas fa-leaf" },
-      { "name": "Docker", "iconClass": "fab fa-docker" },
-      { "name": "Celery", "iconClass": "fas fa-rocket" },
-      { "name": "RabbitMQ", "iconClass": "fas fa-server" },
-      { "name": "PostgreSQL", "iconClass": "fas fa-database" },
-      { "name": "Git", "iconClass": "fab fa-git-alt" }
+      {
+        "name": "Python",
+        "iconClass": "fab fa-python",
+        "level": 9
+      },
+      {
+        "name": "C++",
+        "iconClass": "fas fa-code",
+        "level": 7
+      },
+      {
+        "name": "JavaScript",
+        "iconClass": "fab fa-js-square",
+        "level": 7
+      },
+      {
+        "name": "Django",
+        "iconClass": "fas fa-leaf",
+        "level": 8
+      },
+      {
+        "name": "Docker",
+        "iconClass": "fab fa-docker",
+        "level": 7
+      },
+      {
+        "name": "Celery",
+        "iconClass": "fas fa-rocket",
+        "level": 6
+      },
+      {
+        "name": "RabbitMQ",
+        "iconClass": "fas fa-server",
+        "level": 6
+      },
+      {
+        "name": "PostgreSQL",
+        "iconClass": "fas fa-database",
+        "level": 7
+      },
+      {
+        "name": "Git",
+        "iconClass": "fab fa-git-alt",
+        "level": 8
+      }
     ],
     "titleSoftSkills": "Habilidades Blandas",
     "softSkills": [
-      "Adaptaci\u00F3n a nuevas tecnolog\u00EDas",
-      "Resoluci\u00F3n de problemas",
-      "Capacidad de abstracci\u00F3n",
+      "Adaptación a nuevas tecnologías",
+      "Resolución de problemas",
+      "Capacidad de abstracción",
       "Pensamiento enfocado en el usuario",
       "Persistencia"
     ]
   },
   "titleLanguages": "Idiomas",
   "languages": [
-    { "name": "Portugu\u00E9s (BR)", "level": 4 },
-    { "name": "Ingl\u00E9s", "level": 2 },
-    { "name": "Espa\u00F1ol", "level": 1 }
+    {
+      "name": "Portugués (BR)",
+      "level": 4
+    },
+    {
+      "name": "Inglés",
+      "level": 2
+    },
+    {
+      "name": "Español",
+      "level": 1
+    }
   ],
   "titleLanguageCertifications": "Certificaciones de dominio del idioma",
   "languagesCertifications": [],
-  "titleAcademicFormation": "Formaci\u00F3n Acad\u00E9mica",
+  "titleAcademicFormation": "Formación Académica",
   "academicFormation": [
     {
-      "name": "Tecn\u00F3logo en An\u00E1lisis y Desarrollo de Sistemas",
-      "institution": "Est\u00E1cio",
+      "name": "Tecnólogo en Análisis y Desarrollo de Sistemas",
+      "institution": "Estácio",
       "period": "Febrero de 2023 - Hasta el momento",
-      "description": "Formaci\u00F3n enfocada en desarrollo de software, arquitectura y buenas pr\u00E1cticas."
+      "description": "Formación enfocada en desarrollo de software, arquitectura y buenas prácticas."
     },
     {
-      "name": "T\u00E9cnico en Electr\u00F3nica",
+      "name": "Técnico en Electrónica",
       "institution": "UNICORP",
       "period": "Enero de 2010 - Diciembre de 2012",
-      "description": "Formaci\u00F3n t\u00E9cnica con \u00E9nfasis en circuitos, instrumentaci\u00F3n y mantenimiento.",
+      "description": "Formación técnica con énfasis en circuitos, instrumentación y mantenimiento.",
       "pdfUrl": "assets/formacao_academica/certificado_tecnico_em_eletronica.pdf"
     }
   ],
   "titlePortfolio": "Portafolio",
   "portfolio": [
-    { "name": "Bike2Bike", "url": "https://github.com/angelojbgama/Bike2Bike", "github": true },
-    { "name": "Petpedia", "url": "https://github.com/angelojbgama/Petpedia", "github": true },
-    { "name": "Generador de Contrase\u00F1as APP en React Native", "url": "https://github.com/angelojbgama/bat-pass-app", "github": true },
-    { "name": "Web Scraping de Notebooks con API RESTful", "url": "https://github.com/angelojbgama/crawler-jr", "github": true },
-    { "name": "Automatizaci\u00F3n y Lector de PDF con b\u00FAsqueda por Regex en Python", "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex", "github": true },
-    { "name": "Automatizaci\u00F3n y An\u00E1lisis de Datos en Python: IA y Predicci\u00F3n de Precios", "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es", "github": true },
-    { "name": "Python Insights - Analizando Datos con Python", "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main", "github": true },
-    { "name": "Python Power UP - Proyecto de Automatizaci\u00F3n", "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main", "github": true }
+    {
+      "name": "Bike2Bike",
+      "url": "https://github.com/angelojbgama/Bike2Bike",
+      "github": true,
+      "description": "Marketplace que conecta ciclistas para intercambiar o donar bicicletas."
+    },
+    {
+      "name": "Petpedia",
+      "url": "https://github.com/angelojbgama/Petpedia",
+      "github": true,
+      "description": "Plataforma de descubrimiento con artículos y productos para el cuidado de mascotas."
+    },
+    {
+      "name": "Generador de Contraseñas APP en React Native",
+      "url": "https://github.com/angelojbgama/bat-pass-app",
+      "github": true,
+      "description": "Aplicación móvil que crea contraseñas seguras con reglas personalizadas."
+    },
+    {
+      "name": "Web Scraping de Notebooks con API RESTful",
+      "url": "https://github.com/angelojbgama/crawler-jr",
+      "github": true,
+      "description": "Crawler que recopila ofertas de notebooks y expone los datos vía API."
+    },
+    {
+      "name": "Automatización y Lector de PDF con búsqueda por Regex en Python",
+      "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
+      "github": true,
+      "description": "Extractor basado en expresiones regulares para procesar PDFs."
+    },
+    {
+      "name": "Automatización y Análisis de Datos en Python: IA y Predicción de Precios",
+      "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
+      "github": true,
+      "description": "Pipeline de IA que pronostica precios usando series históricas."
+    },
+    {
+      "name": "Python Insights - Analizando Datos con Python",
+      "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
+      "github": true,
+      "description": "Colección de notebooks con análisis exploratorios."
+    },
+    {
+      "name": "Python Power UP - Proyecto de Automatización",
+      "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
+      "github": true,
+      "description": "Utilidades para automatizar tareas recurrentes."
+    }
   ],
   "titleProfessionalExperience": "Experiencia Profesional",
   "professionalExperience": [
     {
-      "name": "Fundaci\u00F3n COPPETEC, R\u00EDo de Janeiro - Programador",
+      "name": "Fundación COPPETEC, Río de Janeiro - Programador",
       "period": "Abril de 2024 - Hasta el momento",
-      "description": "Particip\u00E9 en actividades generales de desarrollo y soporte, colaborando con el equipo seg\u00FAn las necesidades."
+      "description": "Participé en actividades generales de desarrollo y soporte, colaborando con el equipo según las necesidades."
     },
     {
-      "name": "Grupo PLL, R\u00EDo de Janeiro - T\u00E9cnico en Electr\u00F3nica",
+      "name": "Grupo PLL, Río de Janeiro - Técnico en Electrónica",
       "period": "Febrero de 2016 - Noviembre de 2019",
-      "description": "Realic\u00E9 tareas t\u00E9cnicas de rutina y brinde apoyo diario en conjunto con el equipo."
+      "description": "Realicé tareas técnicas de rutina y brinde apoyo diario en conjunto con el equipo."
     },
     {
-      "name": "GMX, R\u00EDo de Janeiro - T\u00E9cnico en Electr\u00F3nica",
+      "name": "GMX, Río de Janeiro - Técnico en Electrónica",
       "period": "Julio de 2012 - Octubre de 2015",
-      "description": "Desempe\u00F1\u00E9 funciones generales del \u00E1rea, prestando soporte t\u00E9cnico y operativo seg\u00FAn la demanda."
+      "description": "Desempeñé funciones generales del área, prestando soporte técnico y operativo según la demanda."
     }
   ],
   "certifications": [
@@ -113,7 +206,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-04",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
-      "tags": ["algoritmos", "estructuras de datos"]
+      "tags": [
+        "algoritmos",
+        "estructuras de datos"
+      ]
     },
     {
       "id": "PROGRAMAÇÃO_PARA_INTERNET",
@@ -121,7 +217,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-03",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_PARA_INTERNET.pdf",
-      "tags": ["web", "programación"]
+      "tags": [
+        "web",
+        "programación"
+      ]
     },
     {
       "id": "Conceitos_basicos_de_rede",
@@ -129,7 +228,10 @@
       "issuer": "CISCO",
       "date": "2024-02",
       "pdfUrl": "assets/certificados/Conceitos_basicos_de_rede.pdf",
-      "tags": ["redes", "básico"]
+      "tags": [
+        "redes",
+        "básico"
+      ]
     },
     {
       "id": "Fundamentos_do_Hardware_do_Computador",
@@ -137,7 +239,10 @@
       "issuer": "CISCO",
       "date": "2024-02",
       "pdfUrl": "assets/certificados/Fundamentos_do_Hardware_do_Computador.pdf",
-      "tags": ["hardware", "fundamentos"]
+      "tags": [
+        "hardware",
+        "fundamentos"
+      ]
     },
     {
       "id": "Logica_de_Programação",
@@ -145,7 +250,10 @@
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2024-01",
       "pdfUrl": "assets/certificados/Logica_de_Programação.pdf",
-      "tags": ["lógica", "programación"]
+      "tags": [
+        "lógica",
+        "programación"
+      ]
     },
     {
       "id": "Computação_em_Nuvem_AWS_Discovery_Day",
@@ -153,7 +261,10 @@
       "issuer": "Amazon Web Services",
       "date": "2023-11",
       "pdfUrl": "assets/certificados/Computação_em_Nuvem_AWS_Discovery_Day.pdf",
-      "tags": ["nube", "aws"]
+      "tags": [
+        "nube",
+        "aws"
+      ]
     },
     {
       "id": "Introdução_a_Programação",
@@ -161,8 +272,10 @@
       "issuer": "EBAC",
       "date": "2023-10",
       "pdfUrl": "assets/certificados/Introdução_a_Programação.pdf",
-      "tags": ["programación", "introducción"]
+      "tags": [
+        "programación",
+        "introducción"
+      ]
     }
   ]
 }
-
