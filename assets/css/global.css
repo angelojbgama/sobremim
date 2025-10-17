@@ -1058,3 +1058,19 @@ body.light-theme .certifications__tags .tag {
 .hard-skill-indicator.count-high {
   background: linear-gradient(135deg, #ff7e5f, var(--accent-color));
 }
+
+.hard-skill-usage,
+.hard-skill-level {
+  font-size: var(--font-small);
+  text-align: center;
+}
+
+.hard-skill-usage {
+  color: var(--text-color);
+  opacity: 0.85;
+}
+
+.hard-skill-level {
+  color: var(--accent-color);
+  font-weight: 600;
+}

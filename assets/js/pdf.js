@@ -1,467 +1,581 @@
-// assets/js/pdf.js — PDF simples e multilíngue
-// Requer jsPDF 2.5.x (já incluído no index.html)
+// assets/js/pdf.js — geração de currículo em PDF com layout estilo currículo usando PDF-LIB
 
-document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("download-pdf");
-  if (!button || !window.jspdf) return;
+document.addEventListener('DOMContentLoaded', () => {
+  const trigger = document.getElementById('download-pdf');
+  if (!trigger || !window.PDFLib) return;
 
-  const mm = (v) => v; // unidade mm
-  const palettes = {
-    // Paleta monocromática (preto, branco e cinza)
-    mono:  { brand: [60,60,60], text: [0,0,0], muted: [96,96,96], stroke: [190,190,190], surface: [255,255,255] },
-    light: { brand: [124, 93, 250], text: [31, 41, 55], muted: [100,116,139], stroke: [220, 224, 231], surface: [255,255,255] },
-    dark:  { brand: [124, 93, 250], text: [243,244,246], muted: [156,163,175], stroke: [75, 85, 99],  surface: [31,41,55]   },
+  const mmToPt = (mm) => (mm / 25.4) * 72;
+
+  const palette = {
+    brand: PDFLib.rgb(0, 0, 0),
+    text: PDFLib.rgb(0.12, 0.12, 0.12),
+    muted: PDFLib.rgb(0.45, 0.45, 0.45),
+    stroke: PDFLib.rgb(0.78, 0.78, 0.78),
+    surface: PDFLib.rgb(0.96, 0.96, 0.96),
   };
 
-  // Helpers de imagem/QR (online)
-  async function urlToDataURL(url) {
-    try {
-      const res = await fetch(url, { mode: "cors" });
-      if (!res.ok) return null;
-      const blob = await res.blob();
-      return await new Promise((resolve) => {
-        const r = new FileReader();
-        r.onloadend = () => resolve(r.result);
-        r.readAsDataURL(blob);
-      });
-    } catch { return null; }
-  }
-  async function makeQRDataURL(text, px = 220) {
-    const api = `https://api.qrserver.com/v1/create-qr-code/?size=${px}x${px}&data=${encodeURIComponent(text)}`;
-    return await urlToDataURL(api);
-  }
+  const sectionTitles = {
+    contact: { pt: 'Contato', en: 'Contact', es: 'Contacto' },
+    summary: { pt: 'Resumo Profissional', en: 'Professional Summary', es: 'Resumen Profesional' },
+    hardSkills: { pt: 'Competências Técnicas', en: 'Technical Skills', es: 'Competencias Técnicas' },
+    softSkills: { pt: 'Competências Comportamentais', en: 'Soft Skills', es: 'Habilidades Blandas' },
+    languages: { pt: 'Idiomas', en: 'Languages', es: 'Idiomas' },
+    certifications: { pt: 'Certificações', en: 'Certifications', es: 'Certificaciones' },
+    featuredProjects: { pt: 'Projetos em Destaque', en: 'Featured Projects', es: 'Proyectos Destacados' },
+  };
+
+  const resolveTitle = (key, lang) => sectionTitles[key]?.[lang] || sectionTitles[key]?.pt || key;
+
+  const formatYM = (ym) => {
+    if (!ym || typeof ym !== 'string') return ym || '';
+    const [year, month] = ym.split('-');
+    if (!year || !month) return ym;
+    return `${month.padStart(2, '0')}/${year}`;
+  };
 
   function calcularDuracao(periodo, traducoes) {
-    const [inicio, fim] = periodo.split(" - ").map(str => str.trim());
+    if (typeof periodo !== 'string' || !periodo.includes(' - ')) return '';
+    const [inicioStr, fimStr] = periodo.split(' - ').map((str) => str.trim());
 
-    // Função para converter a string da data em objeto Date
-    function parseData(dataStr) {
-        if (!dataStr) return new Date();
-        if (traducoes && typeof traducoes.current === 'string' && dataStr.toLowerCase() === traducoes.current.toLowerCase()) {
-            return new Date();
-        }
+    const parse = (dataStr) => {
+      if (!dataStr) return new Date();
+      if (
+        traducoes &&
+        typeof traducoes.current === 'string' &&
+        dataStr.toLowerCase() === traducoes.current.toLowerCase()
+      ) {
+        return new Date();
+      }
+      const partes = dataStr.split(' ');
+      const ano = partes[partes.length - 1];
+      const mesNome = partes[0];
+      const mesIndex = traducoes && traducoes.months ? traducoes.months[mesNome] : undefined;
+      if (mesIndex === undefined) return new Date();
+      return new Date(parseInt(ano, 10), mesIndex, 1);
+    };
 
-        const partes = dataStr.split(" ");
-        const mes = partes[0];
-        const ano = partes[partes.length - 1];
+    const inicio = parse(inicioStr);
+    const fim = parse(fimStr);
 
-        const mesIndex = traducoes && traducoes.months ? traducoes.months[mes] : undefined;
-        if (mesIndex === undefined) {
-            return new Date(); // Retorna a data atual para evitar falhas
-        }
+    let anos = fim.getFullYear() - inicio.getFullYear();
+    let meses = fim.getMonth() - inicio.getMonth();
 
-        return new Date(parseInt(ano, 10), mesIndex, 1);
+    if (meses < 0) {
+      anos -= 1;
+      meses += 12;
     }
 
-    const dataInicio = parseData(inicio);
-    const dataFim = parseData(fim);
+    const joinWord = (traducoes && traducoes.and) || 'e';
+    const anosLabel = anos === 1 ? traducoes?.years || 'ano' : traducoes?.years_plural || 'anos';
+    const mesesLabel =
+      meses === 1 ? traducoes?.months_text || 'mês' : traducoes?.months_plural || 'meses';
 
-    let anos = dataFim.getFullYear() - dataInicio.getFullYear();
-    let mesesDuracao = dataFim.getMonth() - dataInicio.getMonth();
+    const partes = [];
+    if (anos > 0) partes.push(`${anos} ${anosLabel}`);
+    if (meses > 0) partes.push(`${meses} ${mesesLabel}`);
 
-    if (mesesDuracao < 0) {
-        anos--;
-        mesesDuracao += 12;
-    }
-
-    const joinWord = (traducoes && typeof traducoes.and === 'string' && traducoes.and.trim()) || 'e';
-    let duracao = "";
-    if (anos > 0) {
-        duracao += `${anos} ${anos > 1 ? traducoes.years_plural : traducoes.years}`;
-    }
-    if (mesesDuracao > 0) {
-        if (anos > 0) duracao += ` ${joinWord} `;
-        duracao += `${mesesDuracao} ${mesesDuracao > 1 ? traducoes.months_plural : traducoes.months_text}`;
-    }
-    return duracao || traducoes.lessThanAMonth;
+    if (!partes.length) return traducoes?.lessThanAMonth || 'Menos de um mês';
+    if (partes.length === 1) return partes[0];
+    return `${partes[0]} ${joinWord} ${partes[1]}`;
   }
 
-  button.addEventListener("click", async () => {
-    try {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: "mm", format: "a4", compress: true });
-      const W = doc.internal.pageSize.getWidth();
-      const H = doc.internal.pageSize.getHeight();
-      const M = mm(14);
-      let y = M;
+  function collectHardSkills(profile) {
+    const entries = new Map();
+    const ensure = (nameRaw) => {
+      const name = typeof nameRaw === 'string' ? nameRaw.trim() : '';
+      if (!name) return null;
+      if (!entries.has(name)) {
+        entries.set(name, { name, level: null, projectNames: new Set() });
+      }
+      return entries.get(name);
+    };
 
-      // Idioma atual e textos
+    const hard = profile?.skills?.hardSkills;
+    if (Array.isArray(hard)) {
+      hard.forEach((item) => {
+        if (!item) return;
+        if (typeof item === 'string') {
+          ensure(item);
+          return;
+        }
+        const entry = ensure(item.name);
+        if (!entry) return;
+        const level = Number(item.level ?? item.score ?? item.proficiency);
+        if (Number.isFinite(level)) entry.level = Math.max(entry.level ?? level, level);
+      });
+    }
+
+    const portfolio = Array.isArray(profile?.portfolio) ? profile.portfolio : [];
+    portfolio.forEach((project) => {
+      const techs = Array.isArray(project?.technologies) ? project.technologies : [];
+      techs.forEach((tech) => {
+        const entry = ensure(tech);
+        if (!entry) return;
+        if (project?.name) entry.projectNames.add(project.name);
+      });
+    });
+
+    return Array.from(entries.values())
+      .map((entry) => ({
+        name: entry.name,
+        level: Number.isFinite(entry.level) ? Number(entry.level) : null,
+        projectCount: entry.projectNames.size,
+      }))
+      .sort((a, b) => {
+        if (b.projectCount !== a.projectCount) return b.projectCount - a.projectCount;
+        if ((b.level || 0) !== (a.level || 0)) return (b.level || 0) - (a.level || 0);
+        return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+      });
+  }
+
+  function collectSoftSkills(profile) {
+    const soft = profile?.skills?.softSkills;
+    if (!Array.isArray(soft)) return [];
+    return soft
+      .map((item) => {
+        if (typeof item === 'string') return { name: item.trim(), percent: null };
+        if (item && typeof item === 'object') {
+          const name = typeof item.name === 'string' ? item.name.trim() : '';
+          const percent = Number(item.percent ?? item.percentage);
+          return name ? { name, percent: Number.isFinite(percent) ? percent : null } : null;
+        }
+        return null;
+      })
+      .filter((item) => item && item.name);
+  }
+
+  function splitText(text, font, fontSize, maxWidth) {
+    if (!text) return [];
+    const cleaned = String(text).replace(/\s+/g, ' ').trim();
+    if (!cleaned) return [];
+    const words = cleaned.split(' ');
+    const lines = [];
+    let current = '';
+
+    words.forEach((word) => {
+      const candidate = current ? `${current} ${word}` : word;
+      const width = font.widthOfTextAtSize(candidate, fontSize);
+      if (width <= maxWidth) {
+        current = candidate;
+      } else {
+        if (current) lines.push(current);
+        current = word;
+      }
+    });
+
+    if (current) lines.push(current);
+    return lines;
+  }
+
+  trigger.addEventListener('click', async () => {
+    try {
+      const { PDFDocument, StandardFonts } = window.PDFLib;
       const lang = document.documentElement.lang || 'pt';
       const ui = await fetchUiText(lang);
-      const data = await fetchProfileData(lang);
-      if (!data) return;
+      const profile = await fetchProfileData(lang);
+      if (!profile) return;
 
-      const P = palettes.mono;
-      const setText = (rgb) => doc.setTextColor(rgb[0], rgb[1], rgb[2]);
-      const setDraw = (rgb) => doc.setDrawColor(rgb[0], rgb[1], rgb[2]);
-      const setFill = (rgb) => doc.setFillColor(rgb[0], rgb[1], rgb[2]);
+      const doc = await PDFDocument.create();
+      const fontRegular = await doc.embedFont(StandardFonts.Helvetica);
+      const fontBold = await doc.embedFont(StandardFonts.HelveticaBold);
+      const fontItalic = await doc.embedFont(StandardFonts.HelveticaOblique);
 
-      // Helpers
-      const section = (title) => {
-        y += mm(4); // More space before section
-        doc.setFont("helvetica", "bold"); doc.setFontSize(12);
-        setText(P.brand);
-        doc.text(String(title || '').toUpperCase(), M, y);
-        y += mm(5);
-        doc.setLineWidth(0.2); setDraw(P.stroke);
-        doc.line(M, y, W - M, y);
-        y += mm(5);
-        doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-        setText(P.text);
-      };
-      const ensure = (h) => { if (y + h > H - M) { doc.addPage(); y = M; } };
-      const paragraph = (text, maxW) => {
-        if (!text) return;
-        const lines = doc.splitTextToSize(String(text), maxW);
-        lines.forEach(ln => { ensure(mm(6)); doc.text(ln, M, y); y += mm(6); });
-        y += mm(2);
-      };
-      const simpleItem = (label, value) => {
-        if (!value) return;
-        ensure(mm(6));
-        setText(P.text);
-        doc.setFont("helvetica", "bold"); doc.text(`${label}:`, M, y);
-        doc.setFont("helvetica", "normal"); setText(P.muted); doc.text(String(value), M + mm(34), y);
-        setText(P.text);
-        y += mm(6);
-      };
-      const textRight = (text, xRight, yPos) => {
-        const t = String(text || '');
-        const tw = doc.getTextWidth(t);
-        doc.text(t, xRight - tw, yPos);
-      };
-      const BAR_H = mm(4), BAR_TOP = mm(1), BAR_BOTTOM = mm(4);
-      const drawPercentBar = (pct, w = (W - 2*M)) => {
-        const x = M;
-        const p = Math.max(0, Math.min(100, Number(pct)));
-        const filled = (p / 100) * w;
-        // Espaçamento antes da barra
-        ensure(BAR_TOP + BAR_H + BAR_BOTTOM);
-        y += BAR_TOP;
-        // trilho em cinza claro e preenchimento com cinza médio
-        setDraw(P.stroke); setFill(P.stroke);
-        doc.rect(x, y, w, BAR_H, 'FD');
-        setFill(P.brand);
-        if (filled > 0) doc.rect(x, y, filled, BAR_H, 'F');
-        y += BAR_H + BAR_BOTTOM;
+      const pageWidth = mmToPt(210);
+      const pageHeight = mmToPt(297);
+      const margin = mmToPt(15);
+      const contentWidth = pageWidth - margin * 2;
+      const columnGap = mmToPt(8);
+      const leftWidth = mmToPt(64);
+      const rightWidth = contentWidth - leftWidth - columnGap;
+
+      const headingLineGap = mmToPt(3);
+      const lineSpacing = (size) => size * 1.4;
+
+      let page = doc.addPage([pageWidth, pageHeight]);
+      let cursorY = pageHeight - margin;
+
+      const addPage = () => {
+        page = doc.addPage([pageWidth, pageHeight]);
+        cursorY = pageHeight - margin;
       };
 
-      // Cabeçalho redesenhado
-      const header_y_start = y;
-      
-      // Lado esquerdo: Nome e Cargo
-      setText(P.text); doc.setFont("helvetica", "bold"); doc.setFontSize(26);
-      doc.text(String(data.name || ''), M, y);
-      y += mm(10);
-      if (data.job) {
-        doc.setFont("helvetica", "normal"); doc.setFontSize(14);
-        setText(P.muted);
-        doc.text(String(data.job), M, y);
-        y += mm(8);
+      const ensureSpace = (height) => {
+        if (cursorY - height < margin) addPage();
+      };
+
+      // Cabeçalho
+      const headerHeight = mmToPt(34);
+      ensureSpace(headerHeight);
+      cursorY -= mmToPt(6);
+
+      page.drawRectangle({
+        x: margin,
+        y: cursorY - headerHeight,
+        width: contentWidth,
+        height: headerHeight,
+        color: palette.surface,
+        borderColor: palette.stroke,
+        borderWidth: 1,
+      });
+
+      const headerX = margin + mmToPt(10);
+      let headerY = cursorY - mmToPt(8);
+
+      page.drawText(profile.name || '', {
+        x: headerX,
+        y: headerY,
+        size: 22,
+        font: fontBold,
+        color: palette.text,
+      });
+      headerY -= mmToPt(8);
+
+      if (profile.job) {
+        page.drawText(profile.job, {
+          x: headerX,
+          y: headerY,
+          size: 12,
+          font: fontRegular,
+          color: palette.muted,
+        });
       }
 
-      const header_left_height = y - header_y_start;
-      y = header_y_start; // Reseta o y para o lado direito
+      const contacts = [
+        { label: ui.contactEmailLabel || 'E-mail', value: profile.email },
+        { label: ui.contactPhoneLabel || 'Telefone', value: profile.phone },
+        { label: ui.contactLocationLabel || 'Localização', value: profile.location },
+      ].filter((item) => item.value);
 
-      // Lado direito: Informações de Contato
-      let y_right_header = y;
-      doc.setFont("helvetica", "normal"); doc.setFontSize(10);
-      setText(P.text);
-      
-      const contact_info = [
-        { label: ui.contactEmailLabel || 'E-mail', value: data.email },
-        { label: ui.contactPhoneLabel || 'Telefone', value: data.phone },
-        { label: ui.contactLocationLabel || 'Localização', value: data.location }
-      ].filter(info => info.value);
+      let contactY = cursorY - mmToPt(8);
+      const contactX = margin + leftWidth + columnGap;
 
-      contact_info.forEach(info => {
-          doc.setFont("helvetica", "normal");
-          const valueText = info.value;
-          const valueWidth = doc.getTextWidth(valueText);
-          textRight(valueText, W - M, y_right_header);
-
-          doc.setFont("helvetica", "bold");
-          const labelText = `${info.label}: `;
-          textRight(labelText, W - M - valueWidth, y_right_header);
-
-          y_right_header += mm(5);
+      contacts.forEach((info) => {
+        page.drawText(`${info.label}:`, {
+          x: contactX,
+          y: contactY,
+          size: 10,
+          font: fontBold,
+          color: palette.brand,
+        });
+        page.drawText(String(info.value), {
+          x: contactX + mmToPt(24),
+          y: contactY,
+          size: 10,
+          font: fontRegular,
+          color: palette.text,
+        });
+        contactY -= mmToPt(6);
       });
-      
-      const header_right_height = y_right_header - header_y_start;
-      y = header_y_start + Math.max(header_left_height, header_right_height) + mm(5);
-      
-      // Linha inferior para o cabeçalho
-      doc.setLineWidth(0.3); setDraw(P.stroke);
-      doc.line(M, y, W - M, y);
-      y += mm(8);
 
-      // Formação (resumo + progresso)
-      if (data.graduate) {
-        ensure(mm(10));
-        section(ui.titleAcademicFormation || data.titleAcademicFormation || 'Formação Acadêmica');
-        paragraph(data.graduate, W - 2*M);
-        if (data.graduateScale && typeof data.graduateScale.completed === 'number' && typeof data.graduateScale.total === 'number') {
-          const c = data.graduateScale.completed, t = data.graduateScale.total;
-          const pct = Math.min(100, (c / (t || 1)) * 100).toFixed(0);
-          // Linha cabeçalho da barra: label à esquerda, valor à direita
-          doc.setFont("helvetica", "bold"); setText(P.text);
-          doc.text((ui.progressLabel || 'Progresso') + ':', M, y);
-          doc.setFont("helvetica", "normal"); setText(P.muted);
-          textRight(`${c}/${t} (${pct}%)`, W - M, y);
-          setText(P.text);
-          y += mm(1);
-          drawPercentBar(Number(pct));
-        }
-        // Itens detalhados (se houver)
-        if (Array.isArray(data.academicFormation) && data.academicFormation.length) {
-          data.academicFormation.forEach(edu => {
-            const title = [edu.name, edu.institution].filter(Boolean).join(' — ');
-            const duracao = edu.period ? calcularDuracao(edu.period, data.translations) : '';
-            const periodText = edu.period ? `${edu.period}${duracao ? ` (${duracao})` : ''}` : '';
-            ensure(mm(8)); doc.setFont("helvetica", "bold"); doc.text(title, M, y); y += mm(5);
-            if (periodText) { doc.setFont("helvetica", "italic"); doc.text(periodText, M, y); y += mm(5); }
-            doc.setFont("helvetica", "normal"); paragraph(edu.description || '', W - 2*M);
+      cursorY -= headerHeight + mmToPt(4);
+      const columnTopY = cursorY;
+
+      function createColumnWriter(initialPage, startX, startY, width, options = {}) {
+        const {
+          allowNewPage = true,
+          expandOnNewPage = false,
+        } = options;
+
+        let currentPage = initialPage;
+        let currentX = startX;
+        let currentWidth = width;
+        let currentY = startY;
+        let isFirstPage = true;
+
+        const ensureColumnSpace = (height) => {
+          if (currentY - height < margin) {
+            if (!allowNewPage) return false;
+            currentPage = doc.addPage([pageWidth, pageHeight]);
+            currentY = pageHeight - margin;
+            if (expandOnNewPage || !isFirstPage) {
+              currentX = margin;
+              currentWidth = contentWidth;
+            }
+            isFirstPage = false;
+          }
+          return true;
+        };
+
+        const addGap = (value) => {
+          if (value <= 0) return;
+          if (!ensureColumnSpace(value)) return;
+          currentY -= value;
+        };
+
+        const heading = (title) => {
+          if (!title) return;
+          const needed = lineSpacing(11) + headingLineGap + mmToPt(2);
+          if (!ensureColumnSpace(needed)) return;
+          currentY -= lineSpacing(11);
+          currentPage.drawText(String(title).toUpperCase(), {
+            x: currentX,
+            y: currentY,
+            size: 11,
+            font: fontBold,
+            color: palette.brand,
           });
-        }
+          currentY -= headingLineGap;
+          currentPage.drawLine({
+            start: { x: currentX, y: currentY },
+            end: { x: currentX + currentWidth, y: currentY },
+            color: palette.stroke,
+            thickness: 1,
+          });
+          currentY -= mmToPt(2);
+        };
+
+        const text = (content, { font = fontRegular, size = 10, color = palette.text, indent = 0 } = {}) => {
+          const available = Math.max(currentWidth - indent, mmToPt(10));
+          const lines = splitText(content, font, size, available);
+          lines.forEach((line) => {
+            const needed = lineSpacing(size);
+            if (!ensureColumnSpace(needed)) return;
+            currentY -= needed;
+            currentPage.drawText(line, {
+              x: currentX + indent,
+              y: currentY,
+              size,
+              font,
+              color,
+            });
+          });
+          currentY -= mmToPt(2);
+        };
+
+        const bullet = (content, opts = {}) => {
+          const { font = fontRegular, size = 10, color = palette.text } = opts;
+          const bulletIndent = mmToPt(4);
+          const available = Math.max(currentWidth - bulletIndent - mmToPt(2), mmToPt(10));
+          const lines = splitText(content, font, size, available);
+          lines.forEach((line, index) => {
+            const needed = lineSpacing(size);
+            if (!ensureColumnSpace(needed)) return;
+            currentY -= needed;
+            if (index === 0) {
+              currentPage.drawText('•', {
+                x: currentX,
+                y: currentY,
+                size,
+                font,
+                color,
+              });
+            }
+            currentPage.drawText(line, {
+              x: currentX + bulletIndent,
+              y: currentY,
+              size,
+              font,
+              color,
+            });
+          });
+          currentY -= mmToPt(2);
+        };
+
+        const keyValue = (label, value, { size = 10 } = {}) => {
+          if (!value) return;
+          const lineHeight = lineSpacing(size);
+          if (!ensureColumnSpace(lineHeight)) return;
+          currentY -= lineHeight;
+          currentPage.drawText(`${label}:`, {
+            x: currentX,
+            y: currentY,
+            size,
+            font: fontBold,
+            color: palette.brand,
+          });
+          currentPage.drawText(String(value), {
+            x: currentX + mmToPt(20),
+            y: currentY,
+            size,
+            font: fontRegular,
+            color: palette.text,
+          });
+          currentY -= mmToPt(2);
+        };
+
+        return {
+          heading,
+          text,
+          bullet,
+          keyValue,
+          addGap,
+          getY: () => currentY,
+          getPage: () => currentPage,
+        };
       }
 
-      // Habilidades
-      ensure(mm(10));
-      section(data.titleSkills || ui.titleSkills || 'Habilidades');
-      if (data.skills) {
-        const skillToProjects = new Map();
-        const portfolio = Array.isArray(data.portfolio) ? data.portfolio : [];
-
-        for (const project of portfolio) {
-          const technologies = Array.isArray(project.technologies) ? project.technologies : [];
-          for (const tech of technologies) {
-            if (!skillToProjects.has(tech)) {
-              skillToProjects.set(tech, []);
-            }
-            skillToProjects.get(tech).push(project.name);
-          }
-        }
-
-        const hardSkills = Array.from(skillToProjects.keys()).sort();
-        const softSkills = (Array.isArray(data.skills.softSkills) && data.skills.softSkills.length > 0) ? data.skills.softSkills : [];
-
-        if (hardSkills.length > 0 || softSkills.length > 0) {
-          const y_start = y;
-          
-          const gap = mm(10);
-          const colWidth = (W - 2 * M - gap) / 2;
-          const leftColX = M;
-          const rightColX = M + colWidth + gap;
-
-          let y_left = y_start;
-          let y_right = y_start;
-
-          // --- Hard Skills (Left Column) ---
-          if (hardSkills.length > 0) {
-            doc.setFont("helvetica", "bold");
-            doc.text(String(data.skills.titleHardSkills || 'Habilidades Técnicas'), leftColX, y_left);
-            y_left += mm(6);
-            doc.setFont("helvetica", "normal");
-            hardSkills.forEach(name => {
-              const item_y = y_left;
-              const projects = skillToProjects.get(name) || [];
-              const projectCount = projects.length;
-              
-              const nameLines = doc.splitTextToSize(name, colWidth - mm(15));
-              nameLines.forEach(line => {
-                doc.text(line, leftColX, y_left);
-                y_left += mm(5);
-              });
-
-              if (projectCount > 0) {
-                doc.setFont("helvetica", "normal"); setText(P.muted);
-                const projectText = `(${projectCount} projetos)`;
-                const textWidth = doc.getTextWidth(projectText);
-                doc.text(projectText, leftColX + colWidth - textWidth, item_y);
-              }
-              y_left += mm(2);
-            });
-          }
-
-          // --- Soft Skills (Right Column) ---
-          if (softSkills.length > 0) {
-            doc.setFont("helvetica", "bold");
-            doc.text(String(data.skills.titleSoftSkills || 'Habilidades Comportamentais'), rightColX, y_right);
-            y_right += mm(6);
-            doc.setFont("helvetica", "normal");
-            softSkills.forEach(s => {
-              const item_y = y_right;
-              const name = typeof s === 'string' ? s : (s?.name || '');
-              const pct = typeof s === 'object' ? Number(s.percent || s.percentage || 0) : 0;
-              if (!name) return;
-
-              const nameLines = doc.splitTextToSize(name, colWidth - mm(15));
-              nameLines.forEach(line => {
-                doc.text(line, rightColX, y_right);
-                y_right += mm(5);
-              });
-
-              if (pct) {
-                doc.setFont("helvetica", "normal"); setText(P.muted);
-                const pctText = `${pct}%`;
-                const pctWidth = doc.getTextWidth(pctText);
-                doc.text(pctText, rightColX + colWidth - pctWidth, item_y);
-              }
-              y_right += mm(2);
-            });
-          }
-
-          y = Math.max(y_left, y_right);
-        }
-      }
-
-      // Idiomas + Certificações de idioma
-      ensure(mm(10)); section(data.titleLanguages || ui.titleLanguages || 'Idiomas');
-      const levelText = (lvl) => {
-        switch (Number(lvl)) {
-          case 4: return ui.langLevelFluent || 'Fluente';
-          case 3: return ui.langLevelAdvanced || 'Avançado';
-          case 2: return ui.langLevelIntermediate || 'Intermediário';
-          case 1: return ui.langLevelBasic || 'Básico';
-          default: return '';
-        }
-      };
-      const langs = Array.isArray(data.languages) ? data.languages : [];
-      langs.forEach(item => {
-        let name = '', lvl = 0;
-        if (typeof item === 'string') {
-          name = item.replace(/\s*\(([^)]+)\)\s*$/, '').trim();
-        } else if (item && typeof item === 'object') {
-          name = item.name || ''; lvl = Number(item.level || 0);
-        }
-        if (!name) return;
-        ensure(mm(8));
-        doc.setFont("helvetica", "bold"); setText(P.text); doc.text(name, M, y);
-        if (lvl) { doc.setFont("helvetica", "normal"); setText(P.muted); textRight(levelText(lvl), W - M, y); setText(P.text); }
-        y += mm(1);
-        if (lvl) {
-            const w = W - 2 * M;
-            const stageW = w / 4;
-            ensure(BAR_TOP + BAR_H + BAR_BOTTOM);
-            y += BAR_TOP;
-            for (let i = 0; i < 4; i++) {
-                const x = M + i * stageW;
-                setDraw(P.stroke); setFill(P.stroke);
-                doc.rect(x, y, stageW - 2, BAR_H, 'FD');
-                if (i < lvl) {
-                    setFill(P.brand);
-                    doc.rect(x, y, stageW - 2, BAR_H, 'F');
-                }
-            }
-            y += BAR_H + BAR_BOTTOM;
-        }
+      const leftWriter = createColumnWriter(page, margin, columnTopY, leftWidth, {
+        allowNewPage: false,
       });
-      if (Array.isArray(data.languagesCertifications) && data.languagesCertifications.length) {
-        ensure(mm(8)); doc.setFont("helvetica", "bold");
-        doc.text(String(data.titleLanguageCertifications || ui.titleLanguageCertifications || 'Certificações de domínio da língua'), M, y); y += mm(5);
-        doc.setFont("helvetica", "normal");
-        data.languagesCertifications.forEach(c => {
-          const name = c.name || c.title || '';
-          const parts = [c.issuer, c.score || c.levelText, c.date].filter(Boolean);
-          ensure(mm(6));
-          doc.text(`- ${name}${parts.length? ' — ' + parts.join(' · ') : ''}`, M, y);
-          y += mm(6);
+      const rightWriter = createColumnWriter(page, margin + leftWidth + columnGap, columnTopY, rightWidth, {
+        allowNewPage: true,
+        expandOnNewPage: true,
+      });
+
+      // Coluna Esquerda
+      leftWriter.heading(resolveTitle('contact', ui.language || lang));
+      contacts.forEach((info) => leftWriter.keyValue(info.label, info.value));
+      leftWriter.addGap(mmToPt(2));
+
+      const hardSkills = collectHardSkills(profile).slice(0, 8);
+      if (hardSkills.length) {
+        leftWriter.heading(profile.skills?.titleHardSkills || resolveTitle('hardSkills', ui.language || lang));
+        hardSkills.forEach((skill) => {
+          leftWriter.text(skill.name, { font: fontBold, size: 10 });
+          const meta = [];
+          if (skill.level !== null && skill.level !== undefined) meta.push(`${ui.hardSkillLevelLabel || 'Nível'} ${skill.level}/10`);
+          meta.push(`${ui.hardSkillProjectsLabel || 'Projetos'}: ${skill.projectCount}`);
+          leftWriter.text(meta.join(' • '), { font: fontItalic, size: 9, color: palette.muted });
         });
       }
 
-      // Portfólio
-      if (Array.isArray(data.portfolio) && data.portfolio.length) {
-        ensure(mm(10)); section(data.titlePortfolio || ui.titlePortfolio || 'Portfólio');
-        // Cada item com QR do link à direita
-        for (const p of data.portfolio) {
-          const title = p.name || '';
-          const url = p.url || '';
-          const description = p.description || '';
-          const host = (() => { try { return new URL(url).hostname.replace(/^www\./,''); } catch { return url; } })();
+      const softSkills = collectSoftSkills(profile).slice(0, 6);
+      if (softSkills.length) {
+        leftWriter.heading(profile.skills?.titleSoftSkills || resolveTitle('softSkills', ui.language || lang));
+        softSkills.forEach((skill) => {
+          const label =
+            skill.percent !== null && skill.percent !== undefined
+              ? `${skill.name} — ${skill.percent}%`
+              : skill.name;
+          leftWriter.bullet(label, { size: 9, color: palette.text });
+        });
+      }
 
-          const qrSize = mm(18);
-          const pad = mm(3);
-          const textW = (W - 2*M) - (qrSize + pad);
+      const languages = Array.isArray(profile.languages) ? profile.languages : [];
+      if (languages.length) {
+        leftWriter.heading(profile.titleLanguages || ui.titleLanguages || resolveTitle('languages', ui.language || lang));
+        languages.forEach((langItem) => {
+          const name = typeof langItem === 'string' ? langItem : langItem?.name;
+          const level = typeof langItem === 'string' ? null : Number(langItem?.level || 0);
+          if (!name) return;
+          leftWriter.text(name, { font: fontBold, size: 10 });
+          if (level) {
+            const map = {
+              4: ui.langLevelFluent || 'Fluente',
+              3: ui.langLevelAdvanced || 'Avançado',
+              2: ui.langLevelIntermediate || 'Intermediário',
+              1: ui.langLevelBasic || 'Básico',
+            };
+            leftWriter.text(map[level] || '', { font: fontItalic, size: 9, color: palette.muted });
+          }
+        });
+      }
 
-          const technologies = Array.isArray(p.technologies) ? p.technologies : [];
-          const technologiesStr = technologies.join(', ');
-          const technologiesLines = doc.splitTextToSize(`Tecnologias: ${technologiesStr}`, textW);
+      const certifications = Array.isArray(profile.certifications) ? profile.certifications.slice(0, 5) : [];
+      if (certifications.length) {
+        leftWriter.heading(
+          profile.titleCertifications ||
+            ui.titleCertifications ||
+            resolveTitle('certifications', ui.language || lang)
+        );
+        certifications.forEach((cert) => {
+          leftWriter.text(cert.title || '—', { font: fontBold, size: 10 });
+          const meta = [cert.issuer, formatYM(cert.date)].filter(Boolean).join(' · ');
+          if (meta) {
+            leftWriter.text(meta, { font: fontItalic, size: 9, color: palette.muted });
+          }
+        });
+      }
 
-          // Medir altura do bloco
-          const titleLines = doc.splitTextToSize(title, textW);
-          const descLines = doc.splitTextToSize(description, textW);
-          const hostLines = url ? doc.splitTextToSize(host, textW) : [];
-          const contentH = Math.max(qrSize, (titleLines.length * mm(5)) + (descLines.length * mm(4)) + (hostLines.length * mm(4)) + (technologiesLines.length * mm(4)));
-          const boxH = contentH + pad * 2;
+      // Coluna direita
+      const professionalSummary = (() => {
+        if (profile.summary) return profile.summary;
+        const parts = [];
+        if (profile.job) parts.push(profile.job);
+        if (profile.graduate) parts.push(profile.graduate);
+        if (profile.location) parts.push(profile.location);
+        return parts.join(' • ');
+      })();
 
-          ensure(boxH + mm(4));
+      if (professionalSummary) {
+        rightWriter.heading(resolveTitle('summary', ui.language || lang));
+        rightWriter.text(professionalSummary, { font: fontRegular, size: 10 });
+      }
 
-          // Box
-          setDraw(P.stroke); setFill(P.surface);
-          doc.setLineWidth(0.2);
-          doc.roundedRect(M, y, W - 2*M, boxH, 2, 2, 'S');
+      const experiences = Array.isArray(profile.professionalExperience) ? profile.professionalExperience : [];
+      if (experiences.length) {
+        rightWriter.heading(
+          profile.titleProfessionalExperience ||
+            ui.titleProfessionalExperience ||
+            'Experiência Profissional'
+        );
 
-          // QR à direita
-          if (url) {
-            const dataURL = await makeQRDataURL(url, 200);
-            if (dataURL) {
-              try { doc.addImage(dataURL, 'PNG', M + (W - 2*M) - qrSize - pad, y + pad, qrSize, qrSize); } catch (e) {
-                console.error("Failed to add QR code to PDF", e);
-                doc.setFont("helvetica", "italic");
-                doc.text("QR Error", M + (W - 2*M) - qrSize - pad + (qrSize/2), y + pad + (qrSize/2), { align: 'center', baseline: 'middle' });
-              }
+        experiences.forEach((exp) => {
+          rightWriter.text(exp.name || '—', { font: fontBold, size: 11 });
+          if (exp.period) {
+            const duration = calcularDuracao(exp.period, profile.translations);
+            const label = `${exp.period}${duration ? ` (${duration})` : ''}`;
+            rightWriter.text(label, { font: fontItalic, size: 9, color: palette.muted });
+          }
+          if (exp.description) {
+            const bullets = exp.description.split(/[\.;]\s+/).map((item) => item.trim()).filter(Boolean);
+            if (bullets.length > 1) {
+              bullets.forEach((item) => rightWriter.bullet(item, { size: 10 }));
+            } else {
+              rightWriter.text(exp.description, { font: fontRegular, size: 10 });
             }
           }
+          rightWriter.addGap(mmToPt(3));
+        });
+      }
 
-          // Texto à esquerda
-          let tx = M + pad, ty = y + pad + mm(5);
-          doc.setFont("helvetica", "bold"); setText(P.text);
-          titleLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(5); });
-          doc.setFont("helvetica", "normal"); setText(P.muted);
-          descLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(4); });
-          if (technologies.length > 0) {
-            doc.setFont("helvetica", "bold"); setText(P.text);
-            technologiesLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(4); });
+      const academics = Array.isArray(profile.academicFormation) ? profile.academicFormation : [];
+      if (academics.length) {
+        rightWriter.heading(
+          profile.titleAcademicFormation || ui.titleAcademicFormation || 'Formação Acadêmica'
+        );
+        academics.forEach((edu) => {
+          const title = [edu.name, edu.institution].filter(Boolean).join(' — ');
+          rightWriter.text(title || '—', { font: fontBold, size: 11 });
+          if (edu.period) {
+            const duration = calcularDuracao(edu.period, profile.translations);
+            const label = `${edu.period}${duration ? ` (${duration})` : ''}`;
+            rightWriter.text(label, { font: fontItalic, size: 9, color: palette.muted });
           }
-          if (host) { doc.setFont("helvetica", "italic"); setText(P.muted); hostLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(4); }); setText(P.text); }
-
-          y += boxH + mm(4);
-        }
-      }
-
-      // Experiência Profissional
-      if (Array.isArray(data.professionalExperience) && data.professionalExperience.length) {
-        ensure(mm(10)); section(data.titleProfessionalExperience || ui.titleProfessionalExperience || 'Experiência Profissional');
-        data.professionalExperience.forEach(exp => {
-          const title = exp.name || '';
-          const duracao = exp.period ? calcularDuracao(exp.period, data.translations) : '';
-          const periodText = exp.period ? `${exp.period}${duracao ? ` (${duracao})` : ''}` : '';
-          const desc = exp.description || '';
-          ensure(mm(8)); doc.setFont("helvetica", "bold"); doc.text(title, M, y); y += mm(5);
-          doc.setFont("helvetica", "italic"); if (periodText) { doc.text(periodText, M, y); y += mm(5); }
-          doc.setFont("helvetica", "normal"); paragraph(desc, W - 2*M);
+          if (edu.description) {
+            rightWriter.text(edu.description, { font: fontRegular, size: 10 });
+          }
+          rightWriter.addGap(mmToPt(3));
         });
       }
 
-      // Certificações (gerais)
-      if (Array.isArray(data.certifications) && data.certifications.length) {
-        ensure(mm(10)); section(data.titleCertifications || ui.titleCertifications || 'Certificações');
-        data.certifications.forEach(c => {
-          const title = c.title || '';
-          const meta = [c.issuer, c.date].filter(Boolean).join(' · ');
-          ensure(mm(8)); doc.setFont("helvetica", "bold"); doc.text(title, M, y); y += mm(5);
-          if (meta) { doc.setFont("helvetica", "italic"); doc.text(meta, M, y); y += mm(5); }
-          doc.setFont("helvetica", "normal");
+      const featuredProjects = Array.isArray(profile.portfolio) ? profile.portfolio.slice(0, 4) : [];
+      if (featuredProjects.length) {
+        rightWriter.heading(resolveTitle('featuredProjects', ui.language || lang));
+        featuredProjects.forEach((project) => {
+          rightWriter.text(project.name || '—', { font: fontBold, size: 11 });
+          if (project.description) {
+            rightWriter.text(project.description, { font: fontRegular, size: 10 });
+          }
+          if (Array.isArray(project.technologies) && project.technologies.length) {
+            rightWriter.text(project.technologies.join(', '), {
+              font: fontItalic,
+              size: 9,
+              color: palette.muted,
+            });
+          }
+          if (project.url) {
+            rightWriter.text(`${ui.openProject || 'Abrir'}: ${project.url}`, {
+              font: fontRegular,
+              size: 9,
+              color: palette.brand,
+            });
+          }
+          rightWriter.addGap(mmToPt(3));
         });
       }
 
-      // (Formação Acadêmica já foi renderizada junto ao bloco de graduação)
-
-      // Finalizar
-      doc.save(`${(data.name || 'curriculo').replace(/\s+/g,'_')}.pdf`);
-    } catch (e) {
-      console.error('Falha ao gerar PDF', e);
-      alert('Desculpe, ocorreu um erro ao gerar o PDF. Por favor, tente novamente mais tarde.');
+      const pdfBytes = await doc.save();
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${(profile.name || 'curriculo').replace(/\s+/g, '_')}.pdf`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1500);
+    } catch (error) {
+      console.error('Falha ao gerar PDF', error);
+      alert('Desculpe, ocorreu um erro ao gerar o PDF.');
     }
   });
 });

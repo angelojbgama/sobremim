@@ -1,319 +1,225 @@
-﻿// --- Mapeamento de Habilidades para Classes do Font Awesome ---
+﻿// --- Iconografia de habilidades com sanidade de fallbacks ---
+const FALLBACK_ICON = 'fas fa-code';
+const ICON_STYLE_CLASSES = new Set([
+  'fas',
+  'far',
+  'fab',
+  'fal',
+  'fat',
+  'fad',
+  'fa-solid',
+  'fa-regular',
+  'fa-brands',
+]);
+
 const skillIconMapping = {
-  // **Linguagens de Programação**
-  Python: "fab fa-python",
-  "C++": "fas fa-code",
-  JavaScript: "fab fa-js-square",
-  HTML: "fab fa-html5",
-  CSS: "fab fa-css3-alt",
-  Java: "fab fa-java",
-  "C#": "fas fa-code", // Usando fa-code como alternativa
-  Ruby: "fas fa-gem",
-  Go: "fas fa-golang",
-  Swift: "fas fa-swift",
-  Kotlin: "fas fa-code", // Usando fa-code
-  PHP: "fab fa-php",
-  TypeScript: "fas fa-code", // Usando fa-code
-  Rust: "fas fa-code", // Usando fa-code
-  Scala: "fas fa-code", // Usando fa-code
-  Perl: "fas fa-code", // Usando fa-code
-  R: "fas fa-chart-line",
-  SQL: "fas fa-database",
-  "Objective-C": "fas fa-code", // Usando fa-code
+  // Linguagens
+  python: 'fab fa-python',
+  javascript: 'fab fa-js',
+  typescript: 'fab fa-js',
+  html: 'fab fa-html5',
+  css: 'fab fa-css3-alt',
+  java: 'fab fa-java',
+  php: 'fab fa-php',
+  ruby: 'fas fa-gem',
+  'c': 'fas fa-code',
+  'c++': 'fas fa-code',
+  'c#': 'fas fa-code',
+  go: 'fas fa-code',
+  swift: 'fab fa-swift',
+  kotlin: 'fas fa-mobile-alt',
+  rust: 'fas fa-gears',
+  scala: 'fas fa-code',
+  perl: 'fas fa-code',
+  r: 'fas fa-chart-line',
+  sql: 'fas fa-database',
+  'objective-c': 'fas fa-code',
 
-  // **Frameworks e Bibliotecas**
-  React: "fab fa-react",
-  Angular: "fab fa-angular",
-  "Vue.js": "fab fa-vuejs",
-  Django: "fas fa-leaf",
-  Flask: "fas fa-flask",
-  Laravel: "fab fa-laravel",
-  Spring: "fas fa-seedling", // Usando fa-seedling como alternativa
-  "Express.js": "fas fa-server",
-  "Ruby on Rails": "fas fa-gem",
-  "ASP.NET": "fas fa-code",
-  "Node.js": "fab fa-node",
-  Bootstrap: "fab fa-bootstrap",
-  Svelte: "fas fa-code", // Usando fa-code
-  "Ember.js": "fas fa-code", // Usando fa-code
-  jQuery: "fas fa-code", // Usando fa-code
-  TensorFlow: "fas fa-brain", // Usando fa-brain como alternativa
-  Keras: "fas fa-brain", // Usando fa-brain como alternativa
-  PyTorch: "fas fa-brain", // Usando fa-brain como alternativa
-  "ASP.NET Core": "fas fa-code",
-  "Next.js": "fas fa-code", // Usando fa-code
+  // Frameworks e bibliotecas
+  react: 'fab fa-react',
+  angular: 'fab fa-angular',
+  vue: 'fab fa-vuejs',
+  'vue.js': 'fab fa-vuejs',
+  'nuxt.js': 'fab fa-vuejs',
+  svelte: 'fas fa-fire',
+  django: 'fas fa-leaf',
+  flask: 'fas fa-flask',
+  laravel: 'fab fa-laravel',
+  spring: 'fas fa-seedling',
+  'express.js': 'fas fa-server',
+  express: 'fas fa-server',
+  'ruby on rails': 'fas fa-gem',
+  'asp.net': 'fas fa-code',
+  'asp.net core': 'fas fa-code',
+  'next.js': 'fas fa-layer-group',
+  bootstrap: 'fab fa-bootstrap',
+  tailwind: 'fas fa-wind',
+  'tailwind css': 'fas fa-wind',
+  jquery: 'fas fa-code',
+  tensorflow: 'fas fa-brain',
+  keras: 'fas fa-brain',
+  pytorch: 'fas fa-brain',
+  redux: 'fas fa-sync',
+  mobx: 'fas fa-sync',
+  graphql: 'fas fa-project-diagram',
+  electron: 'fas fa-microchip',
+  cordova: 'fas fa-mobile-alt',
+  ionic: 'fas fa-mobile-alt',
+  flutter: 'fas fa-mobile-alt',
+  'react native': 'fab fa-react',
+  fastapi: 'fas fa-bolt',
+  celery: 'fas fa-seedling',
 
-  // **Bancos de Dados**
-  MySQL: "fas fa-database",
-  PostgreSQL: "fas fa-database",
-  MongoDB: "fas fa-database", // Usando fa-database
-  SQLite: "fas fa-database", // Usando fa-database
-  Redis: "fas fa-server", // Usando fa-server
-  Oracle: "fas fa-database", // Usando fa-database
-  MariaDB: "fas fa-database", // Usando fa-database
-  Firebase: "fas fa-fire",
-  Cassandra: "fas fa-database", // Usando fa-database
-  Elasticsearch: "fas fa-search",
-  CouchDB: "fas fa-database", // Usando fa-database
+  // Bancos e dados
+  mysql: 'fas fa-database',
+  postgresql: 'fas fa-database',
+  mongodb: 'fas fa-database',
+  sqlite: 'fas fa-database',
+  redis: 'fas fa-server',
+  oracle: 'fas fa-database',
+  mariadb: 'fas fa-database',
+  firebase: 'fas fa-fire',
+  cassandra: 'fas fa-database',
+  elasticsearch: 'fas fa-search',
+  couchdb: 'fas fa-database',
 
-  // **Ferramentas e Plataformas**
-  Git: "fab fa-git-alt",
-  GitHub: "fab fa-github",
-  GitLab: "fab fa-gitlab",
-  Bitbucket: "fab fa-bitbucket",
-  Docker: "fab fa-docker",
-  Kubernetes: "fas fa-cube", // Usando fa-cube
-  Jenkins: "fas fa-cogs",
-  "Travis CI": "fas fa-code", // Usando fa-code
-  CircleCI: "fas fa-code", // Usando fa-code
-  AWS: "fab fa-aws",
-  Azure: "fab fa-azure",
-  "Google Cloud": "fab fa-google-cloud",
-  Heroku: "fab fa-heroku",
-  Netlify: "fas fa-code", // Usando fa-code
-  Vercel: "fas fa-code", // Usando fa-code
-  Webpack: "fas fa-box-open", // Usando fa-box-open
-  Babel: "fas fa-code", // Usando fa-code
-  NPM: "fab fa-npm",
-  Yarn: "fab fa-yarn",
-  Bower: "fas fa-code", // Usando fa-code
+  // Ferramentas e plataformas
+  git: 'fab fa-git-alt',
+  github: 'fab fa-github',
+  gitlab: 'fab fa-gitlab',
+  bitbucket: 'fab fa-bitbucket',
+  docker: 'fab fa-docker',
+  kubernetes: 'fas fa-network-wired',
+  jenkins: 'fas fa-cogs',
+  'travis ci': 'fas fa-cogs',
+  circleci: 'fas fa-cogs',
+  aws: 'fab fa-aws',
+  azure: 'fab fa-microsoft',
+  'google cloud': 'fab fa-google',
+  heroku: 'fas fa-cloud',
+  netlify: 'fas fa-cloud',
+  vercel: 'fas fa-cloud',
+  webpack: 'fas fa-box-open',
+  babel: 'fas fa-code',
+  npm: 'fab fa-npm',
+  yarn: 'fab fa-yarn',
+  'docker compose': 'fab fa-docker',
+  terraform: 'fas fa-tools',
+  ansible: 'fas fa-cogs',
+  puppet: 'fas fa-cogs',
+  chef: 'fas fa-utensils',
+  jira: 'fas fa-tasks',
+  trello: 'fas fa-th-list',
+  asana: 'fas fa-tasks',
+  basecamp: 'fas fa-clipboard-list',
+  monday: 'fas fa-calendar-alt',
+  'monday.com': 'fas fa-calendar-alt',
+  figma: 'fab fa-figma',
+  'adobe xd': 'fab fa-adobe',
+  sketch: 'fas fa-paint-brush',
+  invision: 'fas fa-eye',
+  photoshop: 'fab fa-adobe',
+  illustrator: 'fab fa-adobe',
+  'after effects': 'fab fa-adobe',
+  'premiere pro': 'fab fa-adobe',
+  postman: 'fas fa-paper-plane',
+  selenium: 'fas fa-robot',
+  cypress: 'fas fa-vial',
+  jest: 'fas fa-vial',
+  mocha: 'fas fa-coffee',
+  junit: 'fas fa-code',
+  pytest: 'fas fa-vial',
 
-  // **Controle de Versão**
-  SVN: "fas fa-code-branch", // Usando fa-code-branch
-  Mercurial: "fas fa-code-branch", // Usando fa-code-branch
+  // Outros conceitos
+  agile: 'fas fa-project-diagram',
+  scrum: 'fas fa-tasks',
+  kanban: 'fas fa-th-list',
+  'rest api': 'fas fa-network-wired',
+  websocket: 'fas fa-plug',
+  microservices: 'fas fa-project-diagram',
+  serverless: 'fas fa-cloud',
+  'ci/cd': 'fas fa-sync-alt',
+  devsecops: 'fas fa-shield-alt',
+  cybersecurity: 'fas fa-shield-alt',
+  blockchain: 'fas fa-link',
+  'machine learning': 'fas fa-brain',
+  'artificial intelligence': 'fas fa-brain',
+  'data science': 'fas fa-chart-line',
+  'big data': 'fas fa-database',
+  'data visualization': 'fas fa-chart-bar',
+  'computer vision': 'fas fa-eye',
+  'internet of things': 'fas fa-project-diagram',
+  robotics: 'fas fa-robot',
+  'augmented reality': 'fas fa-eye',
+  'virtual reality': 'fas fa-vr-cardboard',
+  'quantum computing': 'fas fa-microchip',
+  'edge computing': 'fas fa-network-wired',
 
-  // **Outras Tecnologias**
-  GraphQL: "fas fa-project-diagram", // Usando fa-project-diagram
-  SASS: "fab fa-sass",
-  LESS: "fas fa-code", // Usando fa-code
-  "Tailwind CSS": "fab fa-css3-alt", // Usando fa-css3-alt
-  "Material-UI": "fas fa-palette", // Usando fa-palette
-  Bulma: "fas fa-code", // Usando fa-code
-  "Ant Design": "fas fa-code", // Usando fa-code
-  Redux: "fas fa-sync", // Usando fa-sync
-  MobX: "fas fa-sync", // Usando fa-sync
-  Gatsby: "fas fa-code", // Usando fa-code
-  "Nuxt.js": "fas fa-code", // Usando fa-code
-  Electron: "fas fa-microchip", // Usando fa-microchip
-  Cordova: "fas fa-mobile-alt", // Usando fa-mobile-alt
-  Ionic: "fas fa-mobile-alt", // Usando fa-mobile-alt
-  Flutter: "fas fa-mobile-alt", // Usando fa-mobile-alt
-  "React Native": "fab fa-react",
-  Blazor: "fas fa-code", // Usando fa-code
+  // Sistemas operacionais e IDEs
+  windows: 'fab fa-windows',
+  linux: 'fab fa-linux',
+  macos: 'fab fa-apple',
+  ubuntu: 'fab fa-ubuntu',
+  debian: 'fas fa-code',
+  fedora: 'fas fa-code',
+  'visual studio code': 'fas fa-code',
+  'visual studio': 'fas fa-code',
+  'intellij idea': 'fas fa-code',
+  webstorm: 'fas fa-code',
+  phpstorm: 'fas fa-code',
+  rubymine: 'fas fa-code',
+  eclipse: 'fas fa-code',
+  pycharm: 'fas fa-code',
+  atom: 'fas fa-code',
+  'sublime text': 'fas fa-code',
+  vim: 'fas fa-code',
+  emacs: 'fas fa-code',
+  'notepad++': 'fas fa-code',
+  xcode: 'fas fa-laptop-code',
+  'android studio': 'fab fa-android',
+  terminal: 'fas fa-terminal',
+  powershell: 'fas fa-terminal',
 
-  // **Ferramentas de Design e Prototipagem**
-  Figma: "fab fa-figma",
-  "Adobe XD": "fab fa-adobe",
-  Sketch: "fas fa-paint-brush", // Usando fa-paint-brush
-  InVision: "fas fa-eye", // Usando fa-eye
-  Photoshop: "fab fa-adobe",
-  Illustrator: "fab fa-adobe",
-  "Premiere Pro": "fab fa-adobe",
-  "After Effects": "fab fa-adobe",
-
-  // **Outras Ferramentas de Desenvolvimento**
-  "Visual Studio Code": "fas fa-code",
-  "IntelliJ IDEA": "fas fa-code",
-  Eclipse: "fas fa-code",
-  PyCharm: "fas fa-code",
-  Atom: "fas fa-code",
-  "Sublime Text": "fas fa-code",
-  Vim: "fas fa-code",
-  Emacs: "fas fa-code",
-  "Notepad++": "fas fa-code",
-  Xcode: "fas fa-code",
-  "Android Studio": "fas fa-android", // Usando fa-android
-  Terminal: "fas fa-terminal",
-  "Command Prompt": "fas fa-terminal",
-  PowerShell: "fas fa-terminal",
-  "Docker Compose": "fab fa-docker",
-  Ansible: "fas fa-cogs",
-  Terraform: "fas fa-tools", // Usando fa-tools
-  Puppet: "fas fa-cogs",
-  Chef: "fas fa-cogs",
-  Jupyter: "fas fa-brain", // Usando fa-brain
-  Unity: "fab fa-unity",
-  "Unreal Engine": "fas fa-project-diagram", // Usando fa-project-diagram
-  Blender: "fas fa-cube", // Usando fa-cube
-  GIMP: "fas fa-paint-brush", // Usando fa-paint-brush
-
-  // **Sistemas Operacionais**
-  Windows: "fab fa-windows",
-  Linux: "fab fa-linux",
-  macOS: "fab fa-apple",
-  Ubuntu: "fab fa-ubuntu",
-  Fedora: "fas fa-code", // Usando fa-code
-  Debian: "fas fa-code", // Usando fa-code
-
-  // **Controle de Qualidade e Testes**
-  Jest: "fas fa-vial", // Usando fa-vial
-  Mocha: "fas fa-coffee", // Usando fa-coffee
-  Selenium: "fas fa-robot",
-  Cypress: "fas fa-code", // Usando fa-code
-  JUnit: "fas fa-code", // Usando fa-code
-  Mockito: "fas fa-code", // Usando fa-code
-  Postman: "fas fa-envelope", // Usando fa-envelope
-
-  // **DevOps e CI/CD**
-  Jenkins: "fas fa-cogs",
-  Bamboo: "fas fa-code", // Usando fa-code
-  TeamCity: "fas fa-code", // Usando fa-code
-  "GitLab CI": "fas fa-code", // Usando fa-code
-
-  // **Segurança**
-  OWASP: "fas fa-shield-alt",
-  JWT: "fas fa-key",
-  OAuth: "fas fa-lock",
-  SSL: "fas fa-lock",
-  SAST: "fas fa-search",
-  DAST: "fas fa-search",
-  "Penetration Testing": "fas fa-user-secret",
-
-  // **Outras Tecnologias e Conceitos**
-  Agile: "fas fa-project-diagram",
-  Scrum: "fas fa-tasks",
-  Kanban: "fas fa-th-list",
-  "REST API": "fas fa-network-wired",
-  WebSockets: "fas fa-plug",
-  Microservices: "fas fa-project-diagram",
-  Serverless: "fas fa-cloud",
-  "CI/CD": "fas fa-sync-alt",
-  MVC: "fas fa-project-diagram",
-  MVVM: "fas fa-project-diagram",
-  "Design Patterns": "fas fa-puzzle-piece",
-  SOLID: "fas fa-code",
-  OOP: "fas fa-code",
-  "Functional Programming": "fas fa-code",
-  Concurrency: "fas fa-project-diagram",
-  "Asynchronous Programming": "fas fa-clock",
-
-  // **Cloud Services**
-  "AWS Lambda": "fas fa-cloud",
-  "AWS S3": "fas fa-cloud",
-  "Azure Functions": "fas fa-cloud",
-  "Google Cloud Functions": "fas fa-cloud",
-  DigitalOcean: "fas fa-cloud",
-  Vultr: "fas fa-cloud",
-  Linode: "fas fa-cloud",
-  "Alibaba Cloud": "fas fa-cloud",
-  "Oracle Cloud": "fas fa-cloud",
-  "IBM Cloud": "fas fa-cloud",
-
-  // **Containers e Virtualização**
-  Kubernetes: "fas fa-cube",
-  VirtualBox: "fas fa-desktop", // Usando fa-desktop
-  VMware: "fas fa-desktop", // Usando fa-desktop
-  Vagrant: "fas fa-code", // Usando fa-code
-
-  // **Outros**
-  Graphviz: "fas fa-project-diagram",
-  Swagger: "fas fa-file-alt",
-  "Elastic Stack": "fas fa-search",
-  Prometheus: "fas fa-chart-line",
-  Grafana: "fas fa-chart-bar",
-  Logstash: "fas fa-chart-bar",
-  Kibana: "fas fa-search",
-
-  // **IDE e Editores**
-  "Visual Studio": "fas fa-code",
-  WebStorm: "fas fa-code",
-  PhpStorm: "fas fa-code",
-  RubyMine: "fas fa-code",
-
-  // **Outras Linguagens e Tecnologias Específicas**
-  Lua: "fas fa-code", // Usando fa-code
-  "Shell Scripting": "fas fa-terminal",
-  "Batch Scripting": "fas fa-terminal",
-  COBOL: "fas fa-code", // Usando fa-code
-  Fortran: "fas fa-code", // Usando fa-code
-  Haskell: "fas fa-code", // Usando fa-code
-  Elixir: "fas fa-code", // Usando fa-code
-  Clojure: "fas fa-code", // Usando fa-code
-  "F#": "fas fa-code", // Usando fa-code
-  Erlang: "fas fa-code", // Usando fa-code
-  Groovy: "fas fa-code", // Usando fa-code
-
-  // **Testes e Monitoramento**
-  "New Relic": "fas fa-chart-line",
-  Datadog: "fas fa-chart-pie",
-  Splunk: "fas fa-search",
-  AppDynamics: "fas fa-chart-area",
-  Nagios: "fas fa-server",
-  Zabbix: "fas fa-server",
-
-  // **Gerenciamento de Projetos**
-  Jira: "fas fa-tasks",
-  Trello: "fas fa-th-list",
-  Asana: "fas fa-tasks",
-  Basecamp: "fas fa-clipboard-list",
-  "Monday.com": "fas fa-calendar-alt",
-
-  // **Outros Conceitos e Tecnologias**
-  Blockchain: "fas fa-link",
-  Cryptography: "fas fa-lock",
-  "Machine Learning": "fas fa-brain",
-  "Artificial Intelligence": "fas fa-brain",
-  "Natural Language Processing": "fas fa-language",
-  "Big Data": "fas fa-database",
-  "Data Science": "fas fa-chart-line",
-  "Data Visualization": "fas fa-chart-bar",
-  "Computer Vision": "fas fa-eye",
-  "Internet of Things": "fas fa-project-diagram",
-  Robotics: "fas fa-robot",
-  "Augmented Reality": "fas fa-eye",
-  "Virtual Reality": "fas fa-eye",
-  "Quantum Computing": "fas fa-microchip",
-  "Edge Computing": "fas fa-network-wired",
-  DevSecOps: "fas fa-shield-alt",
-  "API Development": "fas fa-network-wired",
-  "Mobile Development": "fas fa-mobile-alt",
-  "Desktop Development": "fas fa-desktop",
-  "Game Development": "fas fa-gamepad",
-  "Embedded Systems": "fas fa-microchip",
-  "Data Engineering": "fas fa-database",
-  Bioinformatics: "fas fa-microscope", // Usando fa-microscope
-  Cybersecurity: "fas fa-shield-alt",
-  Bioengineering: "fas fa-flask",
-  "Renewable Energy": "fas fa-solar-panel",
-  "Automotive Engineering": "fas fa-car",
-
-  // **Version Control Systems**
-  Mercurial: "fas fa-code-branch",
-  "Subversion (SVN)": "fas fa-code-branch",
-  Perforce: "fas fa-code-branch",
-
-  // **Miscellaneous**
-  Selenium: "fas fa-robot",
-  Postman: "fas fa-envelope",
-  Swagger: "fas fa-file-alt",
-  Jupyter: "fas fa-brain",
-  MATLAB: "fas fa-code", // Usando fa-code
-  LaTeX: "fas fa-file-alt",
-  Pandas: "fas fa-table",
-  NumPy: "fas fa-square", // Usando fa-square
-  SciPy: "fas fa-flask",
-  TensorFlow: "fas fa-brain",
-  PyTorch: "fas fa-brain",
-  OpenCV: "fas fa-eye",
-  "Scikit-learn": "fas fa-brain",
-  Matplotlib: "fas fa-chart-line",
-  Seaborn: "fas fa-chart-bar",
-  Plotly: "fas fa-chart-pie",
-  "D3.js": "fas fa-chart-line",
-  Pyramid: "fas fa-leaf",
-  Bottle: "fas fa-flask",
-  FastAPI: "fas fa-tachometer-alt",
-  CherryPy: "fas fa-code",
-  Tornado: "fas fa-wind",
-  Twisted: "fas fa-code",
-  Falcon: "fas fa-bolt",
-  Zappa: "fas fa-cloud",
-  Hug: "fas fa-code",
-
-  // **No Icon Available**
-  "Unknown Skill 1": "fas fa-tools",
-  "Unknown Skill 2": "fas fa-code",
+  // Bibliotecas de dados/ciência
+  pandas: 'fas fa-table',
+  numpy: 'fas fa-square-root-alt',
+  scipy: 'fas fa-flask',
+  matplotlib: 'fas fa-chart-line',
+  seaborn: 'fas fa-chart-area',
+  plotly: 'fas fa-chart-pie',
+  'd3.js': 'fas fa-chart-line',
+  opencv: 'fas fa-eye',
+  'scikit-learn': 'fas fa-brain',
+  matlab: 'fas fa-square-root-alt',
+  latex: 'fas fa-file-alt',
+  notebook: 'fas fa-book',
 };
+
+function normalizeSkillKey(name) {
+  return typeof name === 'string' ? name.trim().toLowerCase() : '';
+}
+
+function sanitizeIconClass(value) {
+  if (typeof value !== 'string') return FALLBACK_ICON;
+  const tokens = value.trim().split(/\s+/).filter(Boolean);
+  if (!tokens.length) return FALLBACK_ICON;
+
+  let styleToken = tokens.find((token) => ICON_STYLE_CLASSES.has(token));
+  let iconToken = tokens.find(
+    (token) => token.startsWith('fa-') && !ICON_STYLE_CLASSES.has(token)
+  );
+
+  if (!iconToken) return FALLBACK_ICON;
+  styleToken = styleToken || 'fas';
+  return `${styleToken} ${iconToken}`;
+}
+
+function resolveSkillIcon(skillName, overrideIcon) {
+  if (overrideIcon) return sanitizeIconClass(overrideIcon);
+  const key = normalizeSkillKey(skillName);
+  const mapped = key ? skillIconMapping[key] : '';
+  return sanitizeIconClass(mapped || FALLBACK_ICON);
+}
 
 function applyStaticUiText(uiText) {
   if (!uiText || typeof uiText !== 'object') return;
@@ -449,62 +355,147 @@ function updateProfileInfo(profileData) {
 }
 
 // 2. Atualizar Habilidades Técnicas (Hard Skills)
+function formatWithCount(template, count) {
+  return String(template || '').replace('{count}', count);
+}
+
+function collectHardSkills(profileData) {
+  const entries = new Map();
+
+  const ensureEntry = (rawName) => {
+    const name = typeof rawName === 'string' ? rawName.trim() : '';
+    if (!name) return null;
+    if (!entries.has(name)) {
+      entries.set(name, {
+        name,
+        projectNames: new Set(),
+        level: null,
+        iconOverride: null,
+      });
+    }
+    return entries.get(name);
+  };
+
+  const hardSkillList =
+    profileData &&
+    profileData.skills &&
+    Array.isArray(profileData.skills.hardSkills)
+      ? profileData.skills.hardSkills
+      : [];
+
+  hardSkillList.forEach((skill) => {
+    if (!skill) return;
+    if (typeof skill === 'string') {
+      ensureEntry(skill);
+      return;
+    }
+    const entry = ensureEntry(skill.name);
+    if (!entry) return;
+    if (typeof skill.level === 'number' && Number.isFinite(skill.level)) {
+      entry.level = skill.level;
+    }
+    if (skill.iconClass) {
+      entry.iconOverride = skill.iconClass;
+    }
+  });
+
+  const portfolio = Array.isArray(profileData?.portfolio)
+    ? profileData.portfolio
+    : [];
+
+  portfolio.forEach((project) => {
+    const technologies = Array.isArray(project?.technologies)
+      ? project.technologies
+      : [];
+    technologies.forEach((tech) => {
+      const entry = ensureEntry(tech);
+      if (!entry) return;
+      if (project?.name) {
+        entry.projectNames.add(project.name);
+      }
+    });
+  });
+
+  return Array.from(entries.values()).map((entry) => ({
+    name: entry.name,
+    iconOverride: entry.iconOverride,
+    level: entry.level,
+    projectCount: entry.projectNames.size,
+    projectNames: Array.from(entry.projectNames),
+  }));
+}
+
 function updateHardSkills(profileData, uiText) {
   const container = document.getElementById('hard-skills-chart-container');
   if (!container) return;
 
-  const skillToProjects = new Map();
-  const portfolio = Array.isArray(profileData.portfolio) ? profileData.portfolio : [];
-
-  for (const project of portfolio) {
-    const technologies = Array.isArray(project.technologies) ? project.technologies : [];
-    for (const tech of technologies) {
-      if (!skillToProjects.has(tech)) {
-        skillToProjects.set(tech, []);
-      }
-      skillToProjects.get(tech).push(project.name);
-    }
-  }
-
-  const hardSkills = Array.from(skillToProjects.keys()).sort();
-
+  const hardSkills = collectHardSkills(profileData);
   if (hardSkills.length === 0) {
     const emptyText = (uiText && uiText.noHardSkills) || 'No skills registered.';
     container.innerHTML = `<p class="hard-skills-empty">${emptyText}</p>`;
     return;
   }
 
+  const usageSingular =
+    (uiText && uiText.hardSkillUsageSingular) || 'Used in {count} project';
+  const usagePlural =
+    (uiText && uiText.hardSkillUsagePlural) || 'Used in {count} projects';
+  const usageNone =
+    (uiText && uiText.hardSkillUsageNone) || 'No related projects yet';
+  const levelLabel =
+    (uiText && uiText.hardSkillLevelLabel) || 'Level';
+  const projectsLabel =
+    (uiText && uiText.hardSkillProjectsLabel) || 'Projects';
+
   const list = document.createElement('ul');
   list.className = 'hard-skills-list';
 
-  for (const skillName of hardSkills) {
-    const projects = skillToProjects.get(skillName) || [];
-    const icon = skillIconMapping[skillName] || 'fas fa-code';
-    const projectCount = projects.length;
-    const projectText = projectCount > 0 ? `Utilizado em ${projectCount} projeto${projectCount > 1 ? 's' : ''}` : 'Nenhum projeto associado';
-
-    let countClass = '';
-    if (projectCount > 0) {
-      if (projectCount <= 2) {
-        countClass = 'count-low';
-      } else if (projectCount <= 4) {
-        countClass = 'count-medium';
-      } else {
-        countClass = 'count-high';
+  hardSkills
+    .sort((a, b) => {
+      if (b.projectCount !== a.projectCount) {
+        return b.projectCount - a.projectCount;
       }
-    }
+      return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+    })
+    .forEach((skill) => {
+      const projectCount = skill.projectCount;
+      const hasProjects = projectCount > 0;
+      const indicatorText = hasProjects
+        ? formatWithCount(projectCount === 1 ? usageSingular : usagePlural, projectCount)
+        : usageNone;
 
-    const item = document.createElement('li');
-    item.className = 'hard-skill-item';
-    item.innerHTML = `
-      <div class="hard-skill-indicator ${countClass}">${projectCount}</div>
-      <div class="hard-skill-name">
-        <i class="${icon}"></i>
-        <span>${skillName}</span>
-      </div>
-    `;
-    list.appendChild(item);
-  }
+      let countClass = '';
+      if (projectCount > 0) {
+        if (projectCount <= 2) countClass = 'count-low';
+        else if (projectCount <= 4) countClass = 'count-medium';
+        else countClass = 'count-high';
+      }
+
+      const icon = resolveSkillIcon(skill.name, skill.iconOverride);
+      const levelMarkup =
+        typeof skill.level === 'number' && Number.isFinite(skill.level)
+          ? `<span class="hard-skill-level" aria-label="${levelLabel}: ${skill.level}/10">${levelLabel}: ${skill.level}/10</span>`
+          : '';
+      const projectsTitle = hasProjects
+        ? `${projectsLabel}: ${skill.projectNames.join(', ')}`
+        : '';
+
+      const item = document.createElement('li');
+      item.className = 'hard-skill-item';
+      if (projectsTitle) {
+        item.title = projectsTitle;
+      }
+      item.innerHTML = `
+        <div class="hard-skill-indicator ${countClass}">${projectCount}</div>
+        <div class="hard-skill-name">
+          <i class="${icon}" aria-hidden="true"></i>
+          <span>${skill.name}</span>
+        </div>
+        <span class="hard-skill-usage">${indicatorText}</span>
+        ${levelMarkup}
+      `;
+      list.appendChild(item);
+    });
 
   container.innerHTML = '';
   container.appendChild(list);
@@ -720,7 +711,7 @@ function updatePortfolio(profileData, uiText) {
 
       const technologiesHTML = technologies.length > 0 ? `
         <div class="portfolio-technologies">
-          ${technologies.map(tech => `<span class="tag"><i class="${skillIconMapping[tech] || 'fas fa-code'}"></i> ${tech}</span>`).join('')}
+          ${technologies.map((tech) => `<span class="tag"><i class="${resolveSkillIcon(tech)}"></i> ${tech}</span>`).join('')}
         </div>
       ` : '';
 
@@ -1008,32 +999,3 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// --- Funções para Favoritar Página ---
-const favoriteToggle = document.getElementById("favorite-toggle");
-if (favoriteToggle) {
-  // Verifica se o elemento existe
-  const favoriteIcon = favoriteToggle.querySelector("i"); // Ícone de favorito
-  const isFavorited = localStorage.getItem("isFavorited") === "true";
-
-  // Função para atualizar o ícone de favorito
-  const updateFavoriteIcon = (favorited) => {
-    if (favorited) {
-      favoriteIcon.classList.remove("fa-regular", "fa-star");
-      favoriteIcon.classList.add("fa-solid", "fa-star");
-    } else {
-      favoriteIcon.classList.remove("fa-solid", "fa-star");
-      favoriteIcon.classList.add("fa-regular", "fa-star");
-    }
-  };
-
-  // Aplicar o estado de favorito salvo anteriormente e atualizar o ícone
-  updateFavoriteIcon(isFavorited);
-
-  // Evento de clique para alternar o favorito
-  favoriteToggle.addEventListener("click", () => {
-    const favorited = localStorage.getItem("isFavorited") === "true";
-    const newFavoriteStatus = !favorited;
-    updateFavoriteIcon(newFavoriteStatus);
-    localStorage.setItem("isFavorited", newFavoriteStatus);
-  });
-}
