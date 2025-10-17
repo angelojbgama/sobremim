@@ -376,116 +376,11 @@ body.light-theme .progress-bar {
   font-size: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
 }
 
-.skills .tools ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-  gap: clamp(0.12rem, 0.7vw, 0.35rem);
-}
 
-.skills .tools ul li {
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: 0.65rem 1rem;
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
-  box-shadow: none;
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
 
-.skills .tools ul li:hover {
-  background: linear-gradient(135deg, rgba(124, 93, 250, 0.22), rgba(27, 185, 241, 0.2));
-  border-color: var(--border-strong);
-}
 
-.skills .tools ul li i {
-  font-size: 1.2rem;
-  color: var(--accent-color);
-}
 
-.skills .tools ul li .skill-name {
-  font-size: 1rem;
-}
 
-.hard-skills {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(2.25rem, 1fr));
-  justify-items: center;
-  gap: clamp(0.25rem, 1.5vw, 0.5rem);
-}
-
-.hard-skills li {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(2.25rem, 8vw, 3.1rem);
-  height: clamp(2.25rem, 8vw, 3.1rem); /* garante quadrado mesmo sem suporte a aspect-ratio */
-  aspect-ratio: 1; /* navegadores modernos */
-  padding: 0; /* remove padding herdado e evita retângulo */
-  border-radius: var(--border-radius);
-  border: 1px solid var(--border-color);
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
-  cursor: pointer;
-  transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.hard-skills li:hover {
-  background: linear-gradient(135deg, rgba(124, 93, 250, 0.25), rgba(27, 185, 241, 0.22));
-  border-color: var(--border-strong);
-}
-
-.hard-skills li i {
-  font-size: clamp(1.25rem, 4vw, 1.8rem);
-  color: var(--text-color);
-}
-
-.hard-skills li .skill-name {
-  display: none;
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + clamp(0.2rem, 1vw, 0.45rem));
-  transform: translate(-50%, 0.4rem);
-  padding: 0.3rem 0.6rem;
-  border-radius: var(--border-radius);
-  background-color: var(--balloon-bg-color);
-  color: var(--balloon-text-color);
-  font-size: var(--font-small);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-.hard-skills li:hover .skill-name,
-.hard-skills li.active .skill-name {
-  display: none;
-  opacity: 1;
-  transform: translate(-50%, 0);
-}
-
-/* Tooltip global sobreposto (fora do fluxo/sem clipping) */
-.app-tooltip {
-  position: fixed;
-  z-index: 2147483647; /* acima de tudo */
-  pointer-events: none;
-  background-color: var(--balloon-bg-color);
-  color: var(--balloon-text-color);
-  padding: 0.35rem 0.6rem;
-  border-radius: var(--border-radius);
-  font-size: var(--font-small);
-  white-space: nowrap;
-  opacity: 0;
-  transform: translateY(-2px);
-  transition: opacity 0.15s ease, transform 0.15s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-.app-tooltip[data-show='true'] {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 
 
@@ -720,6 +615,36 @@ body.light-theme .languages li.language .language__stage.is-active {
   word-break: break-word;
   font-size: var(--font-small);
   opacity: 0.85;
+}
+
+.portfolio-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.portfolio-technologies .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px; /* pill shape */
+  background-color: var(--accordion-bg-color);
+  border: 1px solid var(--border-color);
+  font-size: var(--font-small);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.portfolio-technologies .tag:hover {
+  background-color: var(--accordion-hover-bg-color);
+  border-color: var(--border-strong);
+}
+
+.portfolio-technologies .tag i {
+  font-size: 0.9rem;
+  color: var(--accent-color);
 }
 
 .certifications {
@@ -1058,24 +983,78 @@ body.light-theme .certifications__tags .tag {
     scroll-behavior: auto !important;
   }
 }
-.hard-skills-chart { width: 100%; display: flex; flex-direction: column; gap: var(--space-1); }
-.hard-skills-bars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; width: 100%; }
-.hard-skills-bars__item { display: flex; flex-direction: column; gap: .4rem; padding: .9rem 1rem; border: 1px solid var(--border-color); border-radius: var(--border-radius); background: linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0)); transition: border-color .3s ease, background .3s ease; }
-.hard-skills-bars__item:hover { border-color: var(--border-strong); background: linear-gradient(135deg, rgba(124,93,250,0.18), rgba(27,185,241,0.16)); }
-.hard-skills-bars__header { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
-.hard-skills-bars__info { display: inline-flex; align-items: center; gap: .55rem; font-weight: 600; color: var(--text-color); }
-.hard-skills-bars__info i { color: var(--accent-color); font-size: 1rem; }
-.hard-skills-bars__name { font-size: .95rem; }
-.hard-skills-bars__value { font-size: .85rem; opacity: .85; }
-.hard-skills-bars__track { position: relative; width: 100%; height: .55rem; border-radius: 999px; overflow: hidden; background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); border: 1px solid var(--border-color); }
-.hard-skills-bars__fill { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent-color), var(--accent-color-alt)); transition: width .3s ease; }
-.hard-skills-empty { margin: 0; font-size: .9rem; opacity: .75; text-align: center; }
+.hard-skills-list {
+  display: flex;
+  flex-wrap: wrap;        /* quebra quando faltar espaço */
+  gap: var(--space-2);    /* respiro entre os cards */
+  justify-content: center;
+}
 
-@media (max-width: 720px) {
-  .hard-skills-bars {
-    grid-template-columns: 1fr;
-  }
-  .hard-skills-bars__info { gap: .45rem; }
-  .hard-skills-bars__name { font-size: .9rem; }
-  .hard-skills-bars__track { height: .5rem; }
+.hard-skill-item {
+  flex: 0 0 auto;         /* grow 0 | shrink 0 | basis auto */
+  inline-size: fit-content;
+  min-inline-size: 6rem;  /* não fique minúsculo demais */
+  padding: var(--space-1) calc(var(--space-2) + 1.2rem) var(--space-1) var(--space-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--accordion-bg-color);
+  position: relative;
+  transition: border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+
+.hard-skill-item:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+  background: linear-gradient(
+    135deg,
+    rgba(124, 93, 250, 0.08),
+    rgba(27, 185, 241, 0.06)
+  );
+}
+
+.hard-skill-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;      /* impede quebra de texto */
+  font-weight: bold;
+  font-size: clamp(.9rem, .85rem + .2vw, 1rem);
+}
+
+.hard-skill-name i { font-size: 1rem; color: var(--accent-color); }
+
+.hard-skill-indicator {
+  position: absolute;
+  top: calc(var(--space-2) * -0.4);
+  right: calc(var(--space-2) * -0.4);
+  width: 1.8rem;
+  height: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--header-text-color);
+  font-weight: bold;
+  font-size: 0.8rem;
+  box-shadow: var(--shadow-soft);
+  border: 2px solid var(--header-bg-color);
+  z-index: 1;
+}
+
+.hard-skill-indicator.count-low {
+  background: linear-gradient(135deg, var(--accent-color-alt), #3ddc84);
+}
+
+.hard-skill-indicator.count-medium {
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-color-alt));
+}
+
+.hard-skill-indicator.count-high {
+  background: linear-gradient(135deg, #ff7e5f, var(--accent-color));
 }

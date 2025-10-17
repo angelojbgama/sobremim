@@ -41,60 +41,6 @@
   "titleSkills": "Habilidades",
   "skills": {
     "titleHardSkills": "Habilidades Técnicas",
-    "hardSkills": [
-      {
-        "name": "Python",
-        "level": 9
-      },
-      {
-        "name": "C++",
-        "level": 7
-      },
-      {
-        "name": "Java",
-        "level": 6
-      },
-      {
-        "name": "JavaScript",
-        "level": 7
-      },
-      {
-        "name": "React Native",
-        "level": 8
-      },
-      {
-        "name": "Flutter",
-        "level": 8
-      },
-      {
-        "name": "Django",
-        "level": 8
-      },
-      {
-        "name": "Docker",
-        "level": 7
-      },
-      {
-        "name": "Kubernetes",
-        "level": 7
-      },
-      {
-        "name": "Celery",
-        "level": 6
-      },
-      {
-        "name": "RabbitMQ",
-        "level": 6
-      },
-      {
-        "name": "PostgreSQL",
-        "level": 7
-      },
-      {
-        "name": "Git",
-        "level": 8
-      }
-    ],
     "titleSoftSkills": "Habilidades Comportamentais",
     "softSkills": [
       {
@@ -182,49 +128,57 @@
       "name": "Bike2Bike",
       "url": "https://github.com/angelojbgama/Bike2Bike",
       "github": true,
-      "description": "Marketplace de bicicletas usadas com foco em trocas e doações entre ciclistas."
+      "description": "Marketplace de bicicletas usadas com foco em trocas e doações entre ciclistas.",
+      "technologies": ["Python", "Django", "PostgreSQL"]
     },
     {
       "name": "Cardápio Digital",
       "url": "https://angelojbgama.github.io/terra_e_p-o/",
       "github": false,
-      "description": "Cardápio online otimizado para tablets e totens em lanchonetes."
+      "description": "Cardápio online otimizado para tablets e totens em lanchonetes.",
+      "technologies": ["HTML", "CSS", "JavaScript"]
     },
     {
       "name": "APP Gerador de Senhas em React Native",
       "url": "https://github.com/angelojbgama/bat-pass-app",
       "github": true,
-      "description": "Aplicativo mobile que gera senhas fortes com diferentes critérios."
+      "description": "Aplicativo mobile que gera senhas fortes com diferentes critérios.",
+      "technologies": ["React Native", "JavaScript"]
     },
     {
       "name": "Web Scraping de Notebooks com API RESTful",
       "url": "https://github.com/angelojbgama/crawler-jr",
       "github": true,
-      "description": "Crawler que coleta ofertas de notebooks e expõe dados via API."
+      "description": "Crawler que coleta ofertas de notebooks e expõe dados via API.",
+      "technologies": ["Python"]
     },
     {
       "name": "Automação e leitura de PDF com Regex (Python)",
       "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
       "github": true,
-      "description": "Script que extrai campos de PDFs e gera relatórios estruturados."
+      "description": "Script que extrai campos de PDFs e gera relatórios estruturados.",
+      "technologies": ["Python"]
     },
     {
       "name": "Automação e análise de dados em Python: IA e previsão de preços",
       "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
       "github": true,
-      "description": "Pipeline de machine learning para prever preços com dados históricos."
+      "description": "Pipeline de machine learning para prever preços com dados históricos.",
+      "technologies": ["Python"]
     },
     {
       "name": "Python Insights - Analisando Dados com Python",
       "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
       "github": true,
-      "description": "Coleção de notebooks explorando análises e visualizações em Python."
+      "description": "Coleção de notebooks explorando análises e visualizações em Python.",
+      "technologies": ["Python"]
     },
     {
       "name": "Python Power UP - Projeto de Automação",
       "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
       "github": true,
-      "description": "Ferramentas para automatizar tarefas repetitivas no dia a dia."
+      "description": "Ferramentas para automatizar tarefas repetitivas no dia a dia.",
+      "technologies": ["Python"]
     }
   ],
   "titleProfessionalExperience": "Experiência Profissional",

@@ -450,71 +450,64 @@ function updateProfileInfo(profileData) {
 
 // 2. Atualizar Habilidades Técnicas (Hard Skills)
 function updateHardSkills(profileData, uiText) {
-  const locale = uiText || updateHardSkills._uiText || {};
-  updateHardSkills._uiText = locale;
-
-  const raw = Array.isArray(profileData?.skills?.hardSkills)
-    ? profileData.skills.hardSkills
-    : [];
-
-  const items = raw
-    .map((s) => {
-      if (typeof s === 'string') {
-        return { name: s, level: 0, iconClass: undefined };
-      }
-      const level = Math.max(0, Math.min(10, Number(s.level ?? s.score ?? 0)));
-      const iconClass = typeof s.iconClass === 'string' ? s.iconClass : undefined;
-      return { name: s.name || '', level, iconClass };
-    })
-    .filter((item) => item.name)
-    .sort((a, b) => b.level - a.level);
-
   const container = document.getElementById('hard-skills-chart-container');
   if (!container) return;
 
-  let root = document.getElementById('hardSkillsBars');
-  if (!root) {
-    root = document.createElement('div');
-    root.id = 'hardSkillsBars';
-    root.className = 'hard-skills-bars';
-    container.innerHTML = '';
-    container.appendChild(root);
+  const skillToProjects = new Map();
+  const portfolio = Array.isArray(profileData.portfolio) ? profileData.portfolio : [];
+
+  for (const project of portfolio) {
+    const technologies = Array.isArray(project.technologies) ? project.technologies : [];
+    for (const tech of technologies) {
+      if (!skillToProjects.has(tech)) {
+        skillToProjects.set(tech, []);
+      }
+      skillToProjects.get(tech).push(project.name);
+    }
   }
 
-  const chartLabel = locale.hardSkillsChartLabel || 'Technical skills overview';
-  root.setAttribute('role', 'list');
-  root.setAttribute('aria-label', chartLabel);
+  const hardSkills = Array.from(skillToProjects.keys()).sort();
 
-  if (!items.length) {
-    const emptyText = locale.noHardSkills || 'No skills registered.';
-    root.innerHTML = `<p class="hard-skills-empty">${emptyText}</p>`;
+  if (hardSkills.length === 0) {
+    const emptyText = (uiText && uiText.noHardSkills) || 'No skills registered.';
+    container.innerHTML = `<p class="hard-skills-empty">${emptyText}</p>`;
     return;
   }
 
-  const progressLabel = locale.hardSkillsProgressLabel || 'Skill level';
+  const list = document.createElement('ul');
+  list.className = 'hard-skills-list';
 
-  root.innerHTML = items
-    .map((item) => {
-      const level = Math.max(0, Math.min(10, item.level));
-      const percent = (level / 10) * 100;
-      const icon = item.iconClass || skillIconMapping[item.name] || 'fas fa-tools';
-      const progressAria = `${progressLabel}: ${item.name}`;
-      return `
-        <div class="hard-skills-bars__item" role="listitem">
-          <div class="hard-skills-bars__header">
-            <span class="hard-skills-bars__info">
-              <i class="${icon}" aria-hidden="true"></i>
-              <span class="hard-skills-bars__name">${item.name}</span>
-            </span>
-            <span class="hard-skills-bars__value">${level}/10</span>
-          </div>
-          <div class="hard-skills-bars__track" role="progressbar" aria-label="${progressAria}" aria-valuemin="0" aria-valuemax="10" aria-valuenow="${level}" aria-valuetext="${level}/10">
-            <span class="hard-skills-bars__fill" style="width: ${percent}%"></span>
-          </div>
-        </div>
-      `;
-    })
-    .join('');
+  for (const skillName of hardSkills) {
+    const projects = skillToProjects.get(skillName) || [];
+    const icon = skillIconMapping[skillName] || 'fas fa-code';
+    const projectCount = projects.length;
+    const projectText = projectCount > 0 ? `Utilizado em ${projectCount} projeto${projectCount > 1 ? 's' : ''}` : 'Nenhum projeto associado';
+
+    let countClass = '';
+    if (projectCount > 0) {
+      if (projectCount <= 2) {
+        countClass = 'count-low';
+      } else if (projectCount <= 4) {
+        countClass = 'count-medium';
+      } else {
+        countClass = 'count-high';
+      }
+    }
+
+    const item = document.createElement('li');
+    item.className = 'hard-skill-item';
+    item.innerHTML = `
+      <div class="hard-skill-indicator ${countClass}">${projectCount}</div>
+      <div class="hard-skill-name">
+        <i class="${icon}"></i>
+        <span>${skillName}</span>
+      </div>
+    `;
+    list.appendChild(item);
+  }
+
+  container.innerHTML = '';
+  container.appendChild(list);
 }
 
 // 3. Atualizar Habilidades Comportamentais (Soft Skills)
@@ -723,6 +716,13 @@ function updatePortfolio(profileData, uiText) {
       const label = isGithub ? githubLabel : linkLabel;
       const url = project.url || '#';
       const desc = (project.description || '').trim();
+      const technologies = Array.isArray(project.technologies) ? project.technologies : [];
+
+      const technologiesHTML = technologies.length > 0 ? `
+        <div class="portfolio-technologies">
+          ${technologies.map(tech => `<span class="tag"><i class="${skillIconMapping[tech] || 'fas fa-code'}"></i> ${tech}</span>`).join('')}
+        </div>
+      ` : '';
 
       return `
         <li class="portfolio-item">
@@ -731,6 +731,7 @@ function updatePortfolio(profileData, uiText) {
               <i class="${icon}" aria-hidden="true"></i> ${project.name}
             </h3>
             ${desc ? `<p class="portfolio-description">${desc}</p>` : ''}
+            ${technologiesHTML}
           </div>
           <a class="btn btn-open-link" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="${label}: ${project.name}">
             <i class="${icon}" aria-hidden="true"></i> <span>${openLabel}</span>

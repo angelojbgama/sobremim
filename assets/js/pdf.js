@@ -31,6 +31,51 @@ document.addEventListener("DOMContentLoaded", () => {
     return await urlToDataURL(api);
   }
 
+  function calcularDuracao(periodo, traducoes) {
+    const [inicio, fim] = periodo.split(" - ").map(str => str.trim());
+
+    // Função para converter a string da data em objeto Date
+    function parseData(dataStr) {
+        if (!dataStr) return new Date();
+        if (traducoes && typeof traducoes.current === 'string' && dataStr.toLowerCase() === traducoes.current.toLowerCase()) {
+            return new Date();
+        }
+
+        const partes = dataStr.split(" ");
+        const mes = partes[0];
+        const ano = partes[partes.length - 1];
+
+        const mesIndex = traducoes && traducoes.months ? traducoes.months[mes] : undefined;
+        if (mesIndex === undefined) {
+            return new Date(); // Retorna a data atual para evitar falhas
+        }
+
+        return new Date(parseInt(ano, 10), mesIndex, 1);
+    }
+
+    const dataInicio = parseData(inicio);
+    const dataFim = parseData(fim);
+
+    let anos = dataFim.getFullYear() - dataInicio.getFullYear();
+    let mesesDuracao = dataFim.getMonth() - dataInicio.getMonth();
+
+    if (mesesDuracao < 0) {
+        anos--;
+        mesesDuracao += 12;
+    }
+
+    const joinWord = (traducoes && typeof traducoes.and === 'string' && traducoes.and.trim()) || 'e';
+    let duracao = "";
+    if (anos > 0) {
+        duracao += `${anos} ${anos > 1 ? traducoes.years_plural : traducoes.years}`;
+    }
+    if (mesesDuracao > 0) {
+        if (anos > 0) duracao += ` ${joinWord} `;
+        duracao += `${mesesDuracao} ${mesesDuracao > 1 ? traducoes.months_plural : traducoes.months_text}`;
+    }
+    return duracao || traducoes.lessThanAMonth;
+  }
+
   button.addEventListener("click", async () => {
     try {
       const { jsPDF } = window.jspdf;
@@ -46,8 +91,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await fetchProfileData(lang);
       if (!data) return;
 
-      // Forçar paleta monocromática (preto, branco e cinza)
-      const isLight = true; // mantém contrastes previstos ao desenhar barras
       const P = palettes.mono;
       const setText = (rgb) => doc.setTextColor(rgb[0], rgb[1], rgb[2]);
       const setDraw = (rgb) => doc.setDrawColor(rgb[0], rgb[1], rgb[2]);
@@ -55,15 +98,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Helpers
       const section = (title) => {
-        doc.setFont("helvetica", "bold"); doc.setFontSize(13);
+        y += mm(4); // More space before section
+        doc.setFont("helvetica", "bold"); doc.setFontSize(12);
         setText(P.brand);
         doc.text(String(title || '').toUpperCase(), M, y);
-        y += mm(4);
-        doc.setLineWidth(0.4); setDraw(P.brand);
+        y += mm(5);
+        doc.setLineWidth(0.2); setDraw(P.stroke);
         doc.line(M, y, W - M, y);
-        y += mm(4);
-        doc.setFont("helvetica", "normal"); doc.setFontSize(11);
-        setText(P.text); setDraw(P.stroke);
+        y += mm(5);
+        doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+        setText(P.text);
       };
       const ensure = (h) => { if (y + h > H - M) { doc.addPage(); y = M; } };
       const paragraph = (text, maxW) => {
@@ -95,25 +139,61 @@ document.addEventListener("DOMContentLoaded", () => {
         ensure(BAR_TOP + BAR_H + BAR_BOTTOM);
         y += BAR_TOP;
         // trilho em cinza claro e preenchimento com cinza médio
-        setDraw(P.stroke); setFill([235,235,235]);
-        doc.rect(x, y, w, BAR_H);
+        setDraw(P.stroke); setFill(P.stroke);
+        doc.rect(x, y, w, BAR_H, 'FD');
         setFill(P.brand);
         if (filled > 0) doc.rect(x, y, filled, BAR_H, 'F');
         y += BAR_H + BAR_BOTTOM;
       };
 
-      // Cabeçalho simples
-      setText(P.text); doc.setFont("helvetica", "bold"); doc.setFontSize(20);
+      // Cabeçalho redesenhado
+      const header_y_start = y;
+      
+      // Lado esquerdo: Nome e Cargo
+      setText(P.text); doc.setFont("helvetica", "bold"); doc.setFontSize(26);
       doc.text(String(data.name || ''), M, y);
+      y += mm(10);
+      if (data.job) {
+        doc.setFont("helvetica", "normal"); doc.setFontSize(14);
+        setText(P.muted);
+        doc.text(String(data.job), M, y);
+        y += mm(8);
+      }
+
+      const header_left_height = y - header_y_start;
+      y = header_y_start; // Reseta o y para o lado direito
+
+      // Lado direito: Informações de Contato
+      let y_right_header = y;
+      doc.setFont("helvetica", "normal"); doc.setFontSize(10);
+      setText(P.text);
+      
+      const contact_info = [
+        { label: ui.contactEmailLabel || 'E-mail', value: data.email },
+        { label: ui.contactPhoneLabel || 'Telefone', value: data.phone },
+        { label: ui.contactLocationLabel || 'Localização', value: data.location }
+      ].filter(info => info.value);
+
+      contact_info.forEach(info => {
+          doc.setFont("helvetica", "normal");
+          const valueText = info.value;
+          const valueWidth = doc.getTextWidth(valueText);
+          textRight(valueText, W - M, y_right_header);
+
+          doc.setFont("helvetica", "bold");
+          const labelText = `${info.label}: `;
+          textRight(labelText, W - M - valueWidth, y_right_header);
+
+          y_right_header += mm(5);
+      });
+      
+      const header_right_height = y_right_header - header_y_start;
+      y = header_y_start + Math.max(header_left_height, header_right_height) + mm(5);
+      
+      // Linha inferior para o cabeçalho
+      doc.setLineWidth(0.3); setDraw(P.stroke);
+      doc.line(M, y, W - M, y);
       y += mm(8);
-      doc.setFont("helvetica", "normal"); doc.setFontSize(12);
-      if (data.job) { doc.text(String(data.job), M, y); y += mm(6); }
-      const mailLabel = ui.contactEmailLabel || 'E-mail';
-      const phoneLabel = ui.contactPhoneLabel || 'Telefone';
-      const locationLabel = ui.contactLocationLabel || 'Localização';
-      simpleItem(mailLabel, data.email);
-      simpleItem(phoneLabel, data.phone);
-      simpleItem(locationLabel, data.location);
 
       // Formação (resumo + progresso)
       if (data.graduate) {
@@ -136,8 +216,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (Array.isArray(data.academicFormation) && data.academicFormation.length) {
           data.academicFormation.forEach(edu => {
             const title = [edu.name, edu.institution].filter(Boolean).join(' — ');
+            const duracao = edu.period ? calcularDuracao(edu.period, data.translations) : '';
+            const periodText = edu.period ? `${edu.period}${duracao ? ` (${duracao})` : ''}` : '';
             ensure(mm(8)); doc.setFont("helvetica", "bold"); doc.text(title, M, y); y += mm(5);
-            if (edu.period) { doc.setFont("helvetica", "italic"); doc.text(edu.period, M, y); y += mm(5); }
+            if (periodText) { doc.setFont("helvetica", "italic"); doc.text(periodText, M, y); y += mm(5); }
             doc.setFont("helvetica", "normal"); paragraph(edu.description || '', W - 2*M);
           });
         }
@@ -147,26 +229,89 @@ document.addEventListener("DOMContentLoaded", () => {
       ensure(mm(10));
       section(data.titleSkills || ui.titleSkills || 'Habilidades');
       if (data.skills) {
-        if (Array.isArray(data.skills.hardSkills) && data.skills.hardSkills.length) {
-          doc.setFont("helvetica", "bold"); doc.text(String(data.skills.titleHardSkills || 'Hard Skills'), M, y); y += mm(6);
-          doc.setFont("helvetica", "normal");
-          const hard = data.skills.hardSkills.map(s => s.name || s).filter(Boolean).join(', ');
-          paragraph(hard, W - 2*M);
+        const skillToProjects = new Map();
+        const portfolio = Array.isArray(data.portfolio) ? data.portfolio : [];
+
+        for (const project of portfolio) {
+          const technologies = Array.isArray(project.technologies) ? project.technologies : [];
+          for (const tech of technologies) {
+            if (!skillToProjects.has(tech)) {
+              skillToProjects.set(tech, []);
+            }
+            skillToProjects.get(tech).push(project.name);
+          }
         }
-        if (Array.isArray(data.skills.softSkills) && data.skills.softSkills.length) {
-          doc.setFont("helvetica", "bold"); doc.text(String(data.skills.titleSoftSkills || 'Soft Skills'), M, y); y += mm(5);
-          doc.setFont("helvetica", "normal");
-          data.skills.softSkills.forEach(s => {
-            const name = typeof s === 'string' ? s : (s?.name || '');
-            const pct = typeof s === 'object' ? Number(s.percent || s.percentage || 0) : 0;
-            if (!name) return;
-            // Cabeçalho da habilidade: nome à esquerda, % à direita
-            ensure(mm(8));
-            doc.setFont("helvetica", "bold"); setText(P.text); doc.text(name, M, y);
-            if (pct) { doc.setFont("helvetica", "normal"); setText(P.muted); textRight(`${pct}%`, W - M, y); setText(P.text); }
-            y += mm(1);
-            if (pct) drawPercentBar(pct);
-          });
+
+        const hardSkills = Array.from(skillToProjects.keys()).sort();
+        const softSkills = (Array.isArray(data.skills.softSkills) && data.skills.softSkills.length > 0) ? data.skills.softSkills : [];
+
+        if (hardSkills.length > 0 || softSkills.length > 0) {
+          const y_start = y;
+          
+          const gap = mm(10);
+          const colWidth = (W - 2 * M - gap) / 2;
+          const leftColX = M;
+          const rightColX = M + colWidth + gap;
+
+          let y_left = y_start;
+          let y_right = y_start;
+
+          // --- Hard Skills (Left Column) ---
+          if (hardSkills.length > 0) {
+            doc.setFont("helvetica", "bold");
+            doc.text(String(data.skills.titleHardSkills || 'Habilidades Técnicas'), leftColX, y_left);
+            y_left += mm(6);
+            doc.setFont("helvetica", "normal");
+            hardSkills.forEach(name => {
+              const item_y = y_left;
+              const projects = skillToProjects.get(name) || [];
+              const projectCount = projects.length;
+              
+              const nameLines = doc.splitTextToSize(name, colWidth - mm(15));
+              nameLines.forEach(line => {
+                doc.text(line, leftColX, y_left);
+                y_left += mm(5);
+              });
+
+              if (projectCount > 0) {
+                doc.setFont("helvetica", "normal"); setText(P.muted);
+                const projectText = `(${projectCount} projetos)`;
+                const textWidth = doc.getTextWidth(projectText);
+                doc.text(projectText, leftColX + colWidth - textWidth, item_y);
+              }
+              y_left += mm(2);
+            });
+          }
+
+          // --- Soft Skills (Right Column) ---
+          if (softSkills.length > 0) {
+            doc.setFont("helvetica", "bold");
+            doc.text(String(data.skills.titleSoftSkills || 'Habilidades Comportamentais'), rightColX, y_right);
+            y_right += mm(6);
+            doc.setFont("helvetica", "normal");
+            softSkills.forEach(s => {
+              const item_y = y_right;
+              const name = typeof s === 'string' ? s : (s?.name || '');
+              const pct = typeof s === 'object' ? Number(s.percent || s.percentage || 0) : 0;
+              if (!name) return;
+
+              const nameLines = doc.splitTextToSize(name, colWidth - mm(15));
+              nameLines.forEach(line => {
+                doc.text(line, rightColX, y_right);
+                y_right += mm(5);
+              });
+
+              if (pct) {
+                doc.setFont("helvetica", "normal"); setText(P.muted);
+                const pctText = `${pct}%`;
+                const pctWidth = doc.getTextWidth(pctText);
+                doc.text(pctText, rightColX + colWidth - pctWidth, item_y);
+              }
+              y_right += mm(2);
+            });
+          }
+
+          y = Math.max(y_left, y_right);
         }
       }
 
@@ -190,8 +335,26 @@ document.addEventListener("DOMContentLoaded", () => {
           name = item.name || ''; lvl = Number(item.level || 0);
         }
         if (!name) return;
-        ensure(mm(6));
-        doc.text(`• ${name} ${lvl? `- ${levelText(lvl)}`: ''}`, M, y); y += mm(4);
+        ensure(mm(8));
+        doc.setFont("helvetica", "bold"); setText(P.text); doc.text(name, M, y);
+        if (lvl) { doc.setFont("helvetica", "normal"); setText(P.muted); textRight(levelText(lvl), W - M, y); setText(P.text); }
+        y += mm(1);
+        if (lvl) {
+            const w = W - 2 * M;
+            const stageW = w / 4;
+            ensure(BAR_TOP + BAR_H + BAR_BOTTOM);
+            y += BAR_TOP;
+            for (let i = 0; i < 4; i++) {
+                const x = M + i * stageW;
+                setDraw(P.stroke); setFill(P.stroke);
+                doc.rect(x, y, stageW - 2, BAR_H, 'FD');
+                if (i < lvl) {
+                    setFill(P.brand);
+                    doc.rect(x, y, stageW - 2, BAR_H, 'F');
+                }
+            }
+            y += BAR_H + BAR_BOTTOM;
+        }
       });
       if (Array.isArray(data.languagesCertifications) && data.languagesCertifications.length) {
         ensure(mm(8)); doc.setFont("helvetica", "bold");
@@ -213,16 +376,22 @@ document.addEventListener("DOMContentLoaded", () => {
         for (const p of data.portfolio) {
           const title = p.name || '';
           const url = p.url || '';
+          const description = p.description || '';
           const host = (() => { try { return new URL(url).hostname.replace(/^www\./,''); } catch { return url; } })();
 
-          const qrSize = mm(22);
-          const pad = mm(4);
+          const qrSize = mm(18);
+          const pad = mm(3);
           const textW = (W - 2*M) - (qrSize + pad);
+
+          const technologies = Array.isArray(p.technologies) ? p.technologies : [];
+          const technologiesStr = technologies.join(', ');
+          const technologiesLines = doc.splitTextToSize(`Tecnologias: ${technologiesStr}`, textW);
 
           // Medir altura do bloco
           const titleLines = doc.splitTextToSize(title, textW);
+          const descLines = doc.splitTextToSize(description, textW);
           const hostLines = url ? doc.splitTextToSize(host, textW) : [];
-          const contentH = Math.max(qrSize, (titleLines.length + hostLines.length) * mm(6));
+          const contentH = Math.max(qrSize, (titleLines.length * mm(5)) + (descLines.length * mm(4)) + (hostLines.length * mm(4)) + (technologiesLines.length * mm(4)));
           const boxH = contentH + pad * 2;
 
           ensure(boxH + mm(4));
@@ -236,15 +405,25 @@ document.addEventListener("DOMContentLoaded", () => {
           if (url) {
             const dataURL = await makeQRDataURL(url, 200);
             if (dataURL) {
-              try { doc.addImage(dataURL, 'PNG', M + (W - 2*M) - qrSize - pad, y + pad, qrSize, qrSize); } catch {}
+              try { doc.addImage(dataURL, 'PNG', M + (W - 2*M) - qrSize - pad, y + pad, qrSize, qrSize); } catch (e) {
+                console.error("Failed to add QR code to PDF", e);
+                doc.setFont("helvetica", "italic");
+                doc.text("QR Error", M + (W - 2*M) - qrSize - pad + (qrSize/2), y + pad + (qrSize/2), { align: 'center', baseline: 'middle' });
+              }
             }
           }
 
           // Texto à esquerda
           let tx = M + pad, ty = y + pad + mm(5);
           doc.setFont("helvetica", "bold"); setText(P.text);
-          titleLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(6); });
-          if (host) { doc.setFont("helvetica", "normal"); setText(P.muted); hostLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(5); }); setText(P.text); }
+          titleLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(5); });
+          doc.setFont("helvetica", "normal"); setText(P.muted);
+          descLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(4); });
+          if (technologies.length > 0) {
+            doc.setFont("helvetica", "bold"); setText(P.text);
+            technologiesLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(4); });
+          }
+          if (host) { doc.setFont("helvetica", "italic"); setText(P.muted); hostLines.forEach(ln => { doc.text(ln, tx, ty); ty += mm(4); }); setText(P.text); }
 
           y += boxH + mm(4);
         }
@@ -255,10 +434,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ensure(mm(10)); section(data.titleProfessionalExperience || ui.titleProfessionalExperience || 'Experiência Profissional');
         data.professionalExperience.forEach(exp => {
           const title = exp.name || '';
-          const period = exp.period || '';
+          const duracao = exp.period ? calcularDuracao(exp.period, data.translations) : '';
+          const periodText = exp.period ? `${exp.period}${duracao ? ` (${duracao})` : ''}` : '';
           const desc = exp.description || '';
           ensure(mm(8)); doc.setFont("helvetica", "bold"); doc.text(title, M, y); y += mm(5);
-          doc.setFont("helvetica", "italic"); if (period) { doc.text(period, M, y); y += mm(5); }
+          doc.setFont("helvetica", "italic"); if (periodText) { doc.text(periodText, M, y); y += mm(5); }
           doc.setFont("helvetica", "normal"); paragraph(desc, W - 2*M);
         });
       }
@@ -281,6 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
       doc.save(`${(data.name || 'curriculo').replace(/\s+/g,'_')}.pdf`);
     } catch (e) {
       console.error('Falha ao gerar PDF', e);
+      alert('Desculpe, ocorreu um erro ao gerar o PDF. Por favor, tente novamente mais tarde.');
     }
   });
 });
