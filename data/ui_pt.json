@@ -2,9 +2,16 @@
   "loading": "Carregando...",
   "profileLoadError": "Não foi possível carregar os dados do perfil.",
   "profileNotLoaded": "Dados do perfil não foram carregados.",
+  "titleSkills": "Habilidades",
+  "titleLanguages": "Idiomas",
+  "titlePortfolio": "Portfólio",
+  "titleProfessionalExperience": "Experiência Profissional",
   "titleAcademicFormation": "Formação Acadêmica",
   "titleLanguageCertifications": "Certificações de domínio da língua",
   "titleCertifications": "Certificações",
+  "titleHardSkills": "Habilidades Técnicas",
+  "titleSoftSkills": "Habilidades Comportamentais",
+  "softSkillsTestLabel": "Faça o teste",
   "certIssuer": "Emissor",
   "certDate": "Data",
   "openPdf": "Abrir PDF",
@@ -40,5 +47,30 @@
   "portfolioLinkLabel": "Link",
   "contactEmailLabel": "E-mail",
   "contactPhoneLabel": "Telefone",
-  "contactLocationLabel": "Localização"
+  "contactLocationLabel": "Localização",
+  "translations": {
+    "months": {
+      "Janeiro": 0,
+      "Fevereiro": 1,
+      "Março": 2,
+      "Abril": 3,
+      "Maio": 4,
+      "Junho": 5,
+      "Julho": 6,
+      "Agosto": 7,
+      "Setembro": 8,
+      "Outubro": 9,
+      "Novembro": 10,
+      "Dezembro": 11
+    },
+    "current": "Até o momento",
+    "lessThanAMonth": "Menos de um mês",
+    "years": "ano",
+    "years_plural": "anos",
+    "months_text": "mês",
+    "months_plural": "meses",
+    "and": "e",
+    "completedLabel": "disciplinas cursadas",
+    "ofLabel": "de"
+  }
 }

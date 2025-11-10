@@ -4,100 +4,63 @@
   "shortName": "Angelo Gama",
   "photo": "assets/img/my-photo.jpg",
   "job": "Programador",
+  "summary": "Soy desarrollador especializado en Python y C++, actualmente trabajando en una fundación de investigación en Río de Janeiro, donde contribuyo a proyectos tecnológicos y científicos. Curso Análisis y Desarrollo de Sistemas, profundizando constantemente mis conocimientos en programación, arquitectura de software y buenas prácticas de desarrollo. Mi trayectoria en el área comenzó de forma curiosa: creando scripts automatizados para el juego Tibia. Esa experiencia, aunque inusual, despertó mi pasión por unir creatividad, lógica y tecnología, principios que siguen guiando mi trabajo hasta hoy.",
   "graduate": "Análisis y Desarrollo de Sistemas",
   "graduateScale": {
-    "completed": 15,
+    "completed": 30,
     "total": 35
-  },
-  "translations": {
-    "months": {
-      "Enero": 0,
-      "Febrero": 1,
-      "Marzo": 2,
-      "Abril": 3,
-      "Mayo": 4,
-      "Junio": 5,
-      "Julio": 6,
-      "Agosto": 7,
-      "Septiembre": 8,
-      "Octubre": 9,
-      "Noviembre": 10,
-      "Diciembre": 11
-    },
-    "current": "Hasta el momento",
-    "lessThanAMonth": "Menos de un mes",
-    "years": "año",
-    "years_plural": "años",
-    "months_text": "mes",
-    "months_plural": "meses",
-    "and": "y",
-    "completedLabel": "materias cursadas",
-    "ofLabel": "de"
   },
   "location": "Brasil - RJ",
   "phone": "(21) 98030-9664",
   "phoneCountryCode": "+55",
   "email": "angelojbgama@gmail.com",
-  "titleSkills": "Habilidades",
   "skills": {
-    "titleHardSkills": "Habilidades Técnicas",
-    "hardSkills": [
+    "softSkills": [
       {
-        "name": "Python",
-        "iconClass": "fab fa-python",
-        "level": 9
+        "name": "Persuasión y negociación",
+        "percent": 78
       },
       {
-        "name": "C++",
-        "iconClass": "fas fa-code",
-        "level": 7
+        "name": "Resolución de problemas",
+        "percent": 82
       },
       {
-        "name": "JavaScript",
-        "iconClass": "fab fa-js-square",
-        "level": 7
+        "name": "Inteligencia emocional",
+        "percent": 76
       },
       {
-        "name": "Django",
-        "iconClass": "fas fa-leaf",
-        "level": 8
+        "name": "Relaciones interpersonales",
+        "percent": 80
       },
       {
-        "name": "Docker",
-        "iconClass": "fab fa-docker",
-        "level": 7
+        "name": "Autoconocimiento",
+        "percent": 74
       },
       {
-        "name": "Celery",
-        "iconClass": "fas fa-rocket",
-        "level": 6
+        "name": "Autogestión",
+        "percent": 77
       },
       {
-        "name": "RabbitMQ",
-        "iconClass": "fas fa-server",
-        "level": 6
+        "name": "Empatía",
+        "percent": 84
       },
       {
-        "name": "PostgreSQL",
-        "iconClass": "fas fa-database",
-        "level": 7
+        "name": "Pensamiento crítico",
+        "percent": 79
       },
       {
-        "name": "Git",
-        "iconClass": "fab fa-git-alt",
-        "level": 8
+        "name": "Productividad",
+        "percent": 81
+      },
+      {
+        "name": "Creatividad",
+        "percent": 83
       }
     ],
-    "titleSoftSkills": "Habilidades Blandas",
-    "softSkills": [
-      "Adaptación a nuevas tecnologías",
-      "Resolución de problemas",
-      "Capacidad de abstracción",
-      "Pensamiento enfocado en el usuario",
-      "Persistencia"
-    ]
+    "softSkillsTest": {
+      "url": "https://estudante.estacio.br/mapeamento-socioemocional"
+    }
   },
-  "titleLanguages": "Idiomas",
   "languages": [
     {
       "name": "Portugués (BR)",
@@ -112,15 +75,13 @@
       "level": 1
     }
   ],
-  "titleLanguageCertifications": "Certificaciones de dominio del idioma",
   "languagesCertifications": [],
-  "titleAcademicFormation": "Formación Académica",
   "academicFormation": [
     {
       "name": "Tecnólogo en Análisis y Desarrollo de Sistemas",
       "institution": "Estácio",
       "period": "Febrero de 2023 - Hasta el momento",
-      "description": "Formación enfocada en desarrollo de software, arquitectura y buenas prácticas."
+      "description": "Carrera universitaria enfocada en desarrollo de software, arquitectura y buenas prácticas."
     },
     {
       "name": "Técnico en Electrónica",
@@ -130,100 +91,124 @@
       "pdfUrl": "assets/formacao_academica/certificado_tecnico_em_eletronica.pdf"
     }
   ],
-  "titlePortfolio": "Portafolio",
   "portfolio": [
     {
       "name": "Bike2Bike",
       "url": "https://github.com/angelojbgama/Bike2Bike",
       "github": true,
-      "description": "Marketplace que conecta ciclistas para intercambiar o donar bicicletas."
+      "description": "Marketplace de bicicletas usadas centrado en intercambios y donaciones entre ciclistas.",
+      "technologies": [
+        "Python",
+        "Django",
+        "PostgreSQL"
+      ]
     },
     {
-      "name": "Petpedia",
-      "url": "https://github.com/angelojbgama/Petpedia",
-      "github": true,
-      "description": "Plataforma de descubrimiento con artículos y productos para el cuidado de mascotas."
+      "name": "Cardápio Digital",
+      "url": "https://angelojbgama.github.io/terra_e_p-o/",
+      "github": false,
+      "description": "Menú digital optimizado para tablets y tótems en cafeterías.",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
     },
     {
-      "name": "Generador de Contraseñas APP en React Native",
+      "name": "Generador de Contraseñas en React Native",
       "url": "https://github.com/angelojbgama/bat-pass-app",
       "github": true,
-      "description": "Aplicación móvil que crea contraseñas seguras con reglas personalizadas."
+      "description": "Aplicación móvil que genera contraseñas seguras con diversos criterios.",
+      "technologies": [
+        "React Native",
+        "JavaScript"
+      ]
     },
     {
       "name": "Web Scraping de Notebooks con API RESTful",
       "url": "https://github.com/angelojbgama/crawler-jr",
       "github": true,
-      "description": "Crawler que recopila ofertas de notebooks y expone los datos vía API."
+      "description": "Crawler que recoge ofertas de notebooks y expone datos estructurados vía API.",
+      "technologies": [
+        "Python"
+      ]
     },
     {
-      "name": "Automatización y Lector de PDF con búsqueda por Regex en Python",
+      "name": "Automatización y lectura de PDF con Regex",
       "url": "https://github.com/angelojbgama/Programa-de-leitor-de-pdf-e-busca-por-Regex",
       "github": true,
-      "description": "Extractor basado en expresiones regulares para procesar PDFs."
+      "description": "Script que extrae campos de PDFs y genera reportes estructurados.",
+      "technologies": [
+        "Python"
+      ]
     },
     {
-      "name": "Automatización y Análisis de Datos en Python: IA y Predicción de Precios",
+      "name": "Automatización y análisis de datos en Python: IA y predicción de precios",
       "url": "https://github.com/angelojbgama/Projeto-Python-IA-Intelig-ncia-Artificial-e-Previs-es",
       "github": true,
-      "description": "Pipeline de IA que pronostica precios usando series históricas."
+      "description": "Pipeline de machine learning para predecir precios con datos históricos.",
+      "technologies": [
+        "Python"
+      ]
     },
     {
       "name": "Python Insights - Analizando Datos con Python",
       "url": "https://github.com/angelojbgama/Python-Insights-Analisando-Dados-com-Python/tree/main",
       "github": true,
-      "description": "Colección de notebooks con análisis exploratorios."
+      "description": "Colección de notebooks que explora análisis y visualizaciones en Python.",
+      "technologies": [
+        "Python"
+      ]
     },
     {
       "name": "Python Power UP - Proyecto de Automatización",
       "url": "https://github.com/angelojbgama/Python-Power-Up-Automa-o-de-Tarefas/tree/main",
       "github": true,
-      "description": "Utilidades para automatizar tareas recurrentes."
+      "description": "Herramientas para automatizar tareas repetitivas del día a día.",
+      "technologies": [
+        "Python"
+      ]
     }
   ],
-  "titleProfessionalExperience": "Experiencia Profesional",
   "professionalExperience": [
     {
       "name": "Fundación COPPETEC, Río de Janeiro - Programador",
       "period": "Abril de 2024 - Hasta el momento",
-      "description": "Participé en actividades generales de desarrollo y soporte, colaborando con el equipo según las necesidades."
+      "description": "Desarrollo y soporte general, apoyando al equipo con demandas variadas según la necesidad."
     },
     {
       "name": "Grupo PLL, Río de Janeiro - Técnico en Electrónica",
       "period": "Febrero de 2016 - Noviembre de 2019",
-      "description": "Realicé tareas técnicas de rutina y brinde apoyo diario en conjunto con el equipo."
+      "description": "Ejecuté actividades rutinarias en el área técnica, brindando soporte a operaciones diarias y colaborando con el equipo."
     },
     {
       "name": "GMX, Río de Janeiro - Técnico en Electrónica",
       "period": "Julio de 2012 - Octubre de 2015",
-      "description": "Desempeñé funciones generales del área, prestando soporte técnico y operativo según la demanda."
+      "description": "Realicé tareas generales en el área, ofreciendo apoyo técnico y operativo conforme a las demandas del período."
     }
   ],
   "certifications": [
     {
-      "id": "PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS",
       "title": "PROGRAMAÇÃO DE ALGORITMOS ESCALÁVEIS",
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-04",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_DE_ALGORITMOS_ESCALÁVEIS.pdf",
       "tags": [
         "algoritmos",
-        "estructuras de datos"
+        "estruturas de dados"
       ]
     },
     {
-      "id": "PROGRAMAÇÃO_PARA_INTERNET",
       "title": "PROGRAMAÇÃO PARA INTERNET",
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2025-03",
       "pdfUrl": "assets/certificados/PROGRAMAÇÃO_PARA_INTERNET.pdf",
       "tags": [
         "web",
-        "programación"
+        "programação"
       ]
     },
     {
-      "id": "Conceitos_basicos_de_rede",
       "title": "Conceitos basicos de rede",
       "issuer": "CISCO",
       "date": "2024-02",
@@ -234,7 +219,6 @@
       ]
     },
     {
-      "id": "Fundamentos_do_Hardware_do_Computador",
       "title": "Fundamentos do Hardware do Computador",
       "issuer": "CISCO",
       "date": "2024-02",
@@ -245,36 +229,33 @@
       ]
     },
     {
-      "id": "Logica_de_Programação",
       "title": "Logica de Programação",
       "issuer": "UNIVERSIDADE ESTÁCIO DE SÁ",
       "date": "2024-01",
       "pdfUrl": "assets/certificados/Logica_de_Programação.pdf",
       "tags": [
         "lógica",
-        "programación"
+        "programação"
       ]
     },
     {
-      "id": "Computação_em_Nuvem_AWS_Discovery_Day",
       "title": "Computação em Nuvem AWS Discovery Day",
       "issuer": "Amazon Web Services",
       "date": "2023-11",
       "pdfUrl": "assets/certificados/Computação_em_Nuvem_AWS_Discovery_Day.pdf",
       "tags": [
-        "nube",
+        "nuvem",
         "aws"
       ]
     },
     {
-      "id": "Introdução_a_Programação",
       "title": "Introdução a Programação",
       "issuer": "EBAC",
       "date": "2023-10",
       "pdfUrl": "assets/certificados/Introdução_a_Programação.pdf",
       "tags": [
-        "programación",
-        "introducción"
+        "programação",
+        "introdução"
       ]
     }
   ]

@@ -362,6 +362,22 @@ body.light-theme .progress-bar {
 
 .acordeon.open .content { display: block; padding: 0 var(--space-3) var(--space-3); }
 
+/* Resumo dentro das habilidades */
+.skills-summary {
+  margin: var(--space-3) 0 var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: linear-gradient(135deg, rgba(124, 93, 250, 0.08), rgba(27, 185, 241, 0.08));
+  color: var(--text-color);
+  font-size: clamp(0.9rem, 0.85rem + 0.2vw, 1rem);
+  line-height: 1.65;
+  box-shadow: var(--shadow-soft);
+}
+
+.skills-summary strong {
+  color: var(--accent-color);
+}
 
 /* --------------------------------------------------------------------------
    Conteúdos específicos

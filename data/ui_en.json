@@ -2,9 +2,16 @@
   "loading": "Loading...",
   "profileLoadError": "Could not load profile data.",
   "profileNotLoaded": "Profile data was not loaded.",
+  "titleSkills": "Skills",
+  "titleLanguages": "Languages",
+  "titlePortfolio": "Portfolio",
+  "titleProfessionalExperience": "Professional Experience",
   "titleAcademicFormation": "Academic Formation",
   "titleLanguageCertifications": "Language Proficiency Certifications",
   "titleCertifications": "Certifications",
+  "titleHardSkills": "Technical Skills",
+  "titleSoftSkills": "Behavioral Skills",
+  "softSkillsTestLabel": "Take the test",
   "certIssuer": "Issuer",
   "certDate": "Date",
   "openPdf": "Open PDF",
@@ -40,5 +47,30 @@
   "portfolioLinkLabel": "Link",
   "contactEmailLabel": "E-mail",
   "contactPhoneLabel": "Phone",
-  "contactLocationLabel": "Location"
+  "contactLocationLabel": "Location",
+  "translations": {
+    "months": {
+      "January": 0,
+      "February": 1,
+      "March": 2,
+      "April": 3,
+      "May": 4,
+      "June": 5,
+      "July": 6,
+      "August": 7,
+      "September": 8,
+      "October": 9,
+      "November": 10,
+      "December": 11
+    },
+    "current": "Present",
+    "lessThanAMonth": "Less than a month",
+    "years": "year",
+    "years_plural": "years",
+    "months_text": "month",
+    "months_plural": "months",
+    "and": "and",
+    "completedLabel": "subjects completed",
+    "ofLabel": "of"
+  }
 }

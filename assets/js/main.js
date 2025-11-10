@@ -259,7 +259,7 @@ function formatYM(ym) {
 }
 
 // 1. Atualizar Informações do Perfil
-function updateProfileInfo(profileData) {
+function updateProfileInfo(profileData, uiText) {
   // Atualizar Foto de Perfil
   const photo = document.getElementById("profile.photo");
   if (photo) {
@@ -308,9 +308,9 @@ function updateProfileInfo(profileData) {
       const total = profileData.graduateScale.total;
       const percentage = Math.min((completed / total) * 100, 100).toFixed(2); // Limita a 100% e formata para 2 casas decimais
       progress.style.width = `${percentage}%`;
-      const ui = profileData.translations || {};
-      const completedLabel = ui.completedLabel || 'disciplinas cursadas';
-      progressText.innerText = `${completed} ${completedLabel} ${ui.ofLabel || 'de'} ${total} (${percentage}%)`;
+      const locale = (uiText && uiText.translations) || {};
+      const completedLabel = locale.completedLabel || 'disciplinas cursadas';
+      progressText.innerText = `${completed} ${completedLabel} ${locale.ofLabel || 'de'} ${total} (${percentage}%)`;
     }
   }
 
@@ -351,6 +351,13 @@ function updateProfileInfo(profileData) {
   // Atualizar o Título do Documento
   if (profileData.title) {
     document.title = profileData.title;
+  }
+
+  const summary = document.getElementById("profile.summary");
+  if (summary) {
+    const text = profileData.summary || "";
+    summary.textContent = text;
+    summary.style.display = text ? "" : "none";
   }
 }
 
@@ -502,7 +509,7 @@ function updateHardSkills(profileData, uiText) {
 }
 
 // 3. Atualizar Habilidades Comportamentais (Soft Skills)
-function updateSoftSkills(profileData) {
+function updateSoftSkills(profileData, uiText) {
   const listEl = document.getElementById("profile.skills.softSkills");
   if (!listEl) return;
 
@@ -543,11 +550,11 @@ function updateSoftSkills(profileData) {
 
   // Link simples centralizado no rodapé da seção (configurável via JSON)
   try {
-    const testCfg = profileData && profileData.skills && profileData.skills.softSkillsTest;
-    const section = document.querySelector('.skills .personal');
-    if (section) {
-      let wrap = section.querySelector('.soft-skills__testlink-wrap');
-      if (testCfg && testCfg.url) {
+        const testCfg = profileData && profileData.skills && profileData.skills.softSkillsTest;
+        const section = document.querySelector('.skills .personal');
+        if (section) {
+          let wrap = section.querySelector('.soft-skills__testlink-wrap');
+          if (testCfg && testCfg.url) {
         if (!wrap) {
           wrap = document.createElement('div');
           wrap.className = 'soft-skills__testlink-wrap';
@@ -563,7 +570,11 @@ function updateSoftSkills(profileData) {
         linkEl.href = testCfg.url;
         linkEl.target = '_blank';
         linkEl.rel = 'noopener noreferrer';
-        linkEl.textContent = testCfg.label || 'Faça o teste';
+        const linkLabel =
+          (testCfg && testCfg.label) ||
+          (uiText && uiText.softSkillsTestLabel) ||
+          'Faça o teste';
+        linkEl.textContent = linkLabel;
         wrap.style.display = '';
       } else if (wrap) {
         wrap.style.display = 'none';
@@ -658,7 +669,10 @@ function updateLanguages(profileData, uiText) {
       list.insertAdjacentElement('afterend', certWrap);
     }
 
-    const title = profileData.titleLanguageCertifications || 'Certificações de domínio da língua';
+    const title =
+      profileData.titleLanguageCertifications ||
+      (uiText && uiText.titleLanguageCertifications) ||
+      'Certificações de domínio da língua';
     const viewLabel = (uiText && uiText.viewLanguageCertification) || 'View';
     const itemsHtml = certs.map((c) => {
       const name = c.name || c.title || '';
@@ -779,12 +793,16 @@ function calcularDuracao(periodo, traducoes) {
 }
 
 // 6. Atualizar Experiência Profissional
-function updateProfessionalExperience(profileData) {
+function updateProfessionalExperience(profileData, uiText) {
   const professionalExperience = document.getElementById("profile.professionalExperience");
   if (professionalExperience) {
+      const translations =
+        (uiText && uiText.translations) ||
+        (profileData && profileData.translations) ||
+        {};
       professionalExperience.innerHTML = profileData.professionalExperience
           .map((experience) => {
-              const duracao = calcularDuracao(experience.period, profileData.translations);
+              const duracao = calcularDuracao(experience.period, translations);
               return `
                 <li class="experience-item">
                     <h3 class="title">${experience.name}</h3>
@@ -802,10 +820,15 @@ function updateAcademicFormation(profileData, uiText) {
   const list = document.getElementById("profile.academicFormation");
   if (!list) return;
 
+  const translations =
+    (uiText && uiText.translations) ||
+    (profileData && profileData.translations) ||
+    {};
+
   const items = Array.isArray(profileData.academicFormation) ? profileData.academicFormation : [];
   list.innerHTML = items.map((edu) => {
     const title = [edu.name, edu.institution].filter(Boolean).join(" — ");
-    const duracao = edu.period ? calcularDuracao(edu.period, profileData.translations) : '';
+    const duracao = edu.period ? calcularDuracao(edu.period, translations) : '';
     const periodText = edu.period ? `${edu.period}${duracao ? ` (${duracao})` : ''}` : '';
     const desc = edu.description || '';
     const openLabel = (uiText && uiText.openPdf) || 'Abrir PDF';
@@ -909,16 +932,20 @@ function updateCertifications(profileData, uiText) {
 
 
 // 8. Atualizar Títulos das Seções Internas das Habilidades
-function updateSkillTitles(profileData) {
+function updateSkillTitles(profileData, uiText) {
   const skillTitlesMapping = {
     titleHardSkills: "skills.titleHardSkills",
     titleSoftSkills: "skills.titleSoftSkills",
   };
 
+  const profileSkills = (profileData && profileData.skills) || {};
+
   for (const [jsonKey, elementId] of Object.entries(skillTitlesMapping)) {
     const titleElement = document.getElementById(elementId);
-    if (titleElement && profileData.skills[jsonKey]) {
-      titleElement.innerText = profileData.skills[jsonKey];
+    if (!titleElement) continue;
+    const value = profileSkills[jsonKey] || (uiText && uiText[jsonKey]);
+    if (value) {
+      titleElement.innerText = value;
     }
   }
 }
@@ -933,16 +960,16 @@ function updateSkillTitles(profileData) {
     const profileData = await fetchProfileData(uiText.language);
     if (profileData) {
       const safe=(l,fn)=>{ try { fn(); } catch(e) { console.error(`[update:${l}]`, e); } };
-      safe('profileInfo',       ()=>updateProfileInfo(profileData));
-      safe('softSkills',        ()=>updateSoftSkills(profileData));
+      safe('profileInfo',       ()=>updateProfileInfo(profileData, uiText));
+      safe('softSkills',        ()=>updateSoftSkills(profileData, uiText));
       safe('hardSkills',        ()=>updateHardSkills(profileData, uiText));
       safe('languages',         ()=>updateLanguages(profileData, uiText));
       safe('portfolio',         ()=>updatePortfolio(profileData, uiText));
-      safe('experience',        ()=>updateProfessionalExperience(profileData));
+      safe('experience',        ()=>updateProfessionalExperience(profileData, uiText));
       safe('academicFormation', ()=>updateAcademicFormation(profileData, uiText));
       safe('certifications',    ()=>updateCertifications(profileData, uiText));
       safe('accordionTitles',   ()=>updateAccordionTitles(profileData, uiText));
-      safe('skillTitles',       ()=>updateSkillTitles(profileData));
+      safe('skillTitles',       ()=>updateSkillTitles(profileData, uiText));
     } else {
       console.error(uiText.profileNotLoaded);
     }

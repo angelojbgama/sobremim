@@ -419,7 +419,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const hardSkills = collectHardSkills(profile).slice(0, 8);
       if (hardSkills.length) {
-        leftWriter.heading(profile.skills?.titleHardSkills || resolveTitle('hardSkills', ui.language || lang));
+        const hardSkillsTitle =
+          profile.skills?.titleHardSkills ||
+          ui.titleHardSkills ||
+          resolveTitle('hardSkills', ui.language || lang);
+        leftWriter.heading(hardSkillsTitle);
         hardSkills.forEach((skill) => {
           leftWriter.text(skill.name, { font: fontBold, size: 10 });
           const meta = [];
@@ -431,7 +435,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const softSkills = collectSoftSkills(profile).slice(0, 6);
       if (softSkills.length) {
-        leftWriter.heading(profile.skills?.titleSoftSkills || resolveTitle('softSkills', ui.language || lang));
+        const softSkillsTitle =
+          profile.skills?.titleSoftSkills ||
+          ui.titleSoftSkills ||
+          resolveTitle('softSkills', ui.language || lang);
+        leftWriter.heading(softSkillsTitle);
         softSkills.forEach((skill) => {
           const label =
             skill.percent !== null && skill.percent !== undefined
@@ -503,7 +511,7 @@ document.addEventListener('DOMContentLoaded', () => {
         experiences.forEach((exp) => {
           rightWriter.text(exp.name || '—', { font: fontBold, size: 11 });
           if (exp.period) {
-            const duration = calcularDuracao(exp.period, profile.translations);
+            const duration = calcularDuracao(exp.period, ui.translations || profile.translations);
             const label = `${exp.period}${duration ? ` (${duration})` : ''}`;
             rightWriter.text(label, { font: fontItalic, size: 9, color: palette.muted });
           }
@@ -528,7 +536,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const title = [edu.name, edu.institution].filter(Boolean).join(' — ');
           rightWriter.text(title || '—', { font: fontBold, size: 11 });
           if (edu.period) {
-            const duration = calcularDuracao(edu.period, profile.translations);
+            const duration = calcularDuracao(edu.period, ui.translations || profile.translations);
             const label = `${edu.period}${duration ? ` (${duration})` : ''}`;
             rightWriter.text(label, { font: fontItalic, size: 9, color: palette.muted });
           }
